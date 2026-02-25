@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Compound Assets - Meta Spatial Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========== LIQUID GLASS NAV BAR ========== -->
+  <div class="liquid-nav-wrap">
+    <nav data-liquid-nav data-nav-active="compound">
+      <a data-nav-id="home" data-nav-icon="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/></svg>" href="landing.html">Home</a>
+      <a data-nav-id="spatial" data-nav-icon="<svg viewBox=&quot;0 0 512 512&quot; fill=&quot;currentColor&quot;><path d=&quot;M256 301.3c-17.4-24.6-39.4-50.1-66.2-76.9-44.6-44.6-82.9-62.3-113.8-62.3-28.3 0-51.3 14.9-51.3 51.3 0 36.4 23 51.3 51.3 51.3 30.9 0 69.2-17.7 113.8-62.3 26.8-26.8 48.8-52.3 66.2-76.9 17.4 24.6 39.4 50.1 66.2 76.9 44.6 44.6 82.9 62.3 113.8 62.3 28.3 0 51.3-14.9 51.3-51.3 0-36.4-23-51.3-51.3-51.3-30.9 0-69.2 17.7-113.8 62.3-26.8 26.8-48.8 52.3-66.2 76.9z&quot;/></svg>" href="spatial-production.html">Meta Spatial</a>
+      <a data-nav-id="compound" data-nav-icon="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/></svg>" href="compound-assets.html">Assets</a>
+      <a data-nav-id="world" data-nav-icon="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/></svg>" href="world-building.html">World</a>
+    </nav>
+  </div>
+
+  <main style="padding-top: 72px;">
+    <section class="page-section">
+      <div class="container">
+
+        <div class="section-header fade-in">
+          <span class="section-label" style="color: oklch(0.68 0.16 145);">Compound Assets</span>
+          <h1 class="section-title">Compound Asset Pipeline</h1>
+          <p class="section-subtitle">Assets are not single files -- they are layered, interconnected structures. Build once, compound everywhere. Inspired by the template pipeline that powered Avatar.</p>
+        </div>
+
+        <!-- Asset layer diagram -->
+        <div class="glass-container glass-sm mb-16 fade-in delay-1">
+          <div class="glass-bg"></div>
+          <div class="glass-content">
+            <div class="card-panel-header">
+              <span class="card-panel-label">Asset Layer Structure</span>
+            </div>
+            <svg viewBox="0 0 600 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+              <g transform="translate(40, 20)"><rect x="0" y="0" width="300" height="32" rx="8" stroke="oklch(0.60 0.22 25)" stroke-width="1" fill="oklch(0.60 0.22 25 / 4%)"/><text x="150" y="21" text-anchor="middle" fill="oklch(0.60 0.22 25)" font-size="11" font-family="var(--font-mono)">Metadata + Tags</text><line x1="300" y1="16" x2="380" y2="16" stroke="oklch(0.60 0.22 25)" stroke-width="0.5" opacity="0.2" stroke-dasharray="3 3"/></g>
+              <g transform="translate(40, 65)"><rect x="0" y="0" width="300" height="32" rx="8" stroke="oklch(0.72 0.16 60)" stroke-width="1" fill="oklch(0.72 0.16 60 / 4%)"/><text x="150" y="21" text-anchor="middle" fill="oklch(0.72 0.16 60)" font-size="11" font-family="var(--font-mono)">LOD Variants</text><line x1="300" y1="16" x2="380" y2="16" stroke="oklch(0.72 0.16 60)" stroke-width="0.5" opacity="0.2" stroke-dasharray="3 3"/></g>
+              <g transform="translate(40, 110)"><rect x="0" y="0" width="300" height="32" rx="8" stroke="oklch(0.65 0.12 195)" stroke-width="1" fill="oklch(0.65 0.12 195 / 4%)"/><text x="150" y="21" text-anchor="middle" fill="oklch(0.65 0.12 195)" font-size="11" font-family="var(--font-mono)">Lighting Data</text><line x1="300" y1="16" x2="380" y2="16" stroke="oklch(0.65 0.12 195)" stroke-width="0.5" opacity="0.2" stroke-dasharray="3 3"/></g>
+              <g transform="translate(40, 155)"><rect x="0" y="0" width="300" height="32" rx="8" stroke="oklch(0.62 0.20 255)" stroke-width="1" fill="oklch(0.62 0.20 255 / 4%)"/><text x="150" y="21" text-anchor="middle" fill="oklch(0.62 0.20 255)" font-size="11" font-family="var(--font-mono)">Materials + Textures</text><line x1="300" y1="16" x2="380" y2="16" stroke="oklch(0.62 0.20 255)" stroke-width="0.5" opacity="0.2" stroke-dasharray="3 3"/></g>
+              <g transform="translate(40, 200)"><rect x="0" y="0" width="300" height="32" rx="8" stroke="oklch(0.68 0.16 145)" stroke-width="1" fill="oklch(0.68 0.16 145 / 4%)"/><text x="150" y="21" text-anchor="middle" fill="oklch(0.68 0.16 145)" font-size="11" font-family="var(--font-mono)">Collision / Physics</text><line x1="300" y1="16" x2="380" y2="16" stroke="oklch(0.68 0.16 145)" stroke-width="0.5" opacity="0.2" stroke-dasharray="3 3"/></g>
+              <g transform="translate(40, 245)"><rect x="0" y="0" width="300" height="32" rx="8" stroke="oklch(0.55 0.08 260)" stroke-width="1" fill="oklch(0.55 0.08 260 / 4%)"/><text x="150" y="21" text-anchor="middle" fill="oklch(0.55 0.08 260)" font-size="11" font-family="var(--font-mono)">Base Geometry</text><line x1="300" y1="16" x2="380" y2="16" stroke="oklch(0.55 0.08 260)" stroke-width="0.5" opacity="0.2" stroke-dasharray="3 3"/></g>
+              <g transform="translate(400, 75)"><rect x="0" y="0" width="150" height="80" rx="16" stroke="oklch(0.68 0.16 145)" stroke-width="1.5" fill="oklch(0.68 0.16 145 / 5%)"/><text x="75" y="36" text-anchor="middle" fill="oklch(0.68 0.16 145)" font-size="13" font-family="var(--font-display)" font-weight="600">Compound</text><text x="75" y="54" text-anchor="middle" fill="oklch(0.68 0.16 145)" font-size="13" font-family="var(--font-display)" font-weight="600">Asset</text></g>
+              <g transform="translate(400, 185)"><line x1="75" y1="0" x2="75" y2="35" stroke="oklch(0.35 0.01 260)" stroke-width="1"/><polygon points="70,35 80,35 75,42" fill="oklch(0.35 0.01 260)"/><rect x="15" y="50" width="120" height="36" rx="10" stroke="oklch(0.35 0.01 260)" stroke-width="1" fill="oklch(0.13 0.008 260)"/><text x="75" y="73" text-anchor="middle" fill="oklch(0.50 0.01 260)" font-size="10" font-family="var(--font-mono)">Single Source</text></g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Three principle cards -->
+        <div class="grid-3 mb-16">
+          <div class="glass-container glass-sm fade-in delay-1">
+            <div class="glass-bg"></div>
+            <div class="glass-content">
+              <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 4H20V16H4V4Z" stroke="currentColor" stroke-width="1.5"/><path d="M8 16V20" stroke="currentColor" stroke-width="1.5"/><path d="M16 16V20" stroke="currentColor" stroke-width="1.5"/><path d="M6 20H18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <h4 class="card-title">Template Pipeline</h4>
+              <p class="card-text">Every asset inherits from a master template structure. When the template evolves, every child asset inherits the update. No manual propagation. No version drift.</p>
+            </div>
+          </div>
+
+          <div class="glass-container glass-sm fade-in delay-2">
+            <div class="glass-bg"></div>
+            <div class="glass-content">
+              <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z" stroke="currentColor" stroke-width="1.5"/><path d="M12 22V15.5" stroke="currentColor" stroke-width="1.5"/><path d="M22 8.5L12 15.5L2 8.5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+              <h4 class="card-title">Game-Engine-Ready Assets</h4>
+              <p class="card-text">Assets built for the film pipeline are simultaneously ready for interactive experiences, VR walkthroughs, and ancillary content -- at no additional production cost.</p>
+            </div>
+          </div>
+
+          <div class="glass-container glass-sm fade-in delay-3">
+            <div class="glass-bg"></div>
+            <div class="glass-content">
+              <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1" opacity="0.5"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0.75" opacity="0.3"/></svg></div>
+              <h4 class="card-title">Compound, Not Rebuild</h4>
+              <p class="card-text">Traditional pipelines force you to rebuild assets for each use case. Compound assets layer data so the same source serves film rendering, real-time preview, and game deployment.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison table -->
+        <div class="glass-container glass-sm fade-in delay-4">
+          <div class="glass-bg"></div>
+          <div class="glass-content">
+            <div class="card-panel-header">
+              <span class="card-panel-label">Traditional vs Compound</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="data-table">
+                <thead><tr><th></th><th style="color: oklch(0.60 0.22 25);">Traditional</th><th style="color: oklch(0.68 0.16 145);">Compound</th></tr></thead>
+                <tbody>
+                  <tr><td style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:oklch(0.55 0.01 260 / 50%);">Asset Update</td><td style="color:oklch(0.55 0.01 260 / 50%);">Rebuild from scratch</td><td style="color:oklch(0.96 0.005 260 / 80%);">Update single layer, propagates everywhere</td></tr>
+                  <tr><td style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:oklch(0.55 0.01 260 / 50%);">Multi-Platform</td><td style="color:oklch(0.55 0.01 260 / 50%);">Separate assets per platform</td><td style="color:oklch(0.96 0.005 260 / 80%);">One asset, LOD variants auto-selected</td></tr>
+                  <tr><td style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:oklch(0.55 0.01 260 / 50%);">Ancillary Content</td><td style="color:oklch(0.55 0.01 260 / 50%);">Separate production pipeline</td><td style="color:oklch(0.96 0.005 260 / 80%);">Game-engine-ready assets ship directly</td></tr>
+                  <tr><td style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:oklch(0.55 0.01 260 / 50%);">Template Reuse</td><td style="color:oklch(0.55 0.01 260 / 50%);">Copy-paste, manual sync</td><td style="color:oklch(0.96 0.005 260 / 80%);">Template inheritance</td></tr>
+                  <tr><td style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:oklch(0.55 0.01 260 / 50%);">Team Collaboration</td><td style="color:oklch(0.55 0.01 260 / 50%);">File conflicts, version hell</td><td style="color:oklch(0.96 0.005 260 / 80%);">Layer-level ownership, parallel work</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-credit">Designed and engineered by <strong>Aniket Bhatt</strong></p>
+      <p class="footer-role">Meta Creative Core &middot; Production Design + XR</p>
+      <div class="footer-tech"><span>Unreal Engine 5.7</span><span>Meta Quest 3</span><span>Meta OpenXR</span><span>Take Recorder</span><span>Perforce</span></div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="liquid-glass.js"></script>
+</body>
+</html>

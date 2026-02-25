@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>World Building - Meta Spatial Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========== LIQUID GLASS NAV BAR ========== -->
+  <div class="liquid-nav-wrap">
+    <nav data-liquid-nav data-nav-active="world">
+      <a data-nav-id="home" data-nav-icon="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/></svg>" href="landing.html">Home</a>
+      <a data-nav-id="spatial" data-nav-icon="<svg viewBox=&quot;0 0 512 512&quot; fill=&quot;currentColor&quot;><path d=&quot;M256 301.3c-17.4-24.6-39.4-50.1-66.2-76.9-44.6-44.6-82.9-62.3-113.8-62.3-28.3 0-51.3 14.9-51.3 51.3 0 36.4 23 51.3 51.3 51.3 30.9 0 69.2-17.7 113.8-62.3 26.8-26.8 48.8-52.3 66.2-76.9 17.4 24.6 39.4 50.1 66.2 76.9 44.6 44.6 82.9 62.3 113.8 62.3 28.3 0 51.3-14.9 51.3-51.3 0-36.4-23-51.3-51.3-51.3-30.9 0-69.2 17.7-113.8 62.3-26.8 26.8-48.8 52.3-66.2 76.9z&quot;/></svg>" href="spatial-production.html">Meta Spatial</a>
+      <a data-nav-id="compound" data-nav-icon="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/></svg>" href="compound-assets.html">Assets</a>
+      <a data-nav-id="world" data-nav-icon="<svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot;><path d=&quot;M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/></svg>" href="world-building.html">World</a>
+    </nav>
+  </div>
+
+  <!-- Woodsprite particle canvas -->
+  <canvas id="woodsprite-canvas" class="page-gradient"></canvas>
+
+  <main style="padding-top: 72px;">
+    <section class="page-section">
+      <div class="container">
+
+        <div class="section-header fade-in">
+          <span class="section-label" style="color: oklch(0.65 0.12 195);">World Building</span>
+          <h1 class="section-title">World Building Neural Network</h1>
+          <p class="section-subtitle">The WorldEngine module — a project-specific simulation layer modeling the planet as a coherent mechanistic system. Physics, biology, chemistry driven by the FOREST_SYSTEM architecture, mapping canonical lore to functional classes.</p>
+        </div>
+
+        <!-- Neural network diagram -->
+        <div class="glass-container glass-sm mb-16 fade-in delay-1">
+          <div class="glass-bg"></div>
+          <div class="glass-content">
+            <div class="card-panel-header">
+              <span class="card-panel-label">World State Network</span>
+              <div class="live-indicator"><div class="live-dot"></div><span class="live-label">LIVE</span></div>
+            </div>
+            <svg viewBox="0 0 760 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+              <!--
+                GRID LAYOUT (all nodes on clean y=70 or y=150 rows):
+                Col A (x=70):  Locations top row
+                Col A2(x=70):  Locations bottom row  
+                Col B (x=230): More locations
+                Col C (x=380): Processing (World State / Story Events)
+                Col D (x=540): AI (DINOv2 / PCG)
+                Col E (x=690): Output (Live World)
+              -->
+
+              <!-- ROW 1 (y=55): Bioluminescent Mangrove, Cenote Network, World State, DINOv2 -->
+              <!-- ROW 2 (y=130): Volcanic Caldera, Mycelium Caverns, Story Events, PCG -->
+              <!-- ROW 3 (y=185): Tidal Canopy -->
+              <!-- Output centered at y=93 -->
+
+              <!-- LOCATION NODES - Column 1 (x=65) -->
+              <g>
+                <circle cx="65" cy="55" r="28" stroke="#4dd0e1" stroke-width="1.5" fill="rgba(77,208,225,0.05)"><animate attributeName="r" values="28;29.5;28" dur="4s" repeatCount="indefinite"/></circle>
+                <text x="65" y="52" text-anchor="middle" fill="#4dd0e1" font-size="10" font-family="system-ui, -apple-system, sans-serif">Mangrove</text>
+                <text x="65" y="63" text-anchor="middle" fill="#4dd0e1" font-size="10" font-family="system-ui, -apple-system, sans-serif">Bay</text>
+              </g>
+              <g>
+                <circle cx="65" cy="130" r="28" stroke="#ef5350" stroke-width="1.5" fill="rgba(239,83,80,0.05)"><animate attributeName="r" values="28;29.5;28" dur="3.8s" repeatCount="indefinite"/></circle>
+                <text x="65" y="127" text-anchor="middle" fill="#ef5350" font-size="10" font-family="system-ui, -apple-system, sans-serif">Volcanic</text>
+                <text x="65" y="138" text-anchor="middle" fill="#ef5350" font-size="10" font-family="system-ui, -apple-system, sans-serif">Caldera</text>
+              </g>
+
+              <!-- LOCATION NODES - Column 2 (x=175) -->
+              <g>
+                <circle cx="175" cy="55" r="28" stroke="#66bb6a" stroke-width="1.5" fill="rgba(102,187,106,0.05)"><animate attributeName="r" values="28;29.5;28" dur="4.2s" repeatCount="indefinite"/></circle>
+                <text x="175" y="58" text-anchor="middle" fill="#66bb6a" font-size="11" font-family="system-ui, -apple-system, sans-serif">Encampment</text>
+              </g>
+              <g>
+                <circle cx="175" cy="130" r="28" stroke="#42a5f5" stroke-width="1.5" fill="rgba(66,165,245,0.05)"><animate attributeName="r" values="28;29.5;28" dur="4.5s" repeatCount="indefinite"/></circle>
+                <text x="175" y="127" text-anchor="middle" fill="#42a5f5" font-size="10" font-family="system-ui, -apple-system, sans-serif">Mycelium</text>
+                <text x="175" y="138" text-anchor="middle" fill="#42a5f5" font-size="10" font-family="system-ui, -apple-system, sans-serif">Caverns</text>
+              </g>
+              <g>
+                <circle cx="120" cy="200" r="28" stroke="#ffa726" stroke-width="1.5" fill="rgba(255,167,38,0.05)"><animate attributeName="r" values="28;29.5;28" dur="5s" repeatCount="indefinite"/></circle>
+                <text x="120" y="197" text-anchor="middle" fill="#ffa726" font-size="10" font-family="system-ui, -apple-system, sans-serif">Tidal</text>
+                <text x="120" y="208" text-anchor="middle" fill="#ffa726" font-size="10" font-family="system-ui, -apple-system, sans-serif">Canopy</text>
+              </g>
+
+              <!-- PROCESSING NODES - Column 3 (x=340) -->
+              <g>
+                <circle cx="340" cy="70" r="32" stroke="#4dd0e1" stroke-width="1.5" fill="rgba(77,208,225,0.05)"/>
+                <text x="340" y="66" text-anchor="middle" fill="#4dd0e1" font-size="12" font-family="system-ui, -apple-system, sans-serif" font-weight="500">World</text>
+                <text x="340" y="78" text-anchor="middle" fill="#4dd0e1" font-size="12" font-family="system-ui, -apple-system, sans-serif" font-weight="500">State</text>
+              </g>
+              <g>
+                <circle cx="340" cy="155" r="32" stroke="#ef5350" stroke-width="1.5" fill="rgba(239,83,80,0.05)"/>
+                <text x="340" y="151" text-anchor="middle" fill="#ef5350" font-size="12" font-family="system-ui, -apple-system, sans-serif" font-weight="500">Story</text>
+                <text x="340" y="163" text-anchor="middle" fill="#ef5350" font-size="12" font-family="system-ui, -apple-system, sans-serif" font-weight="500">Events</text>
+              </g>
+
+              <!-- AI NODES - Column 4 (x=500) -->
+              <g>
+                <circle cx="500" cy="70" r="42" stroke="#42a5f5" stroke-width="2" fill="rgba(66,165,245,0.05)"><animate attributeName="stroke-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite"/></circle>
+                <text x="500" y="66" text-anchor="middle" fill="#42a5f5" font-size="13" font-family="system-ui, -apple-system, sans-serif" font-weight="600">DINOv2</text>
+                <text x="500" y="80" text-anchor="middle" fill="#42a5f5" font-size="9" font-family="system-ui, -apple-system, sans-serif" opacity="0.7">Scene Understanding</text>
+              </g>
+              <g>
+                <circle cx="500" cy="155" r="40" stroke="#66bb6a" stroke-width="2" fill="rgba(102,187,106,0.05)"/>
+                <text x="500" y="152" text-anchor="middle" fill="#66bb6a" font-size="13" font-family="system-ui, -apple-system, sans-serif" font-weight="600">PCG</text>
+                <text x="500" y="164" text-anchor="middle" fill="#66bb6a" font-size="9" font-family="system-ui, -apple-system, sans-serif">Generation</text>
+              </g>
+
+              <!-- OUTPUT NODE - Column 5 (x=670) -->
+              <g>
+                <circle cx="670" cy="112" r="34" stroke="#ffa726" stroke-width="2" fill="rgba(255,167,38,0.08)"/>
+                <text x="670" y="108" text-anchor="middle" fill="#ffa726" font-size="13" font-family="system-ui, -apple-system, sans-serif" font-weight="600">Live</text>
+                <text x="670" y="121" text-anchor="middle" fill="#ffa726" font-size="13" font-family="system-ui, -apple-system, sans-serif" font-weight="600">World</text>
+              </g>
+
+              <!-- CONNECTIONS: Locations -> Processing -->
+              <line x1="89" y1="55" x2="308" y2="70" stroke="#4dd0e1" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.5s" repeatCount="indefinite"/></line>
+              <line x1="89" y1="130" x2="308" y2="155" stroke="#ef5350" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.6s" repeatCount="indefinite"/></line>
+              <line x1="197" y1="55" x2="308" y2="70" stroke="#66bb6a" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.9s" repeatCount="indefinite"/></line>
+              <line x1="197" y1="130" x2="308" y2="155" stroke="#42a5f5" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.8s" repeatCount="indefinite"/></line>
+              <line x1="142" y1="195" x2="308" y2="155" stroke="#ffa726" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="2s" repeatCount="indefinite"/></line>
+
+              <!-- Cross connections (faint) -->
+              <line x1="89" y1="55" x2="308" y2="155" stroke="#4dd0e1" stroke-width="0.4" opacity="0.08" stroke-dasharray="2 4"><animate attributeName="stroke-dashoffset" values="0;-6" dur="2.5s" repeatCount="indefinite"/></line>
+              <line x1="197" y1="130" x2="308" y2="70" stroke="#42a5f5" stroke-width="0.4" opacity="0.08" stroke-dasharray="2 4"><animate attributeName="stroke-dashoffset" values="0;-6" dur="2.8s" repeatCount="indefinite"/></line>
+
+              <!-- Processing -> AI -->
+              <line x1="372" y1="70" x2="464" y2="70" stroke="#4dd0e1" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.5s" repeatCount="indefinite"/></line>
+              <line x1="372" y1="155" x2="464" y2="155" stroke="#ef5350" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.7s" repeatCount="indefinite"/></line>
+              <line x1="372" y1="70" x2="464" y2="155" stroke="#4dd0e1" stroke-width="0.4" opacity="0.08" stroke-dasharray="2 4"><animate attributeName="stroke-dashoffset" values="0;-6" dur="2.2s" repeatCount="indefinite"/></line>
+              <line x1="372" y1="155" x2="464" y2="70" stroke="#ef5350" stroke-width="0.4" opacity="0.08" stroke-dasharray="2 4"><animate attributeName="stroke-dashoffset" values="0;-6" dur="2.4s" repeatCount="indefinite"/></line>
+
+              <!-- AI -> Live World -->
+              <line x1="536" y1="70" x2="636" y2="112" stroke="#42a5f5" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.5s" repeatCount="indefinite"/></line>
+              <line x1="536" y1="155" x2="636" y2="112" stroke="#66bb6a" stroke-width="0.7" opacity="0.25" stroke-dasharray="3 3"><animate attributeName="stroke-dashoffset" values="0;-6" dur="1.7s" repeatCount="indefinite"/></line>
+
+              <!-- Vertical connectors -->
+              <line x1="340" y1="102" x2="340" y2="123" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+              <line x1="500" y1="106" x2="500" y2="119" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+
+              <!-- Data particles -->
+              <circle r="2" fill="#4dd0e1" opacity="0.6"><animateMotion path="M89,55 L308,70" dur="3s" repeatCount="indefinite"/></circle>
+              <circle r="2" fill="#42a5f5" opacity="0.6"><animateMotion path="M372,70 L464,70" dur="2.5s" repeatCount="indefinite"/></circle>
+              <circle r="2" fill="#66bb6a" opacity="0.6"><animateMotion path="M536,155 L636,112" dur="2s" repeatCount="indefinite"/></circle>
+              <circle r="2" fill="#ffa726" opacity="0.6"><animateMotion path="M142,195 L308,155" dur="3.2s" repeatCount="indefinite"/></circle>
+              <circle r="2" fill="#ef5350" opacity="0.6"><animateMotion path="M372,155 L464,155" dur="2.8s" repeatCount="indefinite"/></circle>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Three principle cards -->
+        <div class="grid-3 mb-16">
+          <div class="glass-container glass-sm fade-in delay-1">
+            <div class="glass-bg"></div>
+            <div class="glass-content">
+              <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="1.5"/><path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="1.5"/><path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1.5"/></svg></div>
+              <h4 class="card-title">Procedural Content Generation</h4>
+              <p class="card-text">UE5's PCG framework generates environments from rule sets. Nanite handles virtualized geometry while PCG drives procedural world-building from the WorldEngine module's logic.</p>
+            </div>
+          </div>
+
+          <div class="glass-container glass-sm fade-in delay-2">
+            <div class="glass-bg"></div>
+            <div class="glass-content">
+              <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6V12L16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <h4 class="card-title">Persistent World State</h4>
+              <p class="card-text">Every location maintains state across production sessions. The WorldEngine is the authoritative, high-fidelity simulation environment running on the host PC. The world remembers.</p>
+            </div>
+          </div>
+
+          <div class="glass-container glass-sm fade-in delay-3">
+            <div class="glass-bg"></div>
+            <div class="glass-content">
+              <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 4H10V10H4V4Z" stroke="currentColor" stroke-width="1.5"/><path d="M14 4H20V10H14V4Z" stroke="currentColor" stroke-width="1.5"/><path d="M4 14H10V20H4V14Z" stroke="currentColor" stroke-width="1.5"/><path d="M14 14H20V20H14V14Z" stroke="currentColor" stroke-width="1.5"/></svg></div>
+              <h4 class="card-title">Modular Biome System</h4>
+              <p class="card-text">Biomes are composable modules. Mix jungle canopy with bioluminescent flora and ancient ruins. Each module respects the others' spatial rules through PCG constraint graphs.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="glass-container glass-sm closing fade-in delay-4">
+          <div class="glass-bg"></div>
+          <div class="glass-content">
+            <p>The world is not a backdrop. It is a <strong>character</strong>. The initial proof-of-concept is a simulation of Pandora — it reacts, it remembers, and it evolves with the story being told inside it.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-credit">Designed and engineered by <strong>Aniket Bhatt</strong></p>
+      <p class="footer-role">Meta Creative Core &middot; Production Design + XR</p>
+      <div class="footer-tech"><span>Unreal Engine 5.7</span><span>Meta Quest 3</span><span>Meta OpenXR</span><span>Take Recorder</span><span>Perforce</span></div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="woodsprites.js"></script>
+  <script src="liquid-glass.js"></script>
+</body>
+</html>
