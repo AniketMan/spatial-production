@@ -665,7 +665,7 @@
     <div id="section-ai" class="sp-section-panel">
     <div class="fade-in" style="margin-bottom: 40px;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-        <div style="width:4px;height:28px;background:linear-gradient(180deg,#ff6b00,#ee0979);border-radius:2px;"></div>
+        <div style="width:4px;height:28px;background:linear-gradient(180deg,#0064E0,#991DF9);border-radius:2px;"></div>
         <h2 class="sp-section-title" style="margin-bottom:0;">AI Retopology System</h2>
       </div>
       <p class="sp-section-desc" style="margin-bottom:0;">An open-source, locally-run AI retopology system built on PyTorch. Accepts arbitrary 3D meshes, generates clean quad topology at a user-specified polygon budget, and bakes all textures to a single PBR material. No cloud dependencies, no paid licenses.</p>
@@ -673,8 +673,8 @@
 
     <!-- Core Principles -->
     <div class="sp-grid-3" style="margin-bottom: 32px;">
-      <div class="sp-card fade-in delay-1" style="border-top:2px solid #ff6b00;">
-        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ff6b00,#ee0979);">
+      <div class="sp-card fade-in delay-1" style="border-top:2px solid #0064E0;">
+        <div class="sp-card-icon" style="background:linear-gradient(135deg,#0064E0,#991DF9);">
           <svg viewBox="0 0 24 24" fill="none"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h4 class="sp-card-title">Learns Math, Not Examples</h4>
@@ -685,8 +685,8 @@
         </ul>
       </div>
 
-      <div class="sp-card fade-in delay-2" style="border-top:2px solid #ff6b00;">
-        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ff6b00,#ee0979);">
+      <div class="sp-card fade-in delay-2" style="border-top:2px solid #28CDBF;">
+        <div class="sp-card-icon" style="background:linear-gradient(135deg,#28CDBF,#0064E0);">
           <svg viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="currentColor" stroke-width="1.5"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
         <h4 class="sp-card-title">Constrained 3D Space</h4>
@@ -697,8 +697,8 @@
         </ul>
       </div>
 
-      <div class="sp-card fade-in delay-3" style="border-top:2px solid #ff6b00;">
-        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ff6b00,#ee0979);">
+      <div class="sp-card fade-in delay-3" style="border-top:2px solid #991DF9;">
+        <div class="sp-card-icon" style="background:linear-gradient(135deg,#991DF9,#F351C0);">
           <svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M20 8v6m3-3h-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h4 class="sp-card-title">RLHF Refinement</h4>
@@ -714,56 +714,56 @@
     <div class="sp-divider"></div>
 
     <div class="fade-in" style="margin-bottom: 32px;">
-      <div class="sp-section-label" style="color:#ff6b00;">Pipeline Architecture</div>
+      <div class="sp-section-label" style="color:#0064E0;">Pipeline Architecture</div>
       <h2 class="sp-section-title">Seven-Stage Pipeline</h2>
       <p class="sp-section-desc">The system operates as a Blender addon with seven sequential stages, from mesh ingestion through AI topology generation to final PBR texture baking.</p>
     </div>
 
     <div class="sp-layers fade-in">
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">01</div>
+        <div class="sp-layer-num" style="color:#0064E0;">01</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">Input Mesh Ingestion</div>
           <div class="sp-layer-desc">Arbitrary 3D mesh imported via Blender bpy API. Supports any topology — n-gons, triangles, mixed.</div>
         </div>
       </div>
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">02</div>
+        <div class="sp-layer-num" style="color:#006FFF;">02</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">Particle Field Generation</div>
           <div class="sp-layer-desc">Bounded 3D volume filled with uniform particle grid. Resolution determined by target platform preset. Boolean subtraction removes interior particles.</div>
         </div>
       </div>
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">03</div>
+        <div class="sp-layer-num" style="color:#931EFA;">03</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">Surface Shell Extraction</div>
           <div class="sp-layer-desc">Innermost surviving particle layer extracted as conformal point cloud. Original topology completely destroyed — pure geometry remains.</div>
         </div>
       </div>
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">04</div>
+        <div class="sp-layer-num" style="color:#991DF9;">04</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">AI Topology Generation</div>
           <div class="sp-layer-desc">PyTorch neural network: KPConv/PointNet++ encoder extracts per-point features, decoder predicts vertex placement and quad connectivity guided by curvature-aligned edge flow.</div>
         </div>
       </div>
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">05</div>
+        <div class="sp-layer-num" style="color:#F351C0;">05</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">UV Unwrapping</div>
           <div class="sp-layer-desc">Automated UV generation via Blender Smart UV Project or xatlas. Clean quads produce clean UVs.</div>
         </div>
       </div>
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">06</div>
+        <div class="sp-layer-num" style="color:#28CDBF;">06</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">Texture Baking</div>
           <div class="sp-layer-desc">All original materials baked to single PBR material via Blender Cycles: Albedo, Normal, Roughness, Metallic, AO, Height/Displacement channels.</div>
         </div>
       </div>
       <div class="sp-layer">
-        <div class="sp-layer-num" style="color:#ff6b00;">07</div>
+        <div class="sp-layer-num" style="color:#00D1AE;">07</div>
         <div class="sp-layer-body">
           <div class="sp-layer-name">Output Clean Mesh</div>
           <div class="sp-layer-desc">Final quad-dominant mesh with single PBR material exported via Blender bpy API. Ready for production.</div>
@@ -775,7 +775,7 @@
     <div class="sp-divider"></div>
 
     <div class="fade-in" style="margin-bottom: 32px;">
-      <div class="sp-section-label" style="color:#ff6b00;">Platform-Driven Resolution</div>
+      <div class="sp-section-label" style="color:#0064E0;">Platform-Driven Resolution</div>
       <h2 class="sp-section-title">Resolution Presets</h2>
       <p class="sp-section-desc">Volume resolution maps real-world hardware constraints directly to AI output density. Same trained model works across all resolutions — automatic LOD generation by running at decreasing resolutions.</p>
     </div>
@@ -795,37 +795,37 @@
             <tr>
               <td>Film / Offline Render</td>
               <td>500K–5M+</td>
-              <td><span style="font-family:'JetBrains Mono',monospace;color:#ff6b00;">512³+</span></td>
+              <td><span style="font-family:'JetBrains Mono',monospace;color:#0064E0;">512³+</span></td>
               <td>Hero assets, close-up shots</td>
             </tr>
             <tr>
               <td>PS5 / Xbox Series X</td>
               <td>50K–500K</td>
-              <td><span style="font-family:'JetBrains Mono',monospace;color:#ff6b00;">128³–256³</span></td>
+              <td><span style="font-family:'JetBrains Mono',monospace;color:#006FFF;">128³–256³</span></td>
               <td>Real-time AAA, Nanite-compatible</td>
             </tr>
             <tr>
               <td>PC (Mid-range)</td>
               <td>30K–200K</td>
-              <td><span style="font-family:'JetBrains Mono',monospace;color:#ff6b00;">128³</span></td>
+              <td><span style="font-family:'JetBrains Mono',monospace;color:#006FFF;">128³</span></td>
               <td>Standard game assets</td>
             </tr>
             <tr>
               <td>Quest 3</td>
               <td>5K–50K</td>
-              <td><span style="font-family:'JetBrains Mono',monospace;color:#ff6b00;">64³–128³</span></td>
+              <td><span style="font-family:'JetBrains Mono',monospace;color:#991DF9;">64³–128³</span></td>
               <td>Mobile VR, strict triangle budgets</td>
             </tr>
             <tr>
               <td>iPhone / Mobile</td>
               <td>3K–30K</td>
-              <td><span style="font-family:'JetBrains Mono',monospace;color:#ff6b00;">32³–64³</span></td>
+              <td><span style="font-family:'JetBrains Mono',monospace;color:#28CDBF;">32³–64³</span></td>
               <td>AR, mobile games</td>
             </tr>
             <tr>
               <td>Web / WebGL</td>
               <td>1K–15K</td>
-              <td><span style="font-family:'JetBrains Mono',monospace;color:#ff6b00;">32³</span></td>
+              <td><span style="font-family:'JetBrains Mono',monospace;color:#28CDBF;">32³</span></td>
               <td>Browser-based 3D</td>
             </tr>
           </tbody>
@@ -837,14 +837,14 @@
     <div class="sp-divider"></div>
 
     <div class="fade-in" style="margin-bottom: 32px;">
-      <div class="sp-section-label" style="color:#ff6b00;">Technology Stack</div>
+      <div class="sp-section-label" style="color:#0064E0;">Technology Stack</div>
       <h2 class="sp-section-title">Open Source Foundation</h2>
       <p class="sp-section-desc">All components are free, open-source, and run locally. No cloud APIs, no paid licenses, no subscriptions.</p>
     </div>
 
     <div class="sp-grid-3" style="margin-bottom: 32px;">
       <div class="sp-card fade-in delay-1">
-        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ee4c2c,#ff6b00);">
+        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ee4c2c,#0064E0);">
           <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h4 class="sp-card-title">PyTorch</h4>
@@ -857,7 +857,7 @@
       </div>
 
       <div class="sp-card fade-in delay-2">
-        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ff6b00,#ee0979);">
+        <div class="sp-card-icon" style="background:linear-gradient(135deg,#0064E0,#0143B5);">
           <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
         <h4 class="sp-card-title">Blender Addon</h4>
@@ -870,7 +870,7 @@
       </div>
 
       <div class="sp-card fade-in delay-3">
-        <div class="sp-card-icon" style="background:linear-gradient(135deg,#ff6b00,#ee0979);">
+        <div class="sp-card-icon" style="background:linear-gradient(135deg,#28CDBF,#0064E0);">
           <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="1.5"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
         <h4 class="sp-card-title">Geometry Libraries</h4>
@@ -883,8 +883,8 @@
     </div>
 
     <!-- Academic Validation Callout -->
-    <div class="sp-callout fade-in" style="border-color:rgba(255,107,0,0.2);background:rgba(255,107,0,0.08);">
-      <div class="sp-callout-icon" style="background:linear-gradient(135deg,#ff6b00,#ee0979);">
+    <div class="sp-callout fade-in" style="border-color:rgba(0,100,224,0.2);background:rgba(0,100,224,0.08);">
+      <div class="sp-callout-icon" style="background:linear-gradient(135deg,#0064E0,#991DF9);">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5"/><path d="M12 14v7" stroke="currentColor" stroke-width="1.5"/><path d="M3 9v7" stroke="currentColor" stroke-width="1.5"/></svg>
       </div>
       <div>
@@ -897,7 +897,7 @@
     <div class="sp-divider"></div>
 
     <div class="fade-in" style="margin-bottom: 32px;">
-      <div class="sp-section-label" style="color:#ff6b00;">Development Status</div>
+      <div class="sp-section-label" style="color:#0064E0;">Development Status</div>
       <h2 class="sp-section-title">AI Retopology Tracker</h2>
       <p class="sp-section-desc">Current progress across all major AI pipeline components.</p>
     </div>
