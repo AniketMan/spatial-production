@@ -683,11 +683,16 @@
             <div class="preview-section-label">Hero Section</div>
             <div class="component-wrap" data-comp="home-hero" onclick="selectComp(this)">
               <span class="comp-tag">HOME HERO</span>
-              <div id="preview-home-hero" style="text-align:center;padding:60px 40px;background:radial-gradient(ellipse at 70% 80%, rgba(255,45,120,0.15) 0%, transparent 60%);">
-                <div class="p-hero-badge" style="margin-bottom:24px;">PIPELINE ARCHITECTURE</div>
-                <div style="font-size:72px;font-weight:700;letter-spacing:-2px;margin-bottom:20px;">Meta Spatial Production</div>
-                <div style="font-size:18px;line-height:1.7;color:rgba(255,255,255,0.6);max-width:640px;margin:0 auto;">A modular, portable virtual production pipeline built on Meta hardware and Unreal Engine 5.7.</div>
-                <div style="margin-top:20px;font-size:13px;color:rgba(255,255,255,0.35);">By Aniket Bhatt · Unreal Engine 5.7</div>
+              <div id="preview-home-hero" style="display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 40px;min-height:280px;">
+                <div>
+                  <div class="p-hero-badge" style="font-size:clamp(2rem,5vw,3.5rem);padding:0.6rem 2rem;font-weight:700;margin-bottom:24px;">Home</div>
+                  <div style="font-size:18px;line-height:1.7;color:rgba(255,255,255,0.6);max-width:640px;margin:0 auto;">A modular, portable virtual production pipeline built on Meta hardware and Unreal Engine 5.7. Two decoupled modules — WorldEngine and VRProduction — scale from a single workstation to full studio clusters.</div>
+                  <div style="margin-top:20px;font-size:13px;color:rgba(255,255,255,0.35);display:flex;gap:8px;justify-content:center;align-items:center;">
+                    <span>By Aniket Bhatt</span>
+                    <span>&middot;</span>
+                    <span>Unreal Engine 5.7</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -698,25 +703,43 @@
               <div class="component-wrap" data-comp="home-pillar-spatial" onclick="selectComp(this)">
                 <span class="comp-tag">PILLAR: SPATIAL</span>
                 <div class="p-glass" id="preview-pillar-spatial">
-                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(0,130,251,0.15);font-size:20px;margin-bottom:16px;">∞</div>
-                  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">Spatial Production</div>
-                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Five-layer architecture from UE world to standalone Quest 3 app.</div>
+                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(255,255,255,0.04);border-radius:14px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="16" r="4" stroke="currentColor" stroke-width="1"/><circle cx="20" cy="16" r="4" stroke="currentColor" stroke-width="1"/></svg>
+                  </div>
+                  <div style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:12px;">Meta Spatial Production</div>
+                  <div style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.6;">A project-agnostic, portable filmmaking toolkit designed as a self-contained UE5 plugin.</div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;font-weight:500;color:#0082fb;">
+                    <span>Learn more</span>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
                 </div>
               </div>
               <div class="component-wrap" data-comp="home-pillar-assets" onclick="selectComp(this)">
                 <span class="comp-tag">PILLAR: ASSETS</span>
                 <div class="p-glass" id="preview-pillar-assets">
-                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(52,199,89,0.15);font-size:20px;margin-bottom:16px;">◆</div>
-                  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">Compound Assets</div>
-                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Multi-layer asset architecture for non-destructive workflows.</div>
+                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(255,255,255,0.04);border-radius:14px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="4" width="20" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="13" width="20" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="22" width="20" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                  </div>
+                  <div style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:12px;">Compound Asset Pipeline</div>
+                  <div style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.6;">Assets are layered, interconnected structures. Build once, compound everywhere.</div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;font-weight:500;color:#0082fb;">
+                    <span>Learn more</span>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
                 </div>
               </div>
               <div class="component-wrap" data-comp="home-pillar-world" onclick="selectComp(this)">
                 <span class="comp-tag">PILLAR: WORLD</span>
                 <div class="p-glass" id="preview-pillar-world">
-                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(0,212,170,0.15);font-size:20px;margin-bottom:16px;">◎</div>
-                  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">World Building</div>
-                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Reactive world state system driven by narrative logic.</div>
+                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(255,255,255,0.04);border-radius:14px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="22" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="22" r="3" stroke="currentColor" stroke-width="1.5"/><line x1="14" y1="10.5" x2="9.5" y2="19.5" stroke="currentColor" stroke-width="1"/><line x1="18" y1="10.5" x2="22.5" y2="19.5" stroke="currentColor" stroke-width="1"/><line x1="11" y1="22" x2="21" y2="22" stroke="currentColor" stroke-width="1"/></svg>
+                  </div>
+                  <div style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:12px;">World Building Neural Network</div>
+                  <div style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.6;">A project-specific simulation layer modeling the world as a coherent mechanistic system.</div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;font-weight:500;color:#0082fb;">
+                    <span>Learn more</span>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -726,17 +749,16 @@
             <div class="preview-section-label">Footer</div>
             <div class="component-wrap" data-comp="home-footer" onclick="selectComp(this)">
               <span class="comp-tag">FOOTER</span>
-              <div id="preview-home-footer" style="padding:24px;border-top:1px solid rgba(255,255,255,0.06);">
-                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
-                  <span class="p-tech-tag">Unreal Engine 5.7</span>
-                  <span class="p-tech-tag">Meta Quest 3</span>
-                  <span class="p-tech-tag">Blueprints</span>
-                  <span class="p-tech-tag">C++</span>
-                  <span class="p-tech-tag">MetaHuman</span>
-                  <span class="p-tech-tag">Nanite</span>
-                  <span class="p-tech-tag">PCG</span>
+              <div id="preview-home-footer" style="padding:24px 0;border-top:1px solid rgba(255,255,255,0.08);text-align:center;">
+                <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:8px;">Designed and engineered by <strong style="font-weight:500;color:rgba(255,255,255,0.95);">Aniket Bhatt</strong></div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.25);margin-bottom:16px;">Meta Creative Core &middot; Production Design + XR</div>
+                <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
+                  <span style="font-family:'SF Mono',monospace;font-size:11px;font-weight:500;color:rgba(255,255,255,0.15);">Unreal Engine 5.7</span>
+                  <span style="font-family:'SF Mono',monospace;font-size:11px;font-weight:500;color:rgba(255,255,255,0.15);">Meta Quest 3</span>
+                  <span style="font-family:'SF Mono',monospace;font-size:11px;font-weight:500;color:rgba(255,255,255,0.15);">Meta OpenXR</span>
+                  <span style="font-family:'SF Mono',monospace;font-size:11px;font-weight:500;color:rgba(255,255,255,0.15);">Take Recorder</span>
+                  <span style="font-family:'SF Mono',monospace;font-size:11px;font-weight:500;color:rgba(255,255,255,0.15);">Perforce</span>
                 </div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.25);">© 2025 Aniket Bhatt. Internal documentation.</div>
               </div>
             </div>
           </div>
@@ -1177,19 +1199,26 @@
       'home-hero': {
         groups: [
           { title: 'Typography', badge: 'universal', props: [
-            { label: 'Title Size', type: 'slider', target: 'home-hero-title-size', value: 72, min: 32, max: 120, unit: 'px', apply: function(v) { q('#preview-home-hero div:nth-child(2)').style.fontSize = v + 'px'; } },
-            { label: 'Title Weight', type: 'slider', target: 'home-hero-title-weight', value: 700, min: 100, max: 900, unit: '', step: 100, apply: function(v) { q('#preview-home-hero div:nth-child(2)').style.fontWeight = v; } },
-            { label: 'Subtitle Size', type: 'slider', target: 'home-hero-sub-size', value: 18, min: 12, max: 28, unit: 'px', apply: function(v) { q('#preview-home-hero div:nth-child(3)').style.fontSize = v + 'px'; } },
+            { label: 'Badge Size', type: 'slider', target: 'home-hero-badge-size', value: 48, min: 24, max: 80, unit: 'px' },
+            { label: 'Badge Weight', type: 'slider', target: 'home-hero-badge-weight', value: 700, min: 100, max: 900, unit: '', step: 100 },
+            { label: 'Subtitle Size', type: 'slider', target: 'home-hero-sub-size', value: 18, min: 12, max: 28, unit: 'px' },
+            { label: 'Subtitle Line Height', type: 'slider', target: 'home-hero-sub-lh', value: 1.7, min: 1, max: 2.5, unit: '', step: 0.1 },
+            { label: 'Meta Size', type: 'slider', target: 'home-hero-meta-size', value: 13, min: 10, max: 20, unit: 'px' },
           ]},
-          { title: 'Instance: Background', badge: 'instance', props: [
-            { label: 'Gradient Color', type: 'color', target: 'home-hero-gradient', value: '#ff2d78' },
-            { label: 'Gradient Opacity', type: 'slider', target: 'home-hero-grad-op', value: 15, min: 0, max: 50, unit: '%' },
+          { title: 'Instance: Layout', badge: 'instance', props: [
             { label: 'Padding V', type: 'slider', target: 'home-hero-pad-v', value: 60, min: 20, max: 120, unit: 'px', apply: function(v) { q('#preview-home-hero').style.paddingTop = v + 'px'; q('#preview-home-hero').style.paddingBottom = v + 'px'; } },
+            { label: 'Min Height', type: 'slider', target: 'home-hero-min-h', value: 280, min: 150, max: 500, unit: 'px', apply: function(v) { q('#preview-home-hero').style.minHeight = v + 'px'; } },
+            { label: 'Max Width (subtitle)', type: 'slider', target: 'home-hero-max-w', value: 640, min: 400, max: 900, unit: 'px' },
+          ]},
+          { title: 'Instance: Colors', badge: 'instance', props: [
+            { label: 'Subtitle Color', type: 'color', target: 'home-hero-sub-color', value: '#999999' },
+            { label: 'Subtitle Opacity', type: 'slider', target: 'home-hero-sub-op', value: 60, min: 20, max: 100, unit: '%' },
+            { label: 'Meta Text Opacity', type: 'slider', target: 'home-hero-meta-op', value: 35, min: 10, max: 80, unit: '%' },
           ]},
           { title: 'Instance: Content', badge: 'instance', props: [
-            { label: 'Title', type: 'text', target: 'home-hero-title-text', value: 'Meta Spatial Production' },
+            { label: 'Badge Text', type: 'text', target: 'home-hero-badge-text', value: 'Home' },
             { label: 'Subtitle', type: 'text', target: 'home-hero-sub-text', value: 'A modular, portable virtual production pipeline built on Meta hardware and Unreal Engine 5.7.' },
-            { label: 'Badge Text', type: 'text', target: 'home-hero-badge-text', value: 'PIPELINE ARCHITECTURE' },
+            { label: 'Author', type: 'text', target: 'home-hero-author', value: 'By Aniket Bhatt' },
           ]}
         ]
       },
@@ -1197,13 +1226,26 @@
         { title: 'Glass Container', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'hp-s-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-pillar-spatial').style.borderRadius = v + 'px'; } },
           { label: 'Padding', type: 'slider', target: 'hp-s-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-pillar-spatial').style.padding = v + 'px'; } },
+          { label: 'Border Opacity', type: 'slider', target: 'hp-s-border-op', value: 38, min: 0, max: 100, unit: '%' },
         ]},
-        { title: 'Instance: Pillar Card', badge: 'instance', props: [
-          { label: 'Icon Color', type: 'color', target: 'hp-s-icon-color', value: '#0082fb' },
+        { title: 'Instance: Icon', badge: 'instance', props: [
+          { label: 'Icon BG Opacity', type: 'slider', target: 'hp-s-icon-bg-op', value: 4, min: 0, max: 30, unit: '%' },
+          { label: 'Icon Size', type: 'slider', target: 'hp-s-icon-size', value: 48, min: 32, max: 72, unit: 'px' },
+          { label: 'Icon Radius', type: 'slider', target: 'hp-s-icon-radius', value: 14, min: 0, max: 24, unit: 'px' },
+        ]},
+        { title: 'Instance: Typography', badge: 'instance', props: [
           { label: 'Title Size', type: 'slider', target: 'hp-s-title-size', value: 20, min: 14, max: 32, unit: 'px' },
-          { label: 'Desc Size', type: 'slider', target: 'hp-s-desc-size', value: 14, min: 10, max: 20, unit: 'px' },
-          { label: 'Title', type: 'text', target: 'hp-s-title', value: 'Spatial Production' },
-          { label: 'Description', type: 'text', target: 'hp-s-desc', value: 'Five-layer architecture from UE world to standalone Quest 3 app.' },
+          { label: 'Title Weight', type: 'slider', target: 'hp-s-title-weight', value: 600, min: 400, max: 800, unit: '', step: 100 },
+          { label: 'Title Spacing', type: 'slider', target: 'hp-s-title-ls', value: -0.02, min: -0.05, max: 0.05, unit: 'em', step: 0.01 },
+          { label: 'Desc Size', type: 'slider', target: 'hp-s-desc-size', value: 15, min: 10, max: 22, unit: 'px' },
+          { label: 'Desc Line Height', type: 'slider', target: 'hp-s-desc-lh', value: 1.6, min: 1, max: 2.2, unit: '', step: 0.1 },
+          { label: 'Desc Opacity', type: 'slider', target: 'hp-s-desc-op', value: 55, min: 20, max: 100, unit: '%' },
+          { label: 'Arrow Size', type: 'slider', target: 'hp-s-arrow-size', value: 13, min: 10, max: 18, unit: 'px' },
+          { label: 'Arrow Color', type: 'color', target: 'hp-s-arrow-color', value: '#0082fb' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Title', type: 'text', target: 'hp-s-title', value: 'Meta Spatial Production' },
+          { label: 'Description', type: 'text', target: 'hp-s-desc', value: 'A project-agnostic, portable filmmaking toolkit designed as a self-contained UE5 plugin.' },
         ]}
       ]},
       'home-pillar-assets': { groups: [
@@ -1211,10 +1253,15 @@
           { label: 'Border Radius', type: 'slider', target: 'hp-a-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-pillar-assets').style.borderRadius = v + 'px'; } },
           { label: 'Padding', type: 'slider', target: 'hp-a-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-pillar-assets').style.padding = v + 'px'; } },
         ]},
-        { title: 'Instance: Pillar Card', badge: 'instance', props: [
-          { label: 'Icon Color', type: 'color', target: 'hp-a-icon-color', value: '#34c759' },
-          { label: 'Title', type: 'text', target: 'hp-a-title', value: 'Compound Assets' },
-          { label: 'Description', type: 'text', target: 'hp-a-desc', value: 'Multi-layer asset architecture for non-destructive workflows.' },
+        { title: 'Instance: Typography', badge: 'instance', props: [
+          { label: 'Title Size', type: 'slider', target: 'hp-a-title-size', value: 20, min: 14, max: 32, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'hp-a-desc-size', value: 15, min: 10, max: 22, unit: 'px' },
+          { label: 'Desc Opacity', type: 'slider', target: 'hp-a-desc-op', value: 55, min: 20, max: 100, unit: '%' },
+          { label: 'Arrow Color', type: 'color', target: 'hp-a-arrow-color', value: '#0082fb' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Title', type: 'text', target: 'hp-a-title', value: 'Compound Asset Pipeline' },
+          { label: 'Description', type: 'text', target: 'hp-a-desc', value: 'Assets are layered, interconnected structures. Build once, compound everywhere.' },
         ]}
       ]},
       'home-pillar-world': { groups: [
@@ -1222,20 +1269,36 @@
           { label: 'Border Radius', type: 'slider', target: 'hp-w-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-pillar-world').style.borderRadius = v + 'px'; } },
           { label: 'Padding', type: 'slider', target: 'hp-w-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-pillar-world').style.padding = v + 'px'; } },
         ]},
-        { title: 'Instance: Pillar Card', badge: 'instance', props: [
-          { label: 'Icon Color', type: 'color', target: 'hp-w-icon-color', value: '#00d4aa' },
-          { label: 'Title', type: 'text', target: 'hp-w-title', value: 'World Building' },
-          { label: 'Description', type: 'text', target: 'hp-w-desc', value: 'Reactive world state system driven by narrative logic.' },
+        { title: 'Instance: Typography', badge: 'instance', props: [
+          { label: 'Title Size', type: 'slider', target: 'hp-w-title-size', value: 20, min: 14, max: 32, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'hp-w-desc-size', value: 15, min: 10, max: 22, unit: 'px' },
+          { label: 'Desc Opacity', type: 'slider', target: 'hp-w-desc-op', value: 55, min: 20, max: 100, unit: '%' },
+          { label: 'Arrow Color', type: 'color', target: 'hp-w-arrow-color', value: '#0082fb' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Title', type: 'text', target: 'hp-w-title', value: 'World Building Neural Network' },
+          { label: 'Description', type: 'text', target: 'hp-w-desc', value: 'A project-specific simulation layer modeling the world as a coherent mechanistic system.' },
         ]}
       ]},
       'home-footer': { groups: [
-        { title: 'Tech Tags', badge: 'universal', props: [
-          { label: 'Tag Radius', type: 'slider', target: 'hf-tag-radius', value: 8, min: 0, max: 20, unit: 'px' },
-          { label: 'Tag Font', type: 'slider', target: 'hf-tag-font', value: 11, min: 8, max: 16, unit: 'px' },
+        { title: 'Footer Layout', badge: 'universal', props: [
+          { label: 'Border Opacity', type: 'slider', target: 'hf-border-op', value: 8, min: 0, max: 30, unit: '%' },
+          { label: 'Padding Top', type: 'slider', target: 'hf-pad-top', value: 48, min: 16, max: 96, unit: 'px' },
+          { label: 'Padding Bottom', type: 'slider', target: 'hf-pad-bottom', value: 64, min: 16, max: 96, unit: 'px' },
+          { label: 'Gap', type: 'slider', target: 'hf-gap', value: 20, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance: Footer', badge: 'instance', props: [
-          { label: 'Border Color', type: 'color', target: 'hf-border-color', value: '#1a1a1e' },
-          { label: 'Copyright', type: 'text', target: 'hf-copyright', value: '© 2025 Aniket Bhatt. Internal documentation.' },
+        { title: 'Instance: Typography', badge: 'instance', props: [
+          { label: 'Credit Size', type: 'slider', target: 'hf-credit-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Credit Opacity', type: 'slider', target: 'hf-credit-op', value: 55, min: 20, max: 100, unit: '%' },
+          { label: 'Role Size', type: 'slider', target: 'hf-role-size', value: 13, min: 10, max: 18, unit: 'px' },
+          { label: 'Role Opacity', type: 'slider', target: 'hf-role-op', value: 25, min: 10, max: 60, unit: '%' },
+          { label: 'Tech Font', type: 'slider', target: 'hf-tech-font', value: 11, min: 8, max: 16, unit: 'px' },
+          { label: 'Tech Opacity', type: 'slider', target: 'hf-tech-op', value: 15, min: 5, max: 50, unit: '%' },
+          { label: 'Tech Gap', type: 'slider', target: 'hf-tech-gap', value: 24, min: 8, max: 48, unit: 'px' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Credit Name', type: 'text', target: 'hf-credit-name', value: 'Aniket Bhatt' },
+          { label: 'Role Text', type: 'text', target: 'hf-role-text', value: 'Meta Creative Core - Production Design + XR' },
         ]}
       ]},
 
@@ -1245,14 +1308,33 @@
           { label: 'Border Radius', type: 'slider', target: 'sa-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-spatial-arch').style.borderRadius = v + 'px'; } },
           { label: 'Padding', type: 'slider', target: 'sa-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-spatial-arch').style.padding = v + 'px'; } },
         ]},
-        { title: 'Instance: SVG Elements', badge: 'instance', props: [
-          { label: 'Device Stroke', type: 'color', target: 'sa-device-stroke', value: '#666666' },
-          { label: 'Stroke Width', type: 'slider', target: 'sa-stroke-w', value: 1.5, min: 0.5, max: 4, unit: 'px', step: 0.5 },
+        { title: 'Instance: Device Boxes', badge: 'instance', props: [
+          { label: 'Box Stroke Opacity', type: 'slider', target: 'sa-stroke-op', value: 40, min: 10, max: 100, unit: '%' },
+          { label: 'Box Stroke Width', type: 'slider', target: 'sa-stroke-w', value: 1.5, min: 0.5, max: 4, unit: 'px', step: 0.5 },
+          { label: 'Box Corner Radius', type: 'slider', target: 'sa-box-radius', value: 16, min: 4, max: 32, unit: 'px' },
+          { label: 'Lens Stroke Opacity', type: 'slider', target: 'sa-lens-op', value: 25, min: 5, max: 60, unit: '%' },
+        ]},
+        { title: 'Instance: Indicators', badge: 'instance', props: [
           { label: 'Rec Dot (Green)', type: 'color', target: 'sa-dot-green', value: '#34c759' },
           { label: 'Rec Dot (Red)', type: 'color', target: 'sa-dot-red', value: '#ff3b30' },
-          { label: 'Label Size', type: 'slider', target: 'sa-label-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Dot Radius', type: 'slider', target: 'sa-dot-r', value: 4, min: 2, max: 8, unit: 'px' },
+          { label: 'WiFi Stroke Opacity', type: 'slider', target: 'sa-wifi-op', value: 50, min: 10, max: 100, unit: '%' },
+          { label: 'WiFi Stroke Width', type: 'slider', target: 'sa-wifi-w', value: 1.5, min: 0.5, max: 3, unit: 'px', step: 0.5 },
+        ]},
+        { title: 'Instance: Labels', badge: 'instance', props: [
+          { label: 'Device Label Size', type: 'slider', target: 'sa-label-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Device Label Opacity', type: 'slider', target: 'sa-label-op', value: 70, min: 20, max: 100, unit: '%' },
           { label: 'Sub Label Size', type: 'slider', target: 'sa-sublabel-size', value: 11, min: 8, max: 16, unit: 'px' },
-          { label: 'UE Bar Text', type: 'text', target: 'sa-ue-text', value: 'Unreal Engine 5.7' },
+          { label: 'Sub Label Opacity', type: 'slider', target: 'sa-sublabel-op', value: 35, min: 10, max: 70, unit: '%' },
+          { label: 'WiFi Label Size', type: 'slider', target: 'sa-wifi-label-size', value: 11, min: 8, max: 16, unit: 'px' },
+        ]},
+        { title: 'Instance: UE Bar', badge: 'instance', props: [
+          { label: 'Bar Height', type: 'slider', target: 'sa-bar-h', value: 36, min: 24, max: 48, unit: 'px' },
+          { label: 'Bar Radius', type: 'slider', target: 'sa-bar-radius', value: 18, min: 4, max: 24, unit: 'px' },
+          { label: 'Bar BG Opacity', type: 'slider', target: 'sa-bar-bg-op', value: 6, min: 0, max: 20, unit: '%' },
+          { label: 'Bar Border Opacity', type: 'slider', target: 'sa-bar-border-op', value: 10, min: 0, max: 30, unit: '%' },
+          { label: 'Bar Text Size', type: 'slider', target: 'sa-bar-text-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Bar Text', type: 'text', target: 'sa-ue-text', value: 'Unreal Engine 5.7' },
         ]}
       ]},
       'spatial-layers': { groups: [
@@ -1341,40 +1423,71 @@
       'compound-comparison': { groups: [
         { title: 'Glass Container', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'cc-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-compound-comparison').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'cc-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-compound-comparison').style.padding = v + 'px'; } },
         ]},
-        { title: 'Instance: Table', badge: 'instance', props: [
+        { title: 'Instance: Table Headers', badge: 'instance', props: [
           { label: 'Header Size', type: 'slider', target: 'cc-header-size', value: 13, min: 8, max: 20, unit: 'px' },
+          { label: 'Header Padding', type: 'slider', target: 'cc-header-pad', value: 10, min: 4, max: 20, unit: 'px' },
+          { label: 'Traditional Color', type: 'color', target: 'cc-trad-color', value: '#ff9f0a' },
+          { label: 'Compound Color', type: 'color', target: 'cc-comp-color', value: '#34c759' },
+        ]},
+        { title: 'Instance: Table Cells', badge: 'instance', props: [
           { label: 'Cell Size', type: 'slider', target: 'cc-cell-size', value: 14, min: 10, max: 20, unit: 'px' },
-          { label: 'Traditional', type: 'color', target: 'cc-trad-color', value: '#ff9f0a' },
-          { label: 'Compound', type: 'color', target: 'cc-comp-color', value: '#34c759' },
+          { label: 'Cell Padding', type: 'slider', target: 'cc-cell-pad', value: 10, min: 4, max: 20, unit: 'px' },
+          { label: 'Row Label Size', type: 'slider', target: 'cc-label-size', value: 12, min: 8, max: 18, unit: 'px' },
+          { label: 'Row Label Opacity', type: 'slider', target: 'cc-label-op', value: 50, min: 20, max: 80, unit: '%' },
+          { label: 'Trad Cell Opacity', type: 'slider', target: 'cc-trad-op', value: 50, min: 20, max: 100, unit: '%' },
+          { label: 'Compound Cell Opacity', type: 'slider', target: 'cc-comp-op', value: 80, min: 40, max: 100, unit: '%' },
+          { label: 'Divider Opacity', type: 'slider', target: 'cc-divider-op', value: 4, min: 0, max: 15, unit: '%' },
         ]}
       ]},
       'compound-benefit-nd': { groups: [
         { title: 'Glass SM', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'cb1-radius', value: 16, min: 0, max: 32, unit: 'px' },
+          { label: 'Padding', type: 'slider', target: 'cb1-padding', value: 20, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance', badge: 'instance', props: [
+        { title: 'Instance: Style', badge: 'instance', props: [
           { label: 'Accent Color', type: 'color', target: 'cb1-accent', value: '#0082fb' },
           { label: 'Border Top Width', type: 'slider', target: 'cb1-border-w', value: 2, min: 0, max: 6, unit: 'px' },
+          { label: 'Title Size', type: 'slider', target: 'cb1-title-size', value: 15, min: 12, max: 22, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'cb1-desc-size', value: 13, min: 10, max: 18, unit: 'px' },
+          { label: 'Desc Opacity', type: 'slider', target: 'cb1-desc-op', value: 50, min: 20, max: 100, unit: '%' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
           { label: 'Title', type: 'text', target: 'cb1-title', value: 'Non-Destructive' },
+          { label: 'Description', type: 'text', target: 'cb1-desc', value: 'Edit any layer without affecting others.' },
         ]}
       ]},
       'compound-benefit-va': { groups: [
         { title: 'Glass SM', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'cb2-radius', value: 16, min: 0, max: 32, unit: 'px' },
+          { label: 'Padding', type: 'slider', target: 'cb2-padding', value: 20, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance', badge: 'instance', props: [
+        { title: 'Instance: Style', badge: 'instance', props: [
           { label: 'Accent Color', type: 'color', target: 'cb2-accent', value: '#34c759' },
+          { label: 'Border Top Width', type: 'slider', target: 'cb2-border-w', value: 2, min: 0, max: 6, unit: 'px' },
+          { label: 'Title Size', type: 'slider', target: 'cb2-title-size', value: 15, min: 12, max: 22, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'cb2-desc-size', value: 13, min: 10, max: 18, unit: 'px' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
           { label: 'Title', type: 'text', target: 'cb2-title', value: 'Version Aware' },
+          { label: 'Description', type: 'text', target: 'cb2-desc', value: 'Track changes per layer with full history.' },
         ]}
       ]},
       'compound-benefit-pr': { groups: [
         { title: 'Glass SM', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'cb3-radius', value: 16, min: 0, max: 32, unit: 'px' },
+          { label: 'Padding', type: 'slider', target: 'cb3-padding', value: 20, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance', badge: 'instance', props: [
+        { title: 'Instance: Style', badge: 'instance', props: [
           { label: 'Accent Color', type: 'color', target: 'cb3-accent', value: '#ff9f0a' },
+          { label: 'Border Top Width', type: 'slider', target: 'cb3-border-w', value: 2, min: 0, max: 6, unit: 'px' },
+          { label: 'Title Size', type: 'slider', target: 'cb3-title-size', value: 15, min: 12, max: 22, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'cb3-desc-size', value: 13, min: 10, max: 18, unit: 'px' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
           { label: 'Title', type: 'text', target: 'cb3-title', value: 'Pipeline Ready' },
+          { label: 'Description', type: 'text', target: 'cb3-desc', value: 'Integrates with existing DCC tools.' },
         ]}
       ]},
 
@@ -1382,57 +1495,276 @@
       'world-network': { groups: [
         { title: 'Glass Container', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'wn-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-world-network').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'wn-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-world-network').style.padding = v + 'px'; } },
         ]},
-        { title: 'Instance: Network Nodes', badge: 'instance', props: [
-          { label: 'Biome Color', type: 'color', target: 'wn-biome-color', value: '#34c759' },
-          { label: 'State Color', type: 'color', target: 'wn-state-color', value: '#00d4aa' },
-          { label: 'AI Color', type: 'color', target: 'wn-ai-color', value: '#bf5af2' },
-          { label: 'Small Circle', type: 'slider', target: 'wn-sm-size', value: 80, min: 50, max: 120, unit: 'px' },
-          { label: 'Large Circle', type: 'slider', target: 'wn-lg-size', value: 100, min: 60, max: 140, unit: 'px' },
-          { label: 'Border Width', type: 'slider', target: 'wn-border-w', value: 2, min: 1, max: 5, unit: 'px' },
-          { label: 'Label Size', type: 'slider', target: 'wn-label-size', value: 12, min: 8, max: 18, unit: 'px' },
-          { label: 'Arrow Color', type: 'color', target: 'wn-arrow-color', value: '#4d4d4d' },
+        { title: 'Instance: Location Nodes', badge: 'instance', props: [
+          { label: 'Mangrove (cyan)', type: 'color', target: 'wn-mangrove-color', value: '#4dd0e1' },
+          { label: 'Caldera (red)', type: 'color', target: 'wn-caldera-color', value: '#ef5350' },
+          { label: 'Encampment (green)', type: 'color', target: 'wn-encampment-color', value: '#66bb6a' },
+          { label: 'Mycelium (blue)', type: 'color', target: 'wn-mycelium-color', value: '#42a5f5' },
+          { label: 'Tidal (orange)', type: 'color', target: 'wn-tidal-color', value: '#ffa726' },
+          { label: 'Location Radius', type: 'slider', target: 'wn-loc-radius', value: 28, min: 16, max: 48, unit: 'px' },
+          { label: 'Location Stroke', type: 'slider', target: 'wn-loc-stroke', value: 1.5, min: 0.5, max: 4, unit: 'px', step: 0.5 },
+          { label: 'Location Font', type: 'slider', target: 'wn-loc-font', value: 10, min: 8, max: 16, unit: 'px' },
+        ]},
+        { title: 'Instance: Processing Nodes', badge: 'instance', props: [
+          { label: 'World State (cyan)', type: 'color', target: 'wn-state-color', value: '#4dd0e1' },
+          { label: 'Story Events (red)', type: 'color', target: 'wn-story-color', value: '#ef5350' },
+          { label: 'Process Radius', type: 'slider', target: 'wn-proc-radius', value: 32, min: 20, max: 50, unit: 'px' },
+          { label: 'Process Stroke', type: 'slider', target: 'wn-proc-stroke', value: 1.5, min: 0.5, max: 4, unit: 'px', step: 0.5 },
+          { label: 'Process Font', type: 'slider', target: 'wn-proc-font', value: 12, min: 8, max: 18, unit: 'px' },
+        ]},
+        { title: 'Instance: AI Nodes', badge: 'instance', props: [
+          { label: 'DINOv2 (blue)', type: 'color', target: 'wn-dino-color', value: '#42a5f5' },
+          { label: 'PCG (green)', type: 'color', target: 'wn-pcg-color', value: '#66bb6a' },
+          { label: 'AI Radius', type: 'slider', target: 'wn-ai-radius', value: 42, min: 24, max: 60, unit: 'px' },
+          { label: 'AI Stroke', type: 'slider', target: 'wn-ai-stroke', value: 2, min: 0.5, max: 5, unit: 'px', step: 0.5 },
+          { label: 'AI Font', type: 'slider', target: 'wn-ai-font', value: 13, min: 8, max: 20, unit: 'px' },
+          { label: 'Sub Label Font', type: 'slider', target: 'wn-ai-sub-font', value: 9, min: 6, max: 14, unit: 'px' },
+        ]},
+        { title: 'Instance: Output Node', badge: 'instance', props: [
+          { label: 'Live World (orange)', type: 'color', target: 'wn-output-color', value: '#ffa726' },
+          { label: 'Output Radius', type: 'slider', target: 'wn-output-radius', value: 34, min: 20, max: 50, unit: 'px' },
+          { label: 'Output Stroke', type: 'slider', target: 'wn-output-stroke', value: 2, min: 0.5, max: 5, unit: 'px', step: 0.5 },
+          { label: 'Output Font', type: 'slider', target: 'wn-output-font', value: 13, min: 8, max: 20, unit: 'px' },
+        ]},
+        { title: 'Instance: Connections', badge: 'instance', props: [
+          { label: 'Line Width', type: 'slider', target: 'wn-line-w', value: 0.7, min: 0.3, max: 3, unit: 'px', step: 0.1 },
+          { label: 'Line Opacity', type: 'slider', target: 'wn-line-op', value: 25, min: 5, max: 100, unit: '%' },
+          { label: 'Dash Length', type: 'slider', target: 'wn-dash-len', value: 3, min: 1, max: 10, unit: 'px' },
+          { label: 'Dash Gap', type: 'slider', target: 'wn-dash-gap', value: 3, min: 1, max: 10, unit: 'px' },
+          { label: 'Cross Line Width', type: 'slider', target: 'wn-cross-w', value: 0.4, min: 0.1, max: 2, unit: 'px', step: 0.1 },
+          { label: 'Cross Opacity', type: 'slider', target: 'wn-cross-op', value: 8, min: 0, max: 30, unit: '%' },
+          { label: 'Particle Size', type: 'slider', target: 'wn-particle-r', value: 2, min: 1, max: 5, unit: 'px' },
+          { label: 'Particle Opacity', type: 'slider', target: 'wn-particle-op', value: 60, min: 10, max: 100, unit: '%' },
+          { label: 'Vertical Line Color', type: 'color', target: 'wn-vert-color', value: '#333333' },
         ]}
       ]},
       'world-card-biomes': { groups: [
         { title: 'Glass SM', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'wcb-radius', value: 16, min: 0, max: 32, unit: 'px' },
+          { label: 'Padding', type: 'slider', target: 'wcb-padding', value: 24, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance', badge: 'instance', props: [
+        { title: 'Instance: Icon', badge: 'instance', props: [
+          { label: 'Icon BG Opacity', type: 'slider', target: 'wcb-icon-bg-op', value: 4, min: 0, max: 30, unit: '%' },
+          { label: 'Icon Size', type: 'slider', target: 'wcb-icon-size', value: 48, min: 32, max: 72, unit: 'px' },
+          { label: 'Icon Radius', type: 'slider', target: 'wcb-icon-radius', value: 14, min: 0, max: 24, unit: 'px' },
           { label: 'Icon Color', type: 'color', target: 'wcb-color', value: '#34c759' },
-          { label: 'Title', type: 'text', target: 'wcb-title', value: 'Reactive Biomes' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Title', type: 'text', target: 'wcb-title', value: 'Procedural Content Generation' },
+          { label: 'Description', type: 'text', target: 'wcb-desc', value: 'UE5 PCG framework generates environments from rule sets.' },
+          { label: 'Title Size', type: 'slider', target: 'wcb-title-size', value: 18, min: 14, max: 28, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'wcb-desc-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Desc Opacity', type: 'slider', target: 'wcb-desc-op', value: 55, min: 20, max: 100, unit: '%' },
         ]}
       ]},
       'world-card-memory': { groups: [
         { title: 'Glass SM', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'wcm-radius', value: 16, min: 0, max: 32, unit: 'px' },
+          { label: 'Padding', type: 'slider', target: 'wcm-padding', value: 24, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance', badge: 'instance', props: [
+        { title: 'Instance: Icon', badge: 'instance', props: [
+          { label: 'Icon BG Opacity', type: 'slider', target: 'wcm-icon-bg-op', value: 4, min: 0, max: 30, unit: '%' },
+          { label: 'Icon Size', type: 'slider', target: 'wcm-icon-size', value: 48, min: 32, max: 72, unit: 'px' },
+          { label: 'Icon Radius', type: 'slider', target: 'wcm-icon-radius', value: 14, min: 0, max: 24, unit: 'px' },
           { label: 'Icon Color', type: 'color', target: 'wcm-color', value: '#0082fb' },
-          { label: 'Title', type: 'text', target: 'wcm-title', value: 'Persistent Memory' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Title', type: 'text', target: 'wcm-title', value: 'Persistent World State' },
+          { label: 'Description', type: 'text', target: 'wcm-desc', value: 'Every location maintains state across production sessions.' },
+          { label: 'Title Size', type: 'slider', target: 'wcm-title-size', value: 18, min: 14, max: 28, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'wcm-desc-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Desc Opacity', type: 'slider', target: 'wcm-desc-op', value: 55, min: 20, max: 100, unit: '%' },
         ]}
       ]},
       'world-card-ai': { groups: [
         { title: 'Glass SM', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'wca-radius', value: 16, min: 0, max: 32, unit: 'px' },
+          { label: 'Padding', type: 'slider', target: 'wca-padding', value: 24, min: 8, max: 40, unit: 'px' },
         ]},
-        { title: 'Instance', badge: 'instance', props: [
+        { title: 'Instance: Icon', badge: 'instance', props: [
+          { label: 'Icon BG Opacity', type: 'slider', target: 'wca-icon-bg-op', value: 4, min: 0, max: 30, unit: '%' },
+          { label: 'Icon Size', type: 'slider', target: 'wca-icon-size', value: 48, min: 32, max: 72, unit: 'px' },
+          { label: 'Icon Radius', type: 'slider', target: 'wca-icon-radius', value: 14, min: 0, max: 24, unit: 'px' },
           { label: 'Icon Color', type: 'color', target: 'wca-color', value: '#bf5af2' },
-          { label: 'Title', type: 'text', target: 'wca-title', value: 'AI Integration' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
+          { label: 'Title', type: 'text', target: 'wca-title', value: 'Modular Biome System' },
+          { label: 'Description', type: 'text', target: 'wca-desc', value: 'Biomes are composable modules that can be mixed and matched.' },
+          { label: 'Title Size', type: 'slider', target: 'wca-title-size', value: 18, min: 14, max: 28, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'wca-desc-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Desc Opacity', type: 'slider', target: 'wca-desc-op', value: 55, min: 20, max: 100, unit: '%' },
         ]}
       ]},
       'world-closing': { groups: [
         { title: 'Glass Container', badge: 'universal', props: [
           { label: 'Border Radius', type: 'slider', target: 'wc-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-world-closing').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'wc-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-world-closing').style.padding = v + 'px'; } },
         ]},
-        { title: 'Instance: Quote', badge: 'instance', props: [
+        { title: 'Instance: Border Accent', badge: 'instance', props: [
           { label: 'Border Color', type: 'color', target: 'wc-border-color', value: '#00d4aa' },
+          { label: 'Border Width', type: 'slider', target: 'wc-border-w', value: 3, min: 1, max: 8, unit: 'px' },
+          { label: 'Border Side', type: 'text', target: 'wc-border-side', value: 'left' },
+        ]},
+        { title: 'Instance: Quote Typography', badge: 'instance', props: [
           { label: 'Font Size', type: 'slider', target: 'wc-font-size', value: 20, min: 14, max: 32, unit: 'px', apply: function(v) { q('#preview-world-closing div').style.fontSize = v + 'px'; } },
+          { label: 'Font Style', type: 'text', target: 'wc-font-style', value: 'italic' },
           { label: 'Line Height', type: 'slider', target: 'wc-line-h', value: 1.8, min: 1, max: 2.5, unit: '', step: 0.1, apply: function(v) { q('#preview-world-closing div').style.lineHeight = v; } },
           { label: 'Text Opacity', type: 'slider', target: 'wc-text-op', value: 70, min: 20, max: 100, unit: '%', apply: function(v) { q('#preview-world-closing div').style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+          { label: 'Emphasis Weight', type: 'slider', target: 'wc-em-weight', value: 500, min: 400, max: 800, unit: '', step: 100 },
+          { label: 'Emphasis Color', type: 'color', target: 'wc-em-color', value: '#ffffff' },
+        ]},
+        { title: 'Instance: Content', badge: 'instance', props: [
           { label: 'Quote Text', type: 'text', target: 'wc-text', value: 'The initial proof-of-concept is a simulation — it reacts, it remembers, and it evolves with the story being told inside it.' },
         ]}
       ]},
+    };
+
+    // ============================================================
+    // CODE SNIPPETS — HTML/CSS/Fallback per component
+    // ============================================================
+    var CODE_SNIPPETS = {
+      'colors': {
+        html: ':root {\n  --blue: oklch(0.62 0.20 255);  /* #0082fb */\n  --teal: oklch(0.65 0.12 195);  /* #00d4aa */\n  --green: oklch(0.68 0.16 145); /* #34c759 */\n  --orange: oklch(0.72 0.16 60); /* #ff9f0a */\n  --red: oklch(0.60 0.22 25);    /* #ff3b30 */\n  --bg: oklch(0.04 0.003 260);   /* #0a0a0c */\n  --fg: oklch(0.96 0.005 260);\n  --muted: oklch(0.55 0.01 260);\n}',
+        css: '/* All colors defined as CSS custom properties in :root */\n/* Use oklch() for perceptual uniformity */\n/* Fallback hex values in comments for reference */',
+        fallback: '/* oklch() is supported in all modern browsers */\n/* For IE11/legacy, use hex fallbacks: */\n:root {\n  --blue: #0082fb;\n  --green: #34c759;\n  --red: #ff3b30;\n}'
+      },
+      'typography': {
+        html: '<h1 class="hero-title">Hero Title</h1>\n<h2 class="section-title">Section Title</h2>\n<p class="section-subtitle">Body text</p>\n<span class="section-label">SECTION LABEL</span>\n<span class="card-panel-label">CARD LABEL</span>',
+        css: '.hero-title {\n  font-size: clamp(2.5rem, 6vw, 4.5rem);\n  font-weight: 700;\n  letter-spacing: -0.02em;\n}\n.section-title {\n  font-size: clamp(1.5rem, 3vw, 2rem);\n  font-weight: 600;\n}\n.section-subtitle {\n  font-size: 18px;\n  line-height: 1.7;\n  color: var(--muted);\n}',
+        fallback: '/* Same styles apply — no backdrop-filter dependency */'
+      },
+      'glass': {
+        html: '<div class="glass-container">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <span class="card-panel-label">Title</span>\n    <p>Content here</p>\n  </div>\n</div>',
+        css: '.glass-container {\n  position: relative;\n  border-radius: var(--glass-radius);\n  border: 1.5px solid var(--glass-border-color);\n  overflow: hidden;\n}\n.glass-bg {\n  position: absolute; inset: 0;\n  background: rgba(255,255,255,0.04);\n  backdrop-filter: blur(12px) saturate(1.4);\n  box-shadow: var(--glass-shadow);\n}\n.glass-content {\n  position: relative; z-index: 99;\n  padding: 28px 32px;\n}',
+        fallback: '.glass-container {\n  background: rgba(30,30,35,0.95);\n  border: 1.5px solid rgba(112,112,112,0.38);\n  border-radius: 20px;\n}\n.glass-bg {\n  backdrop-filter: none;\n  background: transparent;\n}'
+      },
+      'glass-sm': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <span class="card-panel-label">Title</span>\n    <p>Content</p>\n  </div>\n</div>',
+        css: '.glass-container.glass-sm {\n  --glass-radius: 16px;\n}\n.glass-container.glass-sm > .glass-content {\n  padding: 24px;\n}',
+        fallback: '.glass-container.glass-sm {\n  background: rgba(30,30,35,0.95);\n  border-radius: 16px;\n}'
+      },
+      'badges': {
+        html: '<span class="hero-badge">PIPELINE ARCHITECTURE</span>\n<span class="status-badge status-progress">In Progress</span>\n<span class="status-badge status-specced">Specced</span>\n<span class="status-badge status-not-started">Not Started</span>\n<span class="tech-tag">Unreal Engine 5.7</span>',
+        css: '.hero-badge {\n  display: inline-block;\n  padding: 6px 16px;\n  border-radius: 100px;\n  border: 1px solid rgba(255,255,255,0.15);\n  background: rgba(255,255,255,0.06);\n  backdrop-filter: blur(24px) saturate(1.6);\n  font-size: 13px; font-weight: 500;\n  color: rgba(255,255,255,0.85);\n}\n.status-badge {\n  padding: 4px 12px;\n  border-radius: 20px;\n  font-size: 11px;\n}',
+        fallback: '.hero-badge {\n  background: rgba(30,30,35,0.95);\n  backdrop-filter: none;\n}'
+      },
+      'legend': {
+        html: '<div class="live-indicator">\n  <div class="live-dot"></div>\n  <span class="live-label">LIVE</span>\n</div>',
+        css: '.live-dot {\n  width: 6px; height: 6px;\n  border-radius: 50%;\n  background: #34c759;\n  animation: pulse 2s infinite;\n}\n.live-label {\n  font-size: 11px;\n  letter-spacing: 2px;\n  color: rgba(255,255,255,0.4);\n}',
+        fallback: '/* No fallback needed — no backdrop-filter */'
+      },
+      'icon-circles': {
+        html: '<div class="card-icon">\n  <svg><!-- icon --></svg>\n</div>',
+        css: '.card-icon {\n  width: 48px; height: 48px;\n  display: flex; align-items: center;\n  justify-content: center;\n  border-radius: 14px;\n  background: rgba(255,255,255,0.04);\n  color: var(--muted);\n  margin-bottom: 20px;\n}',
+        fallback: '/* No fallback needed */'
+      },
+      'home-hero': {
+        html: '<section class="hero">\n  <div class="hero-content">\n    <div class="hero-badge" style="font-size:clamp(2.5rem,6vw,4.5rem);\n      padding:0.8rem 3rem;font-weight:700;">Home</div>\n    <p class="hero-subtitle">A modular, portable virtual\n      production pipeline...</p>\n    <div class="hero-meta">\n      <span>By Aniket Bhatt</span>\n      <span>&middot;</span>\n      <span>Unreal Engine 5.7</span>\n    </div>\n  </div>\n</section>',
+        css: '.hero {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  background: transparent;\n}\n.hero-subtitle {\n  font-size: 18px;\n  line-height: 1.7;\n  color: var(--muted);\n  max-width: 640px;\n}\n.hero-meta {\n  font-size: 13px;\n  color: var(--muted-faint);\n}',
+        fallback: '/* Hero uses no backdrop-filter — no fallback needed */'
+      },
+      'home-pillar-spatial': {
+        html: '<a href="spatial-production.html" class="glass-container">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-icon">\n      <svg><!-- VR headset --></svg>\n    </div>\n    <h3 class="pillar-card-title">Meta Spatial Production</h3>\n    <p class="pillar-card-desc">A project-agnostic, portable\n      filmmaking toolkit...</p>\n    <div class="pillar-card-arrow">\n      <span>Learn more</span>\n      <svg><!-- arrow --></svg>\n    </div>\n  </div>\n</a>',
+        css: '.pillar-card-title {\n  font-size: 20px;\n  font-weight: 600;\n  letter-spacing: -0.02em;\n  margin-bottom: 12px;\n}\n.pillar-card-desc {\n  font-size: 15px;\n  line-height: 1.6;\n  color: var(--muted);\n}\n.pillar-card-arrow {\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 20px;\n  font-size: 13px;\n  color: var(--blue);\n}',
+        fallback: '.glass-container {\n  background: rgba(30,30,35,0.95);\n}\n.glass-bg {\n  backdrop-filter: none;\n}'
+      },
+      'home-pillar-assets': {
+        html: '<a href="compound-assets.html" class="glass-container">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-icon">\n      <svg><!-- layers --></svg>\n    </div>\n    <h3 class="pillar-card-title">Compound Asset Pipeline</h3>\n    <p class="pillar-card-desc">Assets are layered, interconnected\n      structures...</p>\n    <div class="pillar-card-arrow">\n      <span>Learn more</span>\n    </div>\n  </div>\n</a>',
+        css: '/* Same as Spatial pillar — uses .pillar-card-title,\n   .pillar-card-desc, .pillar-card-arrow */\n/* See Universal > Glass Container for glass styles */',
+        fallback: '/* Same glass fallback applies */'
+      },
+      'home-pillar-world': {
+        html: '<a href="world-building.html" class="glass-container">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-icon">\n      <svg><!-- network nodes --></svg>\n    </div>\n    <h3 class="pillar-card-title">World Building Neural Network</h3>\n    <p class="pillar-card-desc">A project-specific simulation layer\n      modeling the world...</p>\n    <div class="pillar-card-arrow">\n      <span>Learn more</span>\n    </div>\n  </div>\n</a>',
+        css: '/* Same pillar card styles apply */\n/* See Universal > Glass Container */',
+        fallback: '/* Same glass fallback applies */'
+      },
+      'home-footer': {
+        html: '<footer class="footer">\n  <div class="container footer-inner">\n    <p class="footer-credit">Designed and engineered by\n      <strong>Aniket Bhatt</strong></p>\n    <p class="footer-role">Meta Creative Core &middot;\n      Production Design + XR</p>\n    <div class="footer-tech">\n      <span>Unreal Engine 5.7</span>\n      <span>Meta Quest 3</span>\n      <span>Meta OpenXR</span>\n      <span>Take Recorder</span>\n      <span>Perforce</span>\n    </div>\n  </div>\n</footer>',
+        css: '.footer {\n  border-top: 1px solid rgba(255,255,255,0.08);\n  padding: 3rem 0 4rem;\n}\n.footer-inner {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 20px;\n  text-align: center;\n}\n.footer-tech span {\n  font-family: var(--font-mono);\n  font-size: 11px;\n  color: oklch(0.55 0.01 260 / 30%);\n}',
+        fallback: '/* No fallback needed — no glass effects */'
+      },
+      'spatial-arch': {
+        html: '<div class="sp-card">\n  <div class="sp-card-header">\n    <span class="sp-card-label">System Architecture</span>\n    <span class="sp-live"><span class="sp-live-dot"></span>LIVE</span>\n  </div>\n  <svg viewBox="0 0 800 280">\n    <!-- Quest 3 + CineCamera + UE5.7 bar -->\n  </svg>\n</div>',
+        css: '.sp-card {\n  background: #242526;\n  border-radius: 20px;\n  border: 1px solid #3e4042;\n  padding: 32px;\n  box-shadow: 0 1px 3px rgba(0,0,0,0.3),\n    0 8px 24px rgba(0,0,0,0.2);\n}',
+        fallback: '/* Spatial page uses opaque backgrounds,\n   no backdrop-filter needed */'
+      },
+      'spatial-layers': {
+        html: '<div class="sp-card">\n  <div class="sp-section-label">ARCHITECTURAL LAYERS</div>\n  <div class="sp-layers">\n    <div class="sp-layer">\n      <span class="sp-layer-num">1</span>\n      <div>\n        <div class="sp-layer-title">UE World</div>\n        <div class="sp-layer-desc">Core Unreal level...</div>\n      </div>\n    </div>\n    <!-- layers 2-5 -->\n  </div>\n</div>',
+        css: '.sp-layer {\n  display: flex;\n  align-items: center;\n  padding: 14px 0;\n  border-bottom: 1px solid rgba(255,255,255,0.06);\n}\n.sp-layer-num {\n  font-size: 28px;\n  font-weight: 700;\n  color: #0082fb;\n  min-width: 48px;\n}',
+        fallback: '/* No fallback needed — opaque backgrounds */'
+      },
+      'spatial-card-take': {
+        html: '<div class="sp-card sp-card-sm">\n  <div class="sp-card-icon" style="background:rgba(255,59,48,0.15);">\n    <span>&#9210;</span>\n  </div>\n  <div class="sp-card-title">Take Recorder</div>\n  <div class="sp-card-desc">Multi-track motion capture...</div>\n</div>',
+        css: '.sp-card-sm {\n  padding: 24px;\n}\n.sp-card-icon {\n  width: 36px; height: 36px;\n  border-radius: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 12px;\n}',
+        fallback: '/* No fallback needed */'
+      },
+      'spatial-card-role': {
+        html: '<div class="sp-card sp-card-sm">\n  <div class="sp-card-icon" style="background:rgba(0,130,251,0.15);">\n    <span>&#128100;</span>\n  </div>\n  <div class="sp-card-title">VR Role System</div>\n  <div class="sp-card-desc">IVRRole interface...</div>\n</div>',
+        css: '/* Same .sp-card-sm styles apply */',
+        fallback: '/* No fallback needed */'
+      },
+      'spatial-card-export': {
+        html: '<div class="sp-card sp-card-sm">\n  <div class="sp-card-icon" style="background:rgba(52,199,89,0.15);">\n    <span>&#128228;</span>\n  </div>\n  <div class="sp-card-title">Export Pipeline</div>\n  <div class="sp-card-desc">Level Sequence -> MRQ...</div>\n</div>',
+        css: '/* Same .sp-card-sm styles apply */',
+        fallback: '/* No fallback needed */'
+      },
+      'spatial-status': {
+        html: '<div class="sp-card">\n  <div class="sp-card-header">\n    <span class="sp-card-label">Component Status</span>\n    <span class="sp-live"><span class="sp-live-dot"></span>LIVE</span>\n  </div>\n  <table class="sp-status-table">\n    <thead>\n      <tr><th>Component</th><th>Module</th>\n        <th>Status</th><th>Priority</th></tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>VR Pawn + Roles</td>\n        <td><span class="sp-module-tag">VRProduction</span></td>\n        <td><span class="sp-status-badge sp-in-progress">\n          In Progress</span></td>\n        <td class="sp-priority-high">High</td>\n      </tr>\n    </tbody>\n  </table>\n</div>',
+        css: '.sp-status-table {\n  width: 100%;\n  border-collapse: collapse;\n}\n.sp-status-table th {\n  font-size: 11px;\n  color: #8a8d91;\n  text-align: left;\n  padding: 8px 12px;\n}\n.sp-status-badge {\n  padding: 4px 12px;\n  border-radius: 20px;\n  font-size: 11px;\n}',
+        fallback: '/* No fallback needed — opaque backgrounds */'
+      },
+      'compound-layers': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-panel-header">\n      <span class="card-panel-label">Asset Layer Structure</span>\n    </div>\n    <svg viewBox="0 0 600 340">\n      <!-- 6 layer rows + Compound Asset box -->\n    </svg>\n  </div>\n</div>',
+        css: '/* Uses glass-container glass-sm */\n/* SVG uses oklch() stroke colors:\n   Red:    oklch(0.60 0.22 25)   Metadata\n   Orange: oklch(0.72 0.16 60)   LOD\n   Teal:   oklch(0.65 0.12 195)  Lighting\n   Blue:   oklch(0.62 0.20 255)  Materials\n   Green:  oklch(0.68 0.16 145)  Collision\n*/',
+        fallback: '.glass-container.glass-sm {\n  background: rgba(30,30,35,0.95);\n}'
+      },
+      'compound-comparison': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-panel-header">\n      <span class="card-panel-label">Traditional vs Compound</span>\n    </div>\n    <table class="data-table">\n      <thead><tr><th></th>\n        <th style="color:oklch(0.60 0.22 25)">Traditional</th>\n        <th style="color:oklch(0.68 0.16 145)">Compound</th>\n      </tr></thead>\n      <tbody>\n        <tr><td>Asset Update</td>\n          <td>Rebuild from scratch</td>\n          <td>Update single layer</td></tr>\n      </tbody>\n    </table>\n  </div>\n</div>',
+        css: '.data-table {\n  width: 100%;\n  border-collapse: collapse;\n}\n.data-table th {\n  font-size: 13px;\n  text-align: left;\n  padding: 10px 16px;\n  border-bottom: 1px solid rgba(255,255,255,0.08);\n}\n.data-table td {\n  padding: 10px 16px;\n  font-size: 14px;\n  border-bottom: 1px solid rgba(255,255,255,0.04);\n}',
+        fallback: '/* Same glass fallback applies */'
+      },
+      'compound-benefit-nd': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content" style="border-top:2px solid var(--blue);">\n    <h4 class="card-title">Non-Destructive</h4>\n    <p class="card-text">Edit any layer without affecting others.</p>\n  </div>\n</div>',
+        css: '.card-title {\n  font-size: 15px;\n  font-weight: 600;\n  margin-bottom: 6px;\n}\n.card-text {\n  font-size: 13px;\n  color: var(--muted);\n  line-height: 1.5;\n}',
+        fallback: '/* Same glass fallback */'
+      },
+      'compound-benefit-va': {
+        html: '<!-- Same structure as Non-Destructive -->\n<!-- border-top: 2px solid var(--green) -->',
+        css: '/* Same card-title / card-text styles */',
+        fallback: '/* Same glass fallback */'
+      },
+      'compound-benefit-pr': {
+        html: '<!-- Same structure as Non-Destructive -->\n<!-- border-top: 2px solid var(--orange) -->',
+        css: '/* Same card-title / card-text styles */',
+        fallback: '/* Same glass fallback */'
+      },
+      'world-network': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-panel-header">\n      <span class="card-panel-label">World State Network</span>\n      <div class="live-indicator">\n        <div class="live-dot"></div>\n        <span class="live-label">LIVE</span>\n      </div>\n    </div>\n    <svg viewBox="0 0 760 260">\n      <!-- Location nodes: Mangrove, Caldera, Encampment,\n           Mycelium, Tidal Canopy -->\n      <!-- Processing: World State, Story Events -->\n      <!-- AI: DINOv2, PCG -->\n      <!-- Output: Live World -->\n      <!-- Animated connections with stroke-dasharray -->\n    </svg>\n  </div>\n</div>',
+        css: '/* SVG node colors:\n   Mangrove:    #4dd0e1 (cyan)\n   Caldera:     #ef5350 (red)\n   Encampment:  #66bb6a (green)\n   Mycelium:    #42a5f5 (blue)\n   Tidal:       #ffa726 (orange)\n   World State: #4dd0e1\n   Story Events:#ef5350\n   DINOv2:      #42a5f5\n   PCG:         #66bb6a\n   Live World:  #ffa726\n*/\n/* Connection lines use stroke-dasharray: 3 3\n   with animated stroke-dashoffset */\n/* Data particles use <animateMotion> */',
+        fallback: '/* SVG animations work in all browsers */\n/* Glass container fallback applies */'
+      },
+      'world-card-biomes': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-icon"><!-- layers SVG --></div>\n    <h4 class="card-title">Procedural Content Generation</h4>\n    <p class="card-text">UE5 PCG framework generates\n      environments from rule sets...</p>\n  </div>\n</div>',
+        css: '/* Uses glass-sm + card-title + card-text */',
+        fallback: '/* Same glass fallback */'
+      },
+      'world-card-memory': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-icon"><!-- clock SVG --></div>\n    <h4 class="card-title">Persistent World State</h4>\n    <p class="card-text">Every location maintains state\n      across production sessions...</p>\n  </div>\n</div>',
+        css: '/* Uses glass-sm + card-title + card-text */',
+        fallback: '/* Same glass fallback */'
+      },
+      'world-card-ai': {
+        html: '<div class="glass-container glass-sm">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <div class="card-icon"><!-- grid SVG --></div>\n    <h4 class="card-title">Modular Biome System</h4>\n    <p class="card-text">Biomes are composable modules...</p>\n  </div>\n</div>',
+        css: '/* Uses glass-sm + card-title + card-text */',
+        fallback: '/* Same glass fallback */'
+      },
+      'world-closing': {
+        html: '<div class="glass-container glass-sm closing">\n  <div class="glass-bg"></div>\n  <div class="glass-content">\n    <p>The world is not a backdrop. It is a\n      <strong>character</strong>. The initial\n      proof-of-concept is a simulation...</p>\n  </div>\n</div>',
+        css: '.closing .glass-content {\n  border-left: 3px solid oklch(0.65 0.12 195);\n}\n.closing p {\n  font-size: 20px;\n  font-style: italic;\n  line-height: 1.8;\n  color: var(--muted);\n}',
+        fallback: '.closing {\n  background: rgba(30,30,35,0.95);\n}'
+      }
     };
 
     // ============================================================
@@ -1483,10 +1815,37 @@
         });
         html += '</div></div>';
       });
+
+      // Add code editor tabs if snippets exist
+      var snippets = CODE_SNIPPETS[compId];
+      if (snippets) {
+        html += '<div class="code-section">';
+        html += '<div class="code-section-title">CODE</div>';
+        html += '<div class="code-tabs">';
+        html += '<button class="code-tab active" onclick="switchCodeTab(this,\'' + compId + '\',\'html\')">HTML</button>';
+        html += '<button class="code-tab" onclick="switchCodeTab(this,\'' + compId + '\',\'css\')">CSS</button>';
+        html += '<button class="code-tab" onclick="switchCodeTab(this,\'' + compId + '\',\'fallback\')">Fallback</button>';
+        html += '</div>';
+        html += '<textarea class="code-editor" id="code-editor-' + compId + '" spellcheck="false">' + escHtml(snippets.html) + '</textarea>';
+        html += '</div>';
+      }
+
       return html;
     }
 
-    function escHtml(s) { return s.replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+    // Code tab switching
+    window.switchCodeTab = function(btn, compId, tab) {
+      var tabs = btn.parentElement.querySelectorAll('.code-tab');
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      btn.classList.add('active');
+      var editor = document.getElementById('code-editor-' + compId);
+      var snippets = CODE_SNIPPETS[compId];
+      if (editor && snippets) {
+        editor.value = snippets[tab] || '';
+      }
+    };
+
+    function escHtml(s) { return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
     // ============================================================
     // COMPONENT SELECTION
