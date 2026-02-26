@@ -666,7 +666,23 @@
   // ============================================================
   // INIT: Find all [data-liquid-nav] elements and initialize
   // ============================================================
+  function injectDesignTab() {
+    // Only show Design tab on Manus dev server
+    var host = window.location.hostname;
+    if (host.indexOf('manus') === -1) return;
+    var navs = document.querySelectorAll('[data-liquid-nav]');
+    navs.forEach(function(nav) {
+      var designLink = document.createElement('a');
+      designLink.setAttribute('data-nav-id', 'design');
+      designLink.setAttribute('data-nav-icon', '<svg viewBox="0 0 24 24" fill="none"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      designLink.setAttribute('href', 'design-system.html');
+      designLink.textContent = 'Design';
+      nav.appendChild(designLink);
+    });
+  }
+
   function init() {
+    injectDesignTab();
     var navs = document.querySelectorAll('[data-liquid-nav]');
     navs.forEach(function(el) {
       try {

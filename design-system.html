@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Design System — Meta Spatial Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+      background: #0a0a0c;
+      color: #f2f3f5;
+    }
+
+    /* ============================================================
+       LAYOUT: 3-panel — sidebar | preview | code
+       ============================================================ */
+    .app { display: flex; height: 100vh; }
+
+    /* LEFT SIDEBAR — Inspector */
+    .sidebar {
+      width: 320px;
+      min-width: 320px;
+      background: #111114;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sidebar-header h2 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+    }
+    .sidebar-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0;
+    }
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    .sidebar-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: rgba(255,255,255,0.25);
+      font-size: 13px;
+      text-align: center;
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    /* Property group */
+    .prop-group {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .prop-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .prop-group-header:hover { background: rgba(255,255,255,0.02); }
+    .prop-group-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .prop-group-badge {
+      font-size: 9px;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .badge-universal { background: rgba(0,130,251,0.15); color: #0082fb; }
+    .badge-instance { background: rgba(52,199,89,0.15); color: #34c759; }
+    .prop-group-chevron {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      transition: transform 0.2s;
+    }
+    .prop-group.collapsed .prop-group-chevron { transform: rotate(-90deg); }
+    .prop-group-body { padding: 0 20px 16px; }
+    .prop-group.collapsed .prop-group-body { display: none; }
+
+    /* Individual property row */
+    .prop-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .prop-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+    .prop-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      outline: none;
+    }
+    .prop-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #0082fb;
+      cursor: pointer;
+    }
+    .prop-number {
+      width: 52px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #f2f3f5;
+      font-size: 12px;
+      font-family: 'SF Mono', monospace;
+      text-align: center;
+      padding: 4px;
+      outline: none;
+    }
+    .prop-number:focus { border-color: #0082fb; }
+    .prop-unit {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      width: 16px;
+    }
+    .prop-color {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      background: none;
+      -webkit-appearance: none;
+    }
+    .prop-color::-webkit-color-swatch-wrapper { padding: 2px; }
+    .prop-color::-webkit-color-swatch { border: none; border-radius: 4px; }
+    .prop-color-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-family: 'SF Mono', monospace;
+    }
+    .prop-text {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #f2f3f5;
+      font-size: 12px;
+      padding: 6px 8px;
+      outline: none;
+      font-family: inherit;
+    }
+    .prop-text:focus { border-color: #0082fb; }
+    .prop-select {
+      flex: 1;
+      background: #1a1b1e;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #f2f3f5;
+      font-size: 12px;
+      padding: 5px 8px;
+      outline: none;
+    }
+    .prop-select option { background: #1a1b1e; color: #f2f3f5; }
+
+    /* ============================================================
+       CENTER — Preview Area
+       ============================================================ */
+    .preview-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      background: #111114;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 2px;
+    }
+    .toolbar-btn {
+      padding: 6px 14px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toolbar-btn.active { background: #0082fb; color: #fff; }
+    .toolbar-btn:hover:not(.active) { color: rgba(255,255,255,0.8); }
+    .toolbar-label {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-right: 4px;
+    }
+    .page-select {
+      background: #1a1b1e;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: #f2f3f5;
+      font-size: 12px;
+      padding: 6px 12px;
+      outline: none;
+      margin-left: auto;
+    }
+    .page-select option { background: #1a1b1e; color: #f2f3f5; }
+    .save-btn {
+      padding: 6px 16px;
+      background: #0082fb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .save-btn:hover { background: #006ed4; }
+
+    /* Preview canvas */
+    .preview-canvas {
+      flex: 1;
+      overflow: auto;
+      padding: 40px;
+      background: #0a0a0c;
+      transition: max-width 0.3s;
+    }
+    .preview-canvas.mobile { max-width: 390px; margin: 0 auto; }
+
+    .preview-section {
+      margin-bottom: 48px;
+    }
+    .preview-section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 16px;
+      font-family: 'SF Mono', monospace;
+    }
+
+    /* Clickable component wrapper */
+    .component-wrap {
+      position: relative;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 22px;
+      transition: border-color 0.2s;
+      padding: 2px;
+    }
+    .component-wrap:hover { border-color: rgba(0,130,251,0.3); }
+    .component-wrap.selected { border-color: #0082fb; }
+    .component-wrap .comp-tag {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      font-size: 9px;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #0082fb;
+      color: #fff;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 1;
+    }
+    .component-wrap:hover .comp-tag,
+    .component-wrap.selected .comp-tag { opacity: 1; }
+
+    /* ============================================================
+       COMPONENT PREVIEW STYLES (mirrors actual site)
+       ============================================================ */
+    .p-glass {
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.04);
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .p-glass-sm {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.04);
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .p-section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      font-family: 'SF Mono', monospace;
+      margin-bottom: 12px;
+    }
+    .p-card-label {
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      font-family: 'SF Mono', monospace;
+    }
+    .p-hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.05);
+      text-transform: uppercase;
+      font-family: 'SF Mono', monospace;
+    }
+    .p-status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-family: 'SF Mono', monospace;
+    }
+    .p-status-progress { background: rgba(0,130,251,0.15); color: #0082fb; border: 1px solid rgba(0,130,251,0.3); }
+    .p-status-specced { background: rgba(52,199,89,0.15); color: #34c759; border: 1px solid rgba(52,199,89,0.3); }
+    .p-status-not-started { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); }
+    .p-tech-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.5);
+      font-family: 'SF Mono', monospace;
+    }
+    .p-live-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #34c759;
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .p-live-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #34c759;
+      font-family: 'SF Mono', monospace;
+    }
+    .p-legend-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .p-legend-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Asset layer row */
+    .p-asset-layer {
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      font-family: 'SF Mono', monospace;
+      margin-bottom: 6px;
+    }
+
+    /* Layer number badge */
+    .p-layer-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(0,130,251,0.1);
+      color: #0082fb;
+      border: 1px solid rgba(0,130,251,0.2);
+      font-family: 'SF Mono', monospace;
+      margin-right: 12px;
+    }
+
+    /* Comparison table */
+    .p-comp-table { width: 100%; border-collapse: collapse; }
+    .p-comp-table th {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'SF Mono', monospace;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 500;
+    }
+    .p-comp-table td {
+      font-size: 14px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Icon circle */
+    .p-icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 18px;
+    }
+
+    /* Non-chrome fallback mode */
+    .fallback-mode .p-glass,
+    .fallback-mode .p-glass-sm {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(30,30,35,0.95);
+    }
+
+    /* Code editor area */
+    .code-section {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 20px 16px;
+    }
+    .code-section-title {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+    }
+    .code-tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .code-tab {
+      padding: 4px 10px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      border: none;
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.4);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .code-tab.active { background: rgba(0,130,251,0.2); color: #0082fb; }
+    .code-editor {
+      width: 100%;
+      min-height: 120px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: #a8d8a8;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 12px;
+      resize: vertical;
+      outline: none;
+      tab-size: 2;
+    }
+    .code-editor:focus { border-color: rgba(0,130,251,0.4); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ============================================================
+         LEFT SIDEBAR — Inspector
+         ============================================================ -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>Inspector</h2>
+        <span id="close-btn" style="cursor:pointer;color:rgba(255,255,255,0.3);font-size:18px;display:none;">&times;</span>
+      </div>
+      <div class="sidebar-scroll" id="sidebar-content">
+        <div class="sidebar-empty" id="empty-state">
+          Click any component<br>in the preview to inspect<br>and edit its properties
+        </div>
+        <!-- Panels are injected dynamically by JS -->
+      </div>
+    </div>
+
+    <!-- ============================================================
+         CENTER — Preview
+         ============================================================ -->
+    <div class="preview-area">
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <span class="toolbar-label">Browser</span>
+        <div class="toolbar-group">
+          <button class="toolbar-btn active" data-mode="chrome" onclick="setBrowser('chrome')">Chrome</button>
+          <button class="toolbar-btn" data-mode="fallback" onclick="setBrowser('fallback')">Non-Chrome</button>
+        </div>
+        <span class="toolbar-label">Viewport</span>
+        <div class="toolbar-group">
+          <button class="toolbar-btn active" data-vp="desktop" onclick="setViewport('desktop')">Desktop</button>
+          <button class="toolbar-btn" data-vp="mobile" onclick="setViewport('mobile')">Mobile</button>
+        </div>
+        <span class="toolbar-label">Page</span>
+        <select class="page-select" id="page-select" onchange="setPage(this.value)">
+          <option value="universal">Universal</option>
+          <option value="home">Home</option>
+          <option value="spatial">Spatial Production</option>
+          <option value="compound">Compound Assets</option>
+          <option value="world">World Building</option>
+        </select>
+        <button class="save-btn" onclick="exportConfig()">Save &amp; Export</button>
+      </div>
+
+      <!-- Preview Canvas -->
+      <div class="preview-canvas" id="preview-canvas">
+
+        <!-- ==================== UNIVERSAL COMPONENTS ==================== -->
+        <div id="page-universal">
+
+          <!-- COLOR PALETTE -->
+          <div class="preview-section">
+            <div class="preview-section-label">Color Palette</div>
+            <div class="component-wrap" data-comp="colors" onclick="selectComp(this)">
+              <span class="comp-tag">COLORS</span>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;" id="color-swatches">
+                <div style="width:60px;height:60px;border-radius:12px;background:#0082fb;" data-color="accent-blue" title="Meta Blue"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:#34c759;" data-color="accent-green" title="Green"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:#00d4aa;" data-color="accent-cyan" title="Cyan"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:#ff3b30;" data-color="accent-red" title="Red"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:#ff9f0a;" data-color="accent-orange" title="Orange"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:#bf5af2;" data-color="accent-purple" title="Purple"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.1);" data-color="text-primary" title="Text Primary"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:rgba(255,255,255,0.6);" data-color="text-secondary" title="Text Secondary"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:rgba(255,255,255,0.35);" data-color="text-tertiary" title="Text Tertiary"></div>
+                <div style="width:60px;height:60px;border-radius:12px;background:#0a0a0c;border:1px solid rgba(255,255,255,0.1);" data-color="bg-primary" title="BG Primary"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TYPOGRAPHY -->
+          <div class="preview-section">
+            <div class="preview-section-label">Typography</div>
+            <div class="component-wrap" data-comp="typography" onclick="selectComp(this)">
+              <span class="comp-tag">TYPOGRAPHY</span>
+              <div style="padding:24px;">
+                <div id="typo-h1" style="font-size:72px;font-weight:700;letter-spacing:-2px;margin-bottom:16px;color:rgba(255,255,255,0.95);">Hero Title</div>
+                <div id="typo-h2" style="font-size:56px;font-weight:600;letter-spacing:-1px;margin-bottom:16px;color:rgba(255,255,255,0.95);">Section Title</div>
+                <div id="typo-body" style="font-size:18px;line-height:1.7;color:rgba(255,255,255,0.6);margin-bottom:16px;">Body text — A modular, portable virtual production pipeline built on Meta hardware and Unreal Engine 5.7.</div>
+                <div id="typo-label" style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.35);font-family:'SF Mono',monospace;margin-bottom:8px;">SECTION LABEL</div>
+                <div id="typo-card-label" style="font-size:15px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.85);font-family:'SF Mono',monospace;">CARD PANEL LABEL</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GLASS CONTAINER -->
+          <div class="preview-section">
+            <div class="preview-section-label">Glass Container</div>
+            <div style="display:flex;gap:20px;flex-wrap:wrap;">
+              <div class="component-wrap" data-comp="glass" onclick="selectComp(this)" style="flex:1;min-width:280px;">
+                <span class="comp-tag">GLASS DEFAULT</span>
+                <div class="p-glass" id="preview-glass">
+                  <div class="p-card-label" style="margin-bottom:12px;">Glass Container</div>
+                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Default size with 28px padding, 20px border-radius, and backdrop blur.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="glass-sm" onclick="selectComp(this)" style="flex:1;min-width:220px;">
+                <span class="comp-tag">GLASS SM</span>
+                <div class="p-glass-sm" id="preview-glass-sm">
+                  <div class="p-card-label" style="margin-bottom:8px;">Glass SM</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.6);">Smaller variant, 20px padding.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BADGES & TAGS -->
+          <div class="preview-section">
+            <div class="preview-section-label">Badges &amp; Tags</div>
+            <div class="component-wrap" data-comp="badges" onclick="selectComp(this)">
+              <span class="comp-tag">BADGES</span>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px;">
+                <span class="p-hero-badge" id="preview-hero-badge">PIPELINE ARCHITECTURE</span>
+                <span class="p-status-badge p-status-progress" id="preview-status-progress">In Progress</span>
+                <span class="p-status-badge p-status-specced" id="preview-status-specced">Specced</span>
+                <span class="p-status-badge p-status-not-started" id="preview-status-not-started">Not Started</span>
+                <span class="p-tech-tag" id="preview-tech-tag">Unreal Engine 5.7</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEGEND & LIVE INDICATOR -->
+          <div class="preview-section">
+            <div class="preview-section-label">Legend &amp; Live Indicator</div>
+            <div class="component-wrap" data-comp="legend" onclick="selectComp(this)">
+              <span class="comp-tag">LEGEND</span>
+              <div style="display:flex;gap:24px;align-items:center;padding:16px;">
+                <span><span class="p-live-dot"></span><span class="p-live-label" id="preview-live">LIVE</span></span>
+                <span><span class="p-legend-dot" style="background:#0082fb;"></span><span class="p-legend-label">VRProduction</span></span>
+                <span><span class="p-legend-dot" style="background:#34c759;"></span><span class="p-legend-label">WorldEngine</span></span>
+                <span><span class="p-legend-dot" style="background:#bf5af2;"></span><span class="p-legend-label">DepthComposite</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ICON CIRCLES -->
+          <div class="preview-section">
+            <div class="preview-section-label">Icon Circles</div>
+            <div class="component-wrap" data-comp="icon-circles" onclick="selectComp(this)">
+              <span class="comp-tag">ICON CIRCLES</span>
+              <div style="display:flex;gap:16px;align-items:center;padding:16px;">
+                <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(0,130,251,0.15);font-size:20px;">∞</div>
+                <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(52,199,89,0.15);font-size:20px;">◆</div>
+                <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(0,212,170,0.15);font-size:20px;">◎</div>
+                <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(255,59,48,0.15);font-size:16px;">⏺</div>
+                <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(0,130,251,0.15);font-size:16px;">👤</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== HOME PAGE ==================== -->
+        <div id="page-home" style="display:none;">
+          <div class="preview-section">
+            <div class="preview-section-label">Hero Section</div>
+            <div class="component-wrap" data-comp="home-hero" onclick="selectComp(this)">
+              <span class="comp-tag">HOME HERO</span>
+              <div id="preview-home-hero" style="text-align:center;padding:60px 40px;background:radial-gradient(ellipse at 70% 80%, rgba(255,45,120,0.15) 0%, transparent 60%);">
+                <div class="p-hero-badge" style="margin-bottom:24px;">PIPELINE ARCHITECTURE</div>
+                <div style="font-size:72px;font-weight:700;letter-spacing:-2px;margin-bottom:20px;">Meta Spatial Production</div>
+                <div style="font-size:18px;line-height:1.7;color:rgba(255,255,255,0.6);max-width:640px;margin:0 auto;">A modular, portable virtual production pipeline built on Meta hardware and Unreal Engine 5.7.</div>
+                <div style="margin-top:20px;font-size:13px;color:rgba(255,255,255,0.35);">By Aniket Bhatt · Unreal Engine 5.7</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Pillar Cards</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+              <div class="component-wrap" data-comp="home-pillar-spatial" onclick="selectComp(this)">
+                <span class="comp-tag">PILLAR: SPATIAL</span>
+                <div class="p-glass" id="preview-pillar-spatial">
+                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(0,130,251,0.15);font-size:20px;margin-bottom:16px;">∞</div>
+                  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">Spatial Production</div>
+                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Five-layer architecture from UE world to standalone Quest 3 app.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="home-pillar-assets" onclick="selectComp(this)">
+                <span class="comp-tag">PILLAR: ASSETS</span>
+                <div class="p-glass" id="preview-pillar-assets">
+                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(52,199,89,0.15);font-size:20px;margin-bottom:16px;">◆</div>
+                  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">Compound Assets</div>
+                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Multi-layer asset architecture for non-destructive workflows.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="home-pillar-world" onclick="selectComp(this)">
+                <span class="comp-tag">PILLAR: WORLD</span>
+                <div class="p-glass" id="preview-pillar-world">
+                  <div class="p-icon-circle" style="width:48px;height:48px;background:rgba(0,212,170,0.15);font-size:20px;margin-bottom:16px;">◎</div>
+                  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">World Building</div>
+                  <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;">Reactive world state system driven by narrative logic.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Footer</div>
+            <div class="component-wrap" data-comp="home-footer" onclick="selectComp(this)">
+              <span class="comp-tag">FOOTER</span>
+              <div id="preview-home-footer" style="padding:24px;border-top:1px solid rgba(255,255,255,0.06);">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+                  <span class="p-tech-tag">Unreal Engine 5.7</span>
+                  <span class="p-tech-tag">Meta Quest 3</span>
+                  <span class="p-tech-tag">Blueprints</span>
+                  <span class="p-tech-tag">C++</span>
+                  <span class="p-tech-tag">MetaHuman</span>
+                  <span class="p-tech-tag">Nanite</span>
+                  <span class="p-tech-tag">PCG</span>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.25);">© 2025 Aniket Bhatt. Internal documentation.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SPATIAL PRODUCTION PAGE ==================== -->
+        <div id="page-spatial" style="display:none;">
+          <div class="preview-section">
+            <div class="preview-section-label">Architecture Diagram</div>
+            <div class="component-wrap" data-comp="spatial-arch" onclick="selectComp(this)">
+              <span class="comp-tag">ARCHITECTURE SVG</span>
+              <div class="p-glass" id="preview-spatial-arch">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                  <span class="p-card-label">System Architecture</span>
+                  <span><span class="p-live-dot"></span><span class="p-live-label">LIVE</span></span>
+                </div>
+                <svg viewBox="0 0 800 280" style="width:100%;">
+                  <!-- Quest 3 -->
+                  <rect x="40" y="40" width="200" height="130" rx="16" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                  <circle cx="110" cy="105" r="35" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                  <circle cx="160" cy="105" r="35" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                  <circle cx="100" cy="50" r="4" fill="#34c759"/>
+                  <text x="140" y="200" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="14" font-family="SF Pro Text, sans-serif">Quest 3 / Pro</text>
+                  <text x="140" y="218" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="11" font-family="SF Mono, monospace">6DOF TRACKING</text>
+                  <!-- WiFi -->
+                  <path d="M310 85 Q330 65 350 85" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                  <path d="M318 92 Q330 78 342 92" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                  <text x="330" y="115" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11" font-family="SF Mono, monospace">WiFi 6DOF</text>
+                  <!-- CineCamera -->
+                  <rect x="440" y="40" width="200" height="130" rx="16" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                  <rect x="510" y="75" width="60" height="40" rx="6" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                  <rect x="500" y="80" width="15" height="30" rx="3" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                  <circle cx="600" cy="50" r="4" fill="#ff3b30"/>
+                  <text x="540" y="200" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="14" font-family="SF Pro Text, sans-serif">CineCamera</text>
+                  <text x="540" y="218" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="11" font-family="SF Mono, monospace">VIRTUAL CAMERA</text>
+                  <!-- UE Bar -->
+                  <rect x="200" y="240" width="300" height="36" rx="18" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                  <text x="350" y="263" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="14" font-family="SF Mono, monospace" letter-spacing="2">Unreal Engine 5.7</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Five Architectural Layers</div>
+            <div class="component-wrap" data-comp="spatial-layers" onclick="selectComp(this)">
+              <span class="comp-tag">FIVE LAYERS</span>
+              <div class="p-glass" id="preview-spatial-layers">
+                <div class="p-section-label">ARCHITECTURAL LAYERS</div>
+                <div id="layers-list">
+                  <div style="display:flex;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <span class="p-layer-num">1</span>
+                    <div><div style="font-size:15px;color:rgba(255,255,255,0.95);">UE World</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Core Unreal level with all assets, lighting, and physics</div></div>
+                  </div>
+                  <div style="display:flex;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <span class="p-layer-num">2</span>
+                    <div><div style="font-size:15px;color:rgba(255,255,255,0.95);">Capture Process</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">VR motion capture with Take Recorder and role system</div></div>
+                  </div>
+                  <div style="display:flex;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <span class="p-layer-num">3</span>
+                    <div><div style="font-size:15px;color:rgba(255,255,255,0.95);">Export Process</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Level Sequence → MRQ → Premiere/Resolve</div></div>
+                  </div>
+                  <div style="display:flex;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <span class="p-layer-num">4</span>
+                    <div><div style="font-size:15px;color:rgba(255,255,255,0.95);">Standalone Review App</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Lightweight non-interactive build for stakeholder review</div></div>
+                  </div>
+                  <div style="display:flex;align-items:center;padding:14px 0;">
+                    <span class="p-layer-num">5</span>
+                    <div><div style="font-size:15px;color:rgba(255,255,255,0.95);">Quest 3 Streaming App</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Standalone Quest 3 app connecting untethered via WiFi</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Component Cards</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+              <div class="component-wrap" data-comp="spatial-card-take" onclick="selectComp(this)">
+                <span class="comp-tag">TAKE RECORDER</span>
+                <div class="p-glass-sm" id="preview-card-take">
+                  <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(255,59,48,0.15);font-size:16px;margin-bottom:12px;">⏺</div>
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Take Recorder</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5;">Multi-track motion capture with automatic take management.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="spatial-card-role" onclick="selectComp(this)">
+                <span class="comp-tag">VR ROLE SYSTEM</span>
+                <div class="p-glass-sm" id="preview-card-role">
+                  <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(0,130,251,0.15);font-size:16px;margin-bottom:12px;">👤</div>
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">VR Role System</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5;">IVRRole interface: Actor, Puppeteer, Director modes.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="spatial-card-export" onclick="selectComp(this)">
+                <span class="comp-tag">EXPORT PIPELINE</span>
+                <div class="p-glass-sm" id="preview-card-export">
+                  <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(52,199,89,0.15);font-size:16px;margin-bottom:12px;">📤</div>
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Export Pipeline</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5;">Level Sequence → Movie Render Queue → Editorial.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Status Tracker</div>
+            <div class="component-wrap" data-comp="spatial-status" onclick="selectComp(this)">
+              <span class="comp-tag">STATUS TABLE</span>
+              <div class="p-glass" id="preview-spatial-status">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                  <span class="p-card-label">Component Status</span>
+                  <span><span class="p-live-dot"></span><span class="p-live-label">LIVE</span></span>
+                </div>
+                <table class="p-comp-table">
+                  <thead>
+                    <tr>
+                      <th style="color:rgba(255,255,255,0.4);">Component</th>
+                      <th style="color:rgba(255,255,255,0.4);">Module</th>
+                      <th style="color:rgba(255,255,255,0.4);">Status</th>
+                      <th style="color:rgba(255,255,255,0.4);">Priority</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>VR Pawn + Roles</td>
+                      <td><span style="color:#0082fb;font-size:11px;font-family:'SF Mono',monospace;">VRProduction</span></td>
+                      <td><span class="p-status-badge p-status-progress">In Progress</span></td>
+                      <td style="color:#ff3b30;">High</td>
+                    </tr>
+                    <tr>
+                      <td>Take Recorder</td>
+                      <td><span style="color:#0082fb;font-size:11px;font-family:'SF Mono',monospace;">VRProduction</span></td>
+                      <td><span class="p-status-badge p-status-specced">Specced</span></td>
+                      <td style="color:#ff3b30;">High</td>
+                    </tr>
+                    <tr>
+                      <td>WorldEngine</td>
+                      <td><span style="color:#34c759;font-size:11px;font-family:'SF Mono',monospace;">WorldEngine</span></td>
+                      <td><span class="p-status-badge p-status-not-started">Not Started</span></td>
+                      <td style="color:#ff9f0a;">Medium</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== COMPOUND ASSETS PAGE ==================== -->
+        <div id="page-compound" style="display:none;">
+          <div class="preview-section">
+            <div class="preview-section-label">Asset Layers Diagram</div>
+            <div class="component-wrap" data-comp="compound-layers" onclick="selectComp(this)">
+              <span class="comp-tag">ASSET LAYERS</span>
+              <div class="p-glass" id="preview-compound-layers">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                  <span class="p-section-label" style="margin:0;">ASSET LAYERS</span>
+                  <span style="font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.25);font-family:'SF Mono',monospace;">ASSET-LAYER-DIA</span>
+                </div>
+                <div id="asset-layers-stack">
+                  <div class="p-asset-layer" style="border-left:3px solid #ff9f0a;color:#ff9f0a;">Metadata + Tags</div>
+                  <div class="p-asset-layer" style="border-left:3px solid #34c759;color:#34c759;">LOD Variants</div>
+                  <div class="p-asset-layer" style="border-left:3px solid #0082fb;color:#0082fb;">Lighting Data</div>
+                  <div class="p-asset-layer" style="border-left:3px solid #00d4aa;color:#00d4aa;">Materials + Textures</div>
+                  <div class="p-asset-layer" style="border-left:3px solid #bf5af2;color:#bf5af2;">Collision / Physics</div>
+                  <div class="p-asset-layer" style="border-left:3px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.4);">Base Geometry</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Comparison Table</div>
+            <div class="component-wrap" data-comp="compound-comparison" onclick="selectComp(this)">
+              <span class="comp-tag">COMPARISON TABLE</span>
+              <div class="p-glass" id="preview-compound-comparison">
+                <div class="p-section-label">COMPARISON TABLE</div>
+                <table class="p-comp-table">
+                  <thead>
+                    <tr>
+                      <th style="color:rgba(255,255,255,0.4);"></th>
+                      <th style="color:#ff9f0a;">Traditional</th>
+                      <th style="color:#34c759;">Compound</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Asset Update</td><td>Rebuild from scratch</td><td>Update single layer</td></tr>
+                    <tr><td>LOD Management</td><td>Manual per-asset</td><td>Automatic Nanite</td></tr>
+                    <tr><td>Collaboration</td><td>File locks</td><td>Layer-level merge</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Benefit Cards</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+              <div class="component-wrap" data-comp="compound-benefit-nd" onclick="selectComp(this)">
+                <span class="comp-tag">NON-DESTRUCTIVE</span>
+                <div class="p-glass-sm" style="border-top:2px solid #0082fb;">
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Non-Destructive</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);">Edit any layer without affecting others.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="compound-benefit-va" onclick="selectComp(this)">
+                <span class="comp-tag">VERSION AWARE</span>
+                <div class="p-glass-sm" style="border-top:2px solid #34c759;">
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Version Aware</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);">Track changes per layer with full history.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="compound-benefit-pr" onclick="selectComp(this)">
+                <span class="comp-tag">PIPELINE READY</span>
+                <div class="p-glass-sm" style="border-top:2px solid #ff9f0a;">
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Pipeline Ready</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);">Integrates with existing DCC tools.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== WORLD BUILDING PAGE ==================== -->
+        <div id="page-world" style="display:none;">
+          <div class="preview-section">
+            <div class="preview-section-label">World State Network</div>
+            <div class="component-wrap" data-comp="world-network" onclick="selectComp(this)">
+              <span class="comp-tag">WORLD STATE NETWORK</span>
+              <div class="p-glass" id="preview-world-network">
+                <div class="p-card-label" style="margin-bottom:20px;">World State Network</div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:24px;padding:20px 0;">
+                  <div style="text-align:center;">
+                    <div style="width:80px;height:80px;border-radius:50%;border:2px solid #34c759;display:flex;align-items:center;justify-content:center;">
+                      <span style="font-size:12px;color:#34c759;font-family:'SF Mono',monospace;">Mangrove</span>
+                    </div>
+                  </div>
+                  <div style="text-align:center;">
+                    <div style="width:80px;height:80px;border-radius:50%;border:2px solid #34c759;display:flex;align-items:center;justify-content:center;">
+                      <span style="font-size:12px;color:#34c759;font-family:'SF Mono',monospace;">Encampment</span>
+                    </div>
+                  </div>
+                  <span style="color:rgba(255,255,255,0.3);">→</span>
+                  <div style="text-align:center;">
+                    <div style="width:100px;height:100px;border-radius:50%;border:2px solid #00d4aa;display:flex;align-items:center;justify-content:center;">
+                      <span style="font-size:13px;color:#00d4aa;font-family:'SF Mono',monospace;text-align:center;">World<br>State</span>
+                    </div>
+                  </div>
+                  <span style="color:rgba(255,255,255,0.3);">→</span>
+                  <div style="text-align:center;">
+                    <div style="width:80px;height:80px;border-radius:50%;border:2px solid #bf5af2;display:flex;align-items:center;justify-content:center;">
+                      <span style="font-size:12px;color:#bf5af2;font-family:'SF Mono',monospace;">DINOv2</span>
+                    </div>
+                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:6px;">Scene Understanding</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">System Cards</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+              <div class="component-wrap" data-comp="world-card-biomes" onclick="selectComp(this)">
+                <span class="comp-tag">REACTIVE BIOMES</span>
+                <div class="p-glass-sm">
+                  <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(52,199,89,0.15);font-size:16px;margin-bottom:12px;">🌿</div>
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Reactive Biomes</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5;">Flora and fauna respond to world state changes in real-time.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="world-card-memory" onclick="selectComp(this)">
+                <span class="comp-tag">PERSISTENT MEMORY</span>
+                <div class="p-glass-sm">
+                  <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(0,130,251,0.15);font-size:16px;margin-bottom:12px;">💾</div>
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">Persistent Memory</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5;">World remembers past events and evolves accordingly.</div>
+                </div>
+              </div>
+              <div class="component-wrap" data-comp="world-card-ai" onclick="selectComp(this)">
+                <span class="comp-tag">AI INTEGRATION</span>
+                <div class="p-glass-sm">
+                  <div class="p-icon-circle" style="width:36px;height:36px;background:rgba(191,90,242,0.15);font-size:16px;margin-bottom:12px;">🧠</div>
+                  <div style="font-size:15px;font-weight:600;margin-bottom:6px;">AI Integration</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5;">DINOv2 scene understanding for intelligent world responses.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">Closing Statement</div>
+            <div class="component-wrap" data-comp="world-closing" onclick="selectComp(this)">
+              <span class="comp-tag">CLOSING</span>
+              <div class="p-glass" id="preview-world-closing" style="border-left:3px solid #00d4aa;">
+                <div style="font-size:20px;font-style:italic;line-height:1.8;color:rgba(255,255,255,0.7);">The initial proof-of-concept is a simulation — it reacts, it remembers, and it evolves with the story being told inside it.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /preview-canvas -->
+    </div><!-- /preview-area -->
+  </div><!-- /app -->
+
+  <script>
+  (function() {
+    // ============================================================
+    // STATE
+    // ============================================================
+    var currentComp = null;
+    var currentPage = 'universal';
+
+    // ============================================================
+    // COMPONENT PROPERTY DEFINITIONS
+    // Universal class + instance properties for each component
+    // ============================================================
+    var PROPS = {
+      // --- UNIVERSAL ---
+      'colors': {
+        groups: [
+          { title: 'Color Palette', badge: 'universal', props: [
+            { label: 'Meta Blue', type: 'color', target: 'accent-blue', value: '#0082fb' },
+            { label: 'Green', type: 'color', target: 'accent-green', value: '#34c759' },
+            { label: 'Cyan', type: 'color', target: 'accent-cyan', value: '#00d4aa' },
+            { label: 'Red', type: 'color', target: 'accent-red', value: '#ff3b30' },
+            { label: 'Orange', type: 'color', target: 'accent-orange', value: '#ff9f0a' },
+            { label: 'Purple', type: 'color', target: 'accent-purple', value: '#bf5af2' },
+            { label: 'BG Primary', type: 'color', target: 'bg-primary', value: '#0a0a0c' },
+          ]},
+          { title: 'Text Colors', badge: 'universal', props: [
+            { label: 'Primary', type: 'slider', target: 'text-primary-opacity', value: 95, min: 0, max: 100, unit: '%' },
+            { label: 'Secondary', type: 'slider', target: 'text-secondary-opacity', value: 60, min: 0, max: 100, unit: '%' },
+            { label: 'Tertiary', type: 'slider', target: 'text-tertiary-opacity', value: 35, min: 0, max: 100, unit: '%' },
+          ]}
+        ]
+      },
+      'typography': {
+        groups: [
+          { title: 'Hero Title', badge: 'universal', props: [
+            { label: 'Font Size', type: 'slider', target: 'typo-h1-size', value: 72, min: 24, max: 120, unit: 'px', apply: function(v) { document.getElementById('typo-h1').style.fontSize = v + 'px'; } },
+            { label: 'Weight', type: 'slider', target: 'typo-h1-weight', value: 700, min: 100, max: 900, unit: '', step: 100, apply: function(v) { document.getElementById('typo-h1').style.fontWeight = v; } },
+            { label: 'Spacing', type: 'slider', target: 'typo-h1-spacing', value: -2, min: -5, max: 5, unit: 'px', apply: function(v) { document.getElementById('typo-h1').style.letterSpacing = v + 'px'; } },
+          ]},
+          { title: 'Section Title', badge: 'universal', props: [
+            { label: 'Font Size', type: 'slider', target: 'typo-h2-size', value: 56, min: 20, max: 96, unit: 'px', apply: function(v) { document.getElementById('typo-h2').style.fontSize = v + 'px'; } },
+            { label: 'Weight', type: 'slider', target: 'typo-h2-weight', value: 600, min: 100, max: 900, unit: '', step: 100, apply: function(v) { document.getElementById('typo-h2').style.fontWeight = v; } },
+          ]},
+          { title: 'Body Text', badge: 'universal', props: [
+            { label: 'Font Size', type: 'slider', target: 'typo-body-size', value: 18, min: 12, max: 28, unit: 'px', apply: function(v) { document.getElementById('typo-body').style.fontSize = v + 'px'; } },
+            { label: 'Line Height', type: 'slider', target: 'typo-body-lh', value: 1.7, min: 1, max: 2.5, unit: '', step: 0.1, apply: function(v) { document.getElementById('typo-body').style.lineHeight = v; } },
+          ]},
+          { title: 'Section Label', badge: 'universal', props: [
+            { label: 'Font Size', type: 'slider', target: 'typo-label-size', value: 11, min: 8, max: 18, unit: 'px', apply: function(v) { document.getElementById('typo-label').style.fontSize = v + 'px'; } },
+            { label: 'Spacing', type: 'slider', target: 'typo-label-spacing', value: 3, min: 0, max: 8, unit: 'px', apply: function(v) { document.getElementById('typo-label').style.letterSpacing = v + 'px'; } },
+          ]},
+          { title: 'Card Label', badge: 'universal', props: [
+            { label: 'Font Size', type: 'slider', target: 'typo-card-size', value: 15, min: 10, max: 24, unit: 'px', apply: function(v) { document.getElementById('typo-card-label').style.fontSize = v + 'px'; } },
+            { label: 'Spacing', type: 'slider', target: 'typo-card-spacing', value: 2, min: 0, max: 6, unit: 'px', apply: function(v) { document.getElementById('typo-card-label').style.letterSpacing = v + 'px'; } },
+          ]}
+        ]
+      },
+      'glass': {
+        groups: [
+          { title: 'Glass Container', badge: 'universal', props: [
+            { label: 'Border Radius', type: 'slider', target: 'glass-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { applyAll('.p-glass', 'borderRadius', v + 'px'); } },
+            { label: 'Border Opacity', type: 'slider', target: 'glass-border-op', value: 8, min: 0, max: 50, unit: '%', apply: function(v) { applyAll('.p-glass', 'borderColor', 'rgba(255,255,255,' + (v/100) + ')'); } },
+            { label: 'Blur', type: 'slider', target: 'glass-blur', value: 12, min: 0, max: 40, unit: 'px', apply: function(v) { applyAll('.p-glass', 'backdropFilter', 'blur(' + v + 'px)'); applyAll('.p-glass', 'webkitBackdropFilter', 'blur(' + v + 'px)'); } },
+            { label: 'BG Opacity', type: 'slider', target: 'glass-bg-op', value: 4, min: 0, max: 30, unit: '%', apply: function(v) { applyAll('.p-glass', 'background', 'rgba(255,255,255,' + (v/100) + ')'); } },
+            { label: 'Padding', type: 'slider', target: 'glass-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { applyAll('.p-glass', 'padding', v + 'px'); } },
+            { label: 'Shadow Blur', type: 'slider', target: 'glass-shadow', value: 60, min: 0, max: 100, unit: 'px', apply: function(v) { applyAll('.p-glass', 'boxShadow', '0 20px ' + v + 'px rgba(0,0,0,0.3)'); } },
+          ]},
+          { title: 'Instance: This Container', badge: 'instance', props: [
+            { label: 'Content', type: 'text', target: 'glass-content', value: 'Glass Container' },
+          ]}
+        ]
+      },
+      'glass-sm': {
+        groups: [
+          { title: 'Glass SM (Universal)', badge: 'universal', props: [
+            { label: 'Border Radius', type: 'slider', target: 'glass-sm-radius', value: 16, min: 0, max: 32, unit: 'px', apply: function(v) { applyAll('.p-glass-sm', 'borderRadius', v + 'px'); } },
+            { label: 'Border Opacity', type: 'slider', target: 'glass-sm-border-op', value: 8, min: 0, max: 50, unit: '%', apply: function(v) { applyAll('.p-glass-sm', 'borderColor', 'rgba(255,255,255,' + (v/100) + ')'); } },
+            { label: 'Blur', type: 'slider', target: 'glass-sm-blur', value: 12, min: 0, max: 40, unit: 'px', apply: function(v) { applyAll('.p-glass-sm', 'backdropFilter', 'blur(' + v + 'px)'); applyAll('.p-glass-sm', 'webkitBackdropFilter', 'blur(' + v + 'px)'); } },
+            { label: 'BG Opacity', type: 'slider', target: 'glass-sm-bg-op', value: 4, min: 0, max: 30, unit: '%', apply: function(v) { applyAll('.p-glass-sm', 'background', 'rgba(255,255,255,' + (v/100) + ')'); } },
+            { label: 'Padding', type: 'slider', target: 'glass-sm-padding', value: 20, min: 8, max: 40, unit: 'px', apply: function(v) { applyAll('.p-glass-sm', 'padding', v + 'px'); } },
+          ]}
+        ]
+      },
+      'badges': {
+        groups: [
+          { title: 'Hero Badge', badge: 'universal', props: [
+            { label: 'Border Radius', type: 'slider', target: 'badge-radius', value: 100, min: 0, max: 100, unit: 'px', apply: function(v) { q('#preview-hero-badge').style.borderRadius = v + 'px'; } },
+            { label: 'Font Size', type: 'slider', target: 'badge-font', value: 12, min: 8, max: 18, unit: 'px', apply: function(v) { q('#preview-hero-badge').style.fontSize = v + 'px'; } },
+            { label: 'Spacing', type: 'slider', target: 'badge-spacing', value: 2, min: 0, max: 6, unit: 'px', apply: function(v) { q('#preview-hero-badge').style.letterSpacing = v + 'px'; } },
+            { label: 'Padding V', type: 'slider', target: 'badge-pad-v', value: 6, min: 2, max: 16, unit: 'px', apply: function(v) { q('#preview-hero-badge').style.paddingTop = v + 'px'; q('#preview-hero-badge').style.paddingBottom = v + 'px'; } },
+            { label: 'Padding H', type: 'slider', target: 'badge-pad-h', value: 16, min: 4, max: 32, unit: 'px', apply: function(v) { q('#preview-hero-badge').style.paddingLeft = v + 'px'; q('#preview-hero-badge').style.paddingRight = v + 'px'; } },
+          ]},
+          { title: 'Status Badges', badge: 'universal', props: [
+            { label: 'Border Radius', type: 'slider', target: 'status-radius', value: 20, min: 0, max: 30, unit: 'px', apply: function(v) { applyAll('.p-status-badge', 'borderRadius', v + 'px'); } },
+            { label: 'Font Size', type: 'slider', target: 'status-font', value: 11, min: 8, max: 16, unit: 'px', apply: function(v) { applyAll('.p-status-badge', 'fontSize', v + 'px'); } },
+            { label: 'In Progress', type: 'color', target: 'status-progress-color', value: '#0082fb' },
+            { label: 'Specced', type: 'color', target: 'status-specced-color', value: '#34c759' },
+          ]},
+          { title: 'Tech Tags', badge: 'universal', props: [
+            { label: 'Border Radius', type: 'slider', target: 'tag-radius', value: 8, min: 0, max: 20, unit: 'px', apply: function(v) { applyAll('.p-tech-tag', 'borderRadius', v + 'px'); } },
+            { label: 'Font Size', type: 'slider', target: 'tag-font', value: 11, min: 8, max: 16, unit: 'px', apply: function(v) { applyAll('.p-tech-tag', 'fontSize', v + 'px'); } },
+            { label: 'Padding V', type: 'slider', target: 'tag-pad-v', value: 6, min: 2, max: 14, unit: 'px', apply: function(v) { applyAll('.p-tech-tag', 'paddingTop', v + 'px'); applyAll('.p-tech-tag', 'paddingBottom', v + 'px'); } },
+            { label: 'Padding H', type: 'slider', target: 'tag-pad-h', value: 14, min: 4, max: 28, unit: 'px', apply: function(v) { applyAll('.p-tech-tag', 'paddingLeft', v + 'px'); applyAll('.p-tech-tag', 'paddingRight', v + 'px'); } },
+          ]}
+        ]
+      },
+      'legend': {
+        groups: [
+          { title: 'Live Indicator', badge: 'universal', props: [
+            { label: 'Dot Size', type: 'slider', target: 'live-dot-size', value: 6, min: 4, max: 12, unit: 'px', apply: function(v) { applyAll('.p-live-dot', 'width', v + 'px'); applyAll('.p-live-dot', 'height', v + 'px'); } },
+            { label: 'Color', type: 'color', target: 'live-color', value: '#34c759' },
+            { label: 'Font Size', type: 'slider', target: 'live-font', value: 11, min: 8, max: 16, unit: 'px', apply: function(v) { applyAll('.p-live-label', 'fontSize', v + 'px'); } },
+          ]},
+          { title: 'Legend', badge: 'universal', props: [
+            { label: 'Dot Size', type: 'slider', target: 'legend-dot-size', value: 8, min: 4, max: 16, unit: 'px', apply: function(v) { applyAll('.p-legend-dot', 'width', v + 'px'); applyAll('.p-legend-dot', 'height', v + 'px'); } },
+            { label: 'Label Size', type: 'slider', target: 'legend-label-size', value: 12, min: 8, max: 18, unit: 'px', apply: function(v) { applyAll('.p-legend-label', 'fontSize', v + 'px'); } },
+          ]}
+        ]
+      },
+      'icon-circles': {
+        groups: [
+          { title: 'Icon Circles', badge: 'universal', props: [
+            { label: 'Large Size', type: 'slider', target: 'icon-lg-size', value: 48, min: 24, max: 72, unit: 'px' },
+            { label: 'Small Size', type: 'slider', target: 'icon-sm-size', value: 36, min: 20, max: 56, unit: 'px' },
+            { label: 'Icon Font', type: 'slider', target: 'icon-font-lg', value: 20, min: 12, max: 36, unit: 'px' },
+            { label: 'BG Opacity', type: 'slider', target: 'icon-bg-op', value: 15, min: 0, max: 40, unit: '%' },
+          ]}
+        ]
+      },
+
+      // --- HOME PAGE ---
+      'home-hero': {
+        groups: [
+          { title: 'Typography', badge: 'universal', props: [
+            { label: 'Title Size', type: 'slider', target: 'home-hero-title-size', value: 72, min: 32, max: 120, unit: 'px', apply: function(v) { q('#preview-home-hero div:nth-child(2)').style.fontSize = v + 'px'; } },
+            { label: 'Title Weight', type: 'slider', target: 'home-hero-title-weight', value: 700, min: 100, max: 900, unit: '', step: 100, apply: function(v) { q('#preview-home-hero div:nth-child(2)').style.fontWeight = v; } },
+            { label: 'Subtitle Size', type: 'slider', target: 'home-hero-sub-size', value: 18, min: 12, max: 28, unit: 'px', apply: function(v) { q('#preview-home-hero div:nth-child(3)').style.fontSize = v + 'px'; } },
+          ]},
+          { title: 'Instance: Background', badge: 'instance', props: [
+            { label: 'Gradient Color', type: 'color', target: 'home-hero-gradient', value: '#ff2d78' },
+            { label: 'Gradient Opacity', type: 'slider', target: 'home-hero-grad-op', value: 15, min: 0, max: 50, unit: '%' },
+            { label: 'Padding V', type: 'slider', target: 'home-hero-pad-v', value: 60, min: 20, max: 120, unit: 'px', apply: function(v) { q('#preview-home-hero').style.paddingTop = v + 'px'; q('#preview-home-hero').style.paddingBottom = v + 'px'; } },
+          ]},
+          { title: 'Instance: Content', badge: 'instance', props: [
+            { label: 'Title', type: 'text', target: 'home-hero-title-text', value: 'Meta Spatial Production' },
+            { label: 'Subtitle', type: 'text', target: 'home-hero-sub-text', value: 'A modular, portable virtual production pipeline built on Meta hardware and Unreal Engine 5.7.' },
+            { label: 'Badge Text', type: 'text', target: 'home-hero-badge-text', value: 'PIPELINE ARCHITECTURE' },
+          ]}
+        ]
+      },
+      'home-pillar-spatial': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'hp-s-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-pillar-spatial').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'hp-s-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-pillar-spatial').style.padding = v + 'px'; } },
+        ]},
+        { title: 'Instance: Pillar Card', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'hp-s-icon-color', value: '#0082fb' },
+          { label: 'Title Size', type: 'slider', target: 'hp-s-title-size', value: 20, min: 14, max: 32, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'hp-s-desc-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Title', type: 'text', target: 'hp-s-title', value: 'Spatial Production' },
+          { label: 'Description', type: 'text', target: 'hp-s-desc', value: 'Five-layer architecture from UE world to standalone Quest 3 app.' },
+        ]}
+      ]},
+      'home-pillar-assets': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'hp-a-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-pillar-assets').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'hp-a-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-pillar-assets').style.padding = v + 'px'; } },
+        ]},
+        { title: 'Instance: Pillar Card', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'hp-a-icon-color', value: '#34c759' },
+          { label: 'Title', type: 'text', target: 'hp-a-title', value: 'Compound Assets' },
+          { label: 'Description', type: 'text', target: 'hp-a-desc', value: 'Multi-layer asset architecture for non-destructive workflows.' },
+        ]}
+      ]},
+      'home-pillar-world': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'hp-w-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-pillar-world').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'hp-w-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-pillar-world').style.padding = v + 'px'; } },
+        ]},
+        { title: 'Instance: Pillar Card', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'hp-w-icon-color', value: '#00d4aa' },
+          { label: 'Title', type: 'text', target: 'hp-w-title', value: 'World Building' },
+          { label: 'Description', type: 'text', target: 'hp-w-desc', value: 'Reactive world state system driven by narrative logic.' },
+        ]}
+      ]},
+      'home-footer': { groups: [
+        { title: 'Tech Tags', badge: 'universal', props: [
+          { label: 'Tag Radius', type: 'slider', target: 'hf-tag-radius', value: 8, min: 0, max: 20, unit: 'px' },
+          { label: 'Tag Font', type: 'slider', target: 'hf-tag-font', value: 11, min: 8, max: 16, unit: 'px' },
+        ]},
+        { title: 'Instance: Footer', badge: 'instance', props: [
+          { label: 'Border Color', type: 'color', target: 'hf-border-color', value: '#1a1a1e' },
+          { label: 'Copyright', type: 'text', target: 'hf-copyright', value: '© 2025 Aniket Bhatt. Internal documentation.' },
+        ]}
+      ]},
+
+      // --- SPATIAL PAGE ---
+      'spatial-arch': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'sa-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-spatial-arch').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'sa-padding', value: 28, min: 8, max: 48, unit: 'px', apply: function(v) { q('#preview-spatial-arch').style.padding = v + 'px'; } },
+        ]},
+        { title: 'Instance: SVG Elements', badge: 'instance', props: [
+          { label: 'Device Stroke', type: 'color', target: 'sa-device-stroke', value: '#666666' },
+          { label: 'Stroke Width', type: 'slider', target: 'sa-stroke-w', value: 1.5, min: 0.5, max: 4, unit: 'px', step: 0.5 },
+          { label: 'Rec Dot (Green)', type: 'color', target: 'sa-dot-green', value: '#34c759' },
+          { label: 'Rec Dot (Red)', type: 'color', target: 'sa-dot-red', value: '#ff3b30' },
+          { label: 'Label Size', type: 'slider', target: 'sa-label-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Sub Label Size', type: 'slider', target: 'sa-sublabel-size', value: 11, min: 8, max: 16, unit: 'px' },
+          { label: 'UE Bar Text', type: 'text', target: 'sa-ue-text', value: 'Unreal Engine 5.7' },
+        ]}
+      ]},
+      'spatial-layers': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'sl-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-spatial-layers').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: Layer Rows', badge: 'instance', props: [
+          { label: 'Number BG', type: 'color', target: 'sl-num-bg', value: '#0082fb' },
+          { label: 'Number Size', type: 'slider', target: 'sl-num-size', value: 28, min: 20, max: 40, unit: 'px' },
+          { label: 'Title Size', type: 'slider', target: 'sl-title-size', value: 15, min: 12, max: 22, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'sl-desc-size', value: 13, min: 10, max: 18, unit: 'px' },
+          { label: 'Row Padding', type: 'slider', target: 'sl-row-pad', value: 14, min: 6, max: 24, unit: 'px' },
+          { label: 'Divider Opacity', type: 'slider', target: 'sl-divider-op', value: 6, min: 0, max: 20, unit: '%' },
+        ]}
+      ]},
+      'spatial-card-take': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'sct-radius', value: 16, min: 0, max: 32, unit: 'px', apply: function(v) { q('#preview-card-take').style.borderRadius = v + 'px'; } },
+          { label: 'Padding', type: 'slider', target: 'sct-padding', value: 20, min: 8, max: 40, unit: 'px', apply: function(v) { q('#preview-card-take').style.padding = v + 'px'; } },
+        ]},
+        { title: 'Instance: Take Recorder', badge: 'instance', props: [
+          { label: 'Icon', type: 'text', target: 'sct-icon', value: '⏺' },
+          { label: 'Icon Color', type: 'color', target: 'sct-icon-color', value: '#ff3b30' },
+          { label: 'Title', type: 'text', target: 'sct-title', value: 'Take Recorder' },
+          { label: 'Description', type: 'text', target: 'sct-desc', value: 'Multi-track motion capture with automatic take management.' },
+          { label: 'Title Size', type: 'slider', target: 'sct-title-size', value: 15, min: 12, max: 22, unit: 'px' },
+          { label: 'Desc Size', type: 'slider', target: 'sct-desc-size', value: 13, min: 10, max: 18, unit: 'px' },
+        ]}
+      ]},
+      'spatial-card-role': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'scr-radius', value: 16, min: 0, max: 32, unit: 'px', apply: function(v) { q('#preview-card-role').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: VR Role System', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'scr-icon-color', value: '#0082fb' },
+          { label: 'Title', type: 'text', target: 'scr-title', value: 'VR Role System' },
+          { label: 'Description', type: 'text', target: 'scr-desc', value: 'IVRRole interface: Actor, Puppeteer, Director modes.' },
+        ]}
+      ]},
+      'spatial-card-export': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'sce-radius', value: 16, min: 0, max: 32, unit: 'px', apply: function(v) { q('#preview-card-export').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: Export Pipeline', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'sce-icon-color', value: '#34c759' },
+          { label: 'Title', type: 'text', target: 'sce-title', value: 'Export Pipeline' },
+          { label: 'Description', type: 'text', target: 'sce-desc', value: 'Level Sequence → Movie Render Queue → Editorial.' },
+        ]}
+      ]},
+      'spatial-status': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'ss-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-spatial-status').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Status Badges', badge: 'universal', props: [
+          { label: 'Badge Radius', type: 'slider', target: 'ss-badge-radius', value: 20, min: 0, max: 30, unit: 'px' },
+          { label: 'Badge Font', type: 'slider', target: 'ss-badge-font', value: 11, min: 8, max: 16, unit: 'px' },
+        ]},
+        { title: 'Instance: Table', badge: 'instance', props: [
+          { label: 'Header Size', type: 'slider', target: 'ss-header-size', value: 11, min: 8, max: 16, unit: 'px' },
+          { label: 'Cell Size', type: 'slider', target: 'ss-cell-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Row Padding', type: 'slider', target: 'ss-row-pad', value: 12, min: 6, max: 24, unit: 'px' },
+          { label: 'High Priority', type: 'color', target: 'ss-high-color', value: '#ff3b30' },
+          { label: 'Med Priority', type: 'color', target: 'ss-med-color', value: '#ff9f0a' },
+        ]}
+      ]},
+
+      // --- COMPOUND PAGE ---
+      'compound-layers': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'cl-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-compound-layers').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: Layer Rows', badge: 'instance', props: [
+          { label: 'Row Padding', type: 'slider', target: 'cl-row-pad', value: 16, min: 6, max: 28, unit: 'px' },
+          { label: 'Row Radius', type: 'slider', target: 'cl-row-radius', value: 8, min: 0, max: 16, unit: 'px' },
+          { label: 'Font Size', type: 'slider', target: 'cl-font', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Spacing', type: 'slider', target: 'cl-spacing', value: 1, min: 0, max: 4, unit: 'px' },
+          { label: 'Border Width', type: 'slider', target: 'cl-border-w', value: 3, min: 1, max: 6, unit: 'px' },
+          { label: 'Metadata', type: 'color', target: 'cl-color-1', value: '#ff9f0a' },
+          { label: 'LOD', type: 'color', target: 'cl-color-2', value: '#34c759' },
+          { label: 'Lighting', type: 'color', target: 'cl-color-3', value: '#0082fb' },
+          { label: 'Materials', type: 'color', target: 'cl-color-4', value: '#00d4aa' },
+          { label: 'Collision', type: 'color', target: 'cl-color-5', value: '#bf5af2' },
+          { label: 'Gap', type: 'slider', target: 'cl-gap', value: 6, min: 0, max: 16, unit: 'px' },
+        ]}
+      ]},
+      'compound-comparison': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'cc-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-compound-comparison').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: Table', badge: 'instance', props: [
+          { label: 'Header Size', type: 'slider', target: 'cc-header-size', value: 13, min: 8, max: 20, unit: 'px' },
+          { label: 'Cell Size', type: 'slider', target: 'cc-cell-size', value: 14, min: 10, max: 20, unit: 'px' },
+          { label: 'Traditional', type: 'color', target: 'cc-trad-color', value: '#ff9f0a' },
+          { label: 'Compound', type: 'color', target: 'cc-comp-color', value: '#34c759' },
+        ]}
+      ]},
+      'compound-benefit-nd': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'cb1-radius', value: 16, min: 0, max: 32, unit: 'px' },
+        ]},
+        { title: 'Instance', badge: 'instance', props: [
+          { label: 'Accent Color', type: 'color', target: 'cb1-accent', value: '#0082fb' },
+          { label: 'Border Top Width', type: 'slider', target: 'cb1-border-w', value: 2, min: 0, max: 6, unit: 'px' },
+          { label: 'Title', type: 'text', target: 'cb1-title', value: 'Non-Destructive' },
+        ]}
+      ]},
+      'compound-benefit-va': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'cb2-radius', value: 16, min: 0, max: 32, unit: 'px' },
+        ]},
+        { title: 'Instance', badge: 'instance', props: [
+          { label: 'Accent Color', type: 'color', target: 'cb2-accent', value: '#34c759' },
+          { label: 'Title', type: 'text', target: 'cb2-title', value: 'Version Aware' },
+        ]}
+      ]},
+      'compound-benefit-pr': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'cb3-radius', value: 16, min: 0, max: 32, unit: 'px' },
+        ]},
+        { title: 'Instance', badge: 'instance', props: [
+          { label: 'Accent Color', type: 'color', target: 'cb3-accent', value: '#ff9f0a' },
+          { label: 'Title', type: 'text', target: 'cb3-title', value: 'Pipeline Ready' },
+        ]}
+      ]},
+
+      // --- WORLD PAGE ---
+      'world-network': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'wn-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-world-network').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: Network Nodes', badge: 'instance', props: [
+          { label: 'Biome Color', type: 'color', target: 'wn-biome-color', value: '#34c759' },
+          { label: 'State Color', type: 'color', target: 'wn-state-color', value: '#00d4aa' },
+          { label: 'AI Color', type: 'color', target: 'wn-ai-color', value: '#bf5af2' },
+          { label: 'Small Circle', type: 'slider', target: 'wn-sm-size', value: 80, min: 50, max: 120, unit: 'px' },
+          { label: 'Large Circle', type: 'slider', target: 'wn-lg-size', value: 100, min: 60, max: 140, unit: 'px' },
+          { label: 'Border Width', type: 'slider', target: 'wn-border-w', value: 2, min: 1, max: 5, unit: 'px' },
+          { label: 'Label Size', type: 'slider', target: 'wn-label-size', value: 12, min: 8, max: 18, unit: 'px' },
+          { label: 'Arrow Color', type: 'color', target: 'wn-arrow-color', value: '#4d4d4d' },
+        ]}
+      ]},
+      'world-card-biomes': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'wcb-radius', value: 16, min: 0, max: 32, unit: 'px' },
+        ]},
+        { title: 'Instance', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'wcb-color', value: '#34c759' },
+          { label: 'Title', type: 'text', target: 'wcb-title', value: 'Reactive Biomes' },
+        ]}
+      ]},
+      'world-card-memory': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'wcm-radius', value: 16, min: 0, max: 32, unit: 'px' },
+        ]},
+        { title: 'Instance', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'wcm-color', value: '#0082fb' },
+          { label: 'Title', type: 'text', target: 'wcm-title', value: 'Persistent Memory' },
+        ]}
+      ]},
+      'world-card-ai': { groups: [
+        { title: 'Glass SM', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'wca-radius', value: 16, min: 0, max: 32, unit: 'px' },
+        ]},
+        { title: 'Instance', badge: 'instance', props: [
+          { label: 'Icon Color', type: 'color', target: 'wca-color', value: '#bf5af2' },
+          { label: 'Title', type: 'text', target: 'wca-title', value: 'AI Integration' },
+        ]}
+      ]},
+      'world-closing': { groups: [
+        { title: 'Glass Container', badge: 'universal', props: [
+          { label: 'Border Radius', type: 'slider', target: 'wc-radius', value: 20, min: 0, max: 40, unit: 'px', apply: function(v) { q('#preview-world-closing').style.borderRadius = v + 'px'; } },
+        ]},
+        { title: 'Instance: Quote', badge: 'instance', props: [
+          { label: 'Border Color', type: 'color', target: 'wc-border-color', value: '#00d4aa' },
+          { label: 'Font Size', type: 'slider', target: 'wc-font-size', value: 20, min: 14, max: 32, unit: 'px', apply: function(v) { q('#preview-world-closing div').style.fontSize = v + 'px'; } },
+          { label: 'Line Height', type: 'slider', target: 'wc-line-h', value: 1.8, min: 1, max: 2.5, unit: '', step: 0.1, apply: function(v) { q('#preview-world-closing div').style.lineHeight = v; } },
+          { label: 'Text Opacity', type: 'slider', target: 'wc-text-op', value: 70, min: 20, max: 100, unit: '%', apply: function(v) { q('#preview-world-closing div').style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+          { label: 'Quote Text', type: 'text', target: 'wc-text', value: 'The initial proof-of-concept is a simulation — it reacts, it remembers, and it evolves with the story being told inside it.' },
+        ]}
+      ]},
+    };
+
+    // ============================================================
+    // HELPERS
+    // ============================================================
+    function q(sel) { return document.querySelector(sel); }
+    function qa(sel) { return document.querySelectorAll(sel); }
+    function applyAll(sel, prop, val) {
+      qa(sel).forEach(function(el) { el.style[prop] = val; });
+    }
+
+    // ============================================================
+    // RENDER SIDEBAR PANEL
+    // ============================================================
+    function renderPanel(compId) {
+      var def = PROPS[compId];
+      if (!def) return '';
+      var html = '';
+      def.groups.forEach(function(group) {
+        var badgeClass = group.badge === 'universal' ? 'badge-universal' : 'badge-instance';
+        html += '<div class="prop-group">';
+        html += '<div class="prop-group-header" onclick="toggleGroup(this)">';
+        html += '<span><span class="prop-group-title">' + group.title + '</span> <span class="prop-group-badge ' + badgeClass + '">' + group.badge.toUpperCase() + '</span></span>';
+        html += '<span class="prop-group-chevron">▼</span>';
+        html += '</div>';
+        html += '<div class="prop-group-body">';
+        group.props.forEach(function(p) {
+          if (p.type === 'slider') {
+            var step = p.step || 1;
+            html += '<div class="prop-row">';
+            html += '<span class="prop-label">' + p.label + '</span>';
+            html += '<input type="range" class="prop-slider" min="' + p.min + '" max="' + p.max + '" step="' + step + '" value="' + p.value + '" data-target="' + p.target + '" oninput="syncNum(this)">';
+            html += '<input type="number" class="prop-number" min="' + p.min + '" max="' + p.max + '" step="' + step + '" value="' + p.value + '" data-target="' + p.target + '" oninput="syncSlider(this)">';
+            html += '<span class="prop-unit">' + p.unit + '</span>';
+            html += '</div>';
+          } else if (p.type === 'color') {
+            html += '<div class="prop-row">';
+            html += '<span class="prop-label">' + p.label + '</span>';
+            html += '<input type="color" class="prop-color" value="' + p.value + '" data-target="' + p.target + '" oninput="onPropChange(this)">';
+            html += '<span class="prop-color-label">' + p.value + '</span>';
+            html += '</div>';
+          } else if (p.type === 'text') {
+            html += '<div class="prop-row">';
+            html += '<span class="prop-label">' + p.label + '</span>';
+            html += '<input type="text" class="prop-text" value="' + escHtml(p.value) + '" data-target="' + p.target + '" oninput="onPropChange(this)">';
+            html += '</div>';
+          }
+        });
+        html += '</div></div>';
+      });
+      return html;
+    }
+
+    function escHtml(s) { return s.replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+
+    // ============================================================
+    // COMPONENT SELECTION
+    // ============================================================
+    window.selectComp = function(wrap) {
+      qa('.component-wrap').forEach(function(w) { w.classList.remove('selected'); });
+      wrap.classList.add('selected');
+      var compId = wrap.getAttribute('data-comp');
+      currentComp = compId;
+      var sidebar = document.getElementById('sidebar-content');
+      document.getElementById('empty-state').style.display = 'none';
+      document.getElementById('close-btn').style.display = 'block';
+      sidebar.innerHTML = '<div id="empty-state" style="display:none"></div>' + renderPanel(compId);
+    };
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+      qa('.component-wrap').forEach(function(w) { w.classList.remove('selected'); });
+      currentComp = null;
+      document.getElementById('sidebar-content').innerHTML = '<div class="sidebar-empty" id="empty-state">Click any component<br>in the preview to inspect<br>and edit its properties</div>';
+      this.style.display = 'none';
+    });
+
+    // ============================================================
+    // SYNC SLIDER ↔ NUMBER
+    // ============================================================
+    window.syncNum = function(slider) {
+      var target = slider.getAttribute('data-target');
+      var row = slider.parentElement;
+      var num = row.querySelector('.prop-number');
+      if (num) num.value = slider.value;
+      triggerApply(target, parseFloat(slider.value));
+    };
+
+    window.syncSlider = function(num) {
+      var target = num.getAttribute('data-target');
+      var row = num.parentElement;
+      var slider = row.querySelector('.prop-slider');
+      if (slider) slider.value = num.value;
+      triggerApply(target, parseFloat(num.value));
+    };
+
+    // Scroll wheel on number inputs
+    document.addEventListener('wheel', function(e) {
+      if (e.target.classList.contains('prop-number')) {
+        e.preventDefault();
+        var input = e.target;
+        var step = parseFloat(input.step) || 1;
+        var speed = Math.abs(e.deltaY);
+        var mult = speed > 100 ? 10 : speed > 50 ? 5 : 1;
+        var delta = e.deltaY < 0 ? step * mult : -step * mult;
+        var newVal = Math.round((parseFloat(input.value) + delta) * 100) / 100;
+        var min = parseFloat(input.min);
+        var max = parseFloat(input.max);
+        if (!isNaN(min)) newVal = Math.max(min, newVal);
+        if (!isNaN(max)) newVal = Math.min(max, newVal);
+        input.value = newVal;
+        var row = input.parentElement;
+        var slider = row.querySelector('.prop-slider');
+        if (slider) slider.value = newVal;
+        triggerApply(input.getAttribute('data-target'), newVal);
+      }
+    }, { passive: false });
+
+    window.onPropChange = function(el) {
+      var target = el.getAttribute('data-target');
+      if (el.type === 'color') {
+        var label = el.parentElement.querySelector('.prop-color-label');
+        if (label) label.textContent = el.value;
+      }
+      triggerApply(target, el.value);
+    };
+
+    function triggerApply(target, value) {
+      if (!currentComp) return;
+      var def = PROPS[currentComp];
+      if (!def) return;
+      def.groups.forEach(function(g) {
+        g.props.forEach(function(p) {
+          if (p.target === target && p.apply) {
+            p.apply(value);
+          }
+        });
+      });
+    }
+
+    // ============================================================
+    // TOGGLE GROUP
+    // ============================================================
+    window.toggleGroup = function(header) {
+      header.parentElement.classList.toggle('collapsed');
+    };
+
+    // ============================================================
+    // TOOLBAR: BROWSER MODE
+    // ============================================================
+    window.setBrowser = function(mode) {
+      qa('[data-mode]').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-mode') === mode); });
+      document.getElementById('preview-canvas').classList.toggle('fallback-mode', mode === 'fallback');
+    };
+
+    // ============================================================
+    // TOOLBAR: VIEWPORT
+    // ============================================================
+    window.setViewport = function(vp) {
+      qa('[data-vp]').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-vp') === vp); });
+      document.getElementById('preview-canvas').classList.toggle('mobile', vp === 'mobile');
+    };
+
+    // ============================================================
+    // TOOLBAR: PAGE SELECT
+    // ============================================================
+    window.setPage = function(page) {
+      currentPage = page;
+      ['universal', 'home', 'spatial', 'compound', 'world'].forEach(function(p) {
+        var el = document.getElementById('page-' + p);
+        if (el) el.style.display = (p === page) ? 'block' : 'none';
+      });
+      // Deselect current component
+      qa('.component-wrap').forEach(function(w) { w.classList.remove('selected'); });
+      currentComp = null;
+      document.getElementById('sidebar-content').innerHTML = '<div class="sidebar-empty" id="empty-state">Click any component<br>in the preview to inspect<br>and edit its properties</div>';
+      document.getElementById('close-btn').style.display = 'none';
+    };
+
+    // ============================================================
+    // SAVE & EXPORT
+    // ============================================================
+    window.exportConfig = function() {
+      var config = { timestamp: new Date().toISOString(), components: {} };
+      Object.keys(PROPS).forEach(function(compId) {
+        config.components[compId] = { groups: [] };
+        PROPS[compId].groups.forEach(function(group) {
+          var gData = { title: group.title, badge: group.badge, props: {} };
+          group.props.forEach(function(p) {
+            var el = document.querySelector('[data-target="' + p.target + '"]');
+            gData.props[p.target] = el ? (el.type === 'checkbox' ? el.checked : el.value) : p.value;
+          });
+          config.components[compId].groups.push(gData);
+        });
+      });
+      var json = JSON.stringify(config, null, 2);
+      var blob = new Blob([json], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'meta-spatial-design-config.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      // Also save to localStorage
+      localStorage.setItem('meta-spatial-ds-config', json);
+      alert('Config exported! Share this JSON file to apply changes site-wide.');
+    };
+
+    // ============================================================
+    // LOAD SAVED CONFIG
+    // ============================================================
+    var saved = localStorage.getItem('meta-spatial-ds-config');
+    if (saved) {
+      try {
+        var cfg = JSON.parse(saved);
+        if (cfg.components) {
+          Object.keys(cfg.components).forEach(function(compId) {
+            cfg.components[compId].groups.forEach(function(g) {
+              Object.keys(g.props).forEach(function(target) {
+                var el = document.querySelector('[data-target="' + target + '"]');
+                if (el) el.value = g.props[target];
+              });
+            });
+          });
+        }
+      } catch(e) { console.warn('Failed to load config', e); }
+    }
+
+  })();
+  </script>
+</body>
+</html>
