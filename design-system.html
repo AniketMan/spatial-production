@@ -1918,7 +1918,310 @@
       triggerApply(target, el.value);
     };
 
+    // ============================================================
+    // APPLY MAP — Central mapping from target → DOM update
+    // Covers every property that doesn't have an inline apply()
+    // Format: target: { sel: selector, prop: cssProperty }
+    //    or   target: { fn: function(v) { ... } }
+    // ============================================================
+    var APPLY_MAP = {
+      // --- HOME HERO ---
+      'home-hero-badge-size':   { fn: function(v) { var el = q('#preview-home-hero .p-hero-badge'); if(el) el.style.fontSize = v + 'px'; } },
+      'home-hero-badge-weight': { fn: function(v) { var el = q('#preview-home-hero .p-hero-badge'); if(el) el.style.fontWeight = v; } },
+      'home-hero-sub-size':     { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'home-hero-sub-lh':       { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(2)'); if(el) el.style.lineHeight = v; } },
+      'home-hero-meta-size':    { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'home-hero-max-w':        { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(2)'); if(el) el.style.maxWidth = v + 'px'; } },
+      'home-hero-sub-color':    { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(2)'); if(el) el.style.color = v; } },
+      'home-hero-sub-op':       { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(2)'); if(el) el.style.opacity = v/100; } },
+      'home-hero-meta-op':      { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(3)'); if(el) el.style.opacity = v/100; } },
+      'home-hero-badge-text':   { fn: function(v) { var el = q('#preview-home-hero .p-hero-badge'); if(el) el.textContent = v; } },
+      'home-hero-sub-text':     { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'home-hero-author':       { fn: function(v) { var el = q('#preview-home-hero > div > div:nth-child(3) > span:first-child'); if(el) el.textContent = v; } },
+
+      // --- HOME PILLAR: SPATIAL ---
+      'hp-s-border-op':    { fn: function(v) { var el = q('#preview-pillar-spatial'); if(el) el.style.borderColor = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hp-s-icon-bg-op':   { fn: function(v) { var el = q('#preview-pillar-spatial .p-icon-circle'); if(el) el.style.background = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hp-s-icon-size':    { fn: function(v) { var el = q('#preview-pillar-spatial .p-icon-circle'); if(el) { el.style.width = v + 'px'; el.style.height = v + 'px'; } } },
+      'hp-s-icon-radius':  { fn: function(v) { var el = q('#preview-pillar-spatial .p-icon-circle'); if(el) el.style.borderRadius = v + 'px'; } },
+      'hp-s-title-size':   { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-s-title-weight': { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(2)'); if(el) el.style.fontWeight = v; } },
+      'hp-s-title-ls':     { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(2)'); if(el) el.style.letterSpacing = v + 'em'; } },
+      'hp-s-desc-size':    { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-s-desc-lh':      { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(3)'); if(el) el.style.lineHeight = v; } },
+      'hp-s-desc-op':      { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(3)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hp-s-arrow-size':   { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(4)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-s-arrow-color':  { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(4)'); if(el) el.style.color = v; } },
+      'hp-s-title':        { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'hp-s-desc':         { fn: function(v) { var el = q('#preview-pillar-spatial > div:nth-child(3)'); if(el) el.textContent = v; } },
+
+      // --- HOME PILLAR: ASSETS ---
+      'hp-a-title-size':   { fn: function(v) { var el = q('#preview-pillar-assets > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-a-desc-size':    { fn: function(v) { var el = q('#preview-pillar-assets > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-a-desc-op':      { fn: function(v) { var el = q('#preview-pillar-assets > div:nth-child(3)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hp-a-arrow-color':  { fn: function(v) { var el = q('#preview-pillar-assets > div:nth-child(4)'); if(el) el.style.color = v; } },
+      'hp-a-title':        { fn: function(v) { var el = q('#preview-pillar-assets > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'hp-a-desc':         { fn: function(v) { var el = q('#preview-pillar-assets > div:nth-child(3)'); if(el) el.textContent = v; } },
+
+      // --- HOME PILLAR: WORLD ---
+      'hp-w-title-size':   { fn: function(v) { var el = q('#preview-pillar-world > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-w-desc-size':    { fn: function(v) { var el = q('#preview-pillar-world > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hp-w-desc-op':      { fn: function(v) { var el = q('#preview-pillar-world > div:nth-child(3)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hp-w-arrow-color':  { fn: function(v) { var el = q('#preview-pillar-world > div:nth-child(4)'); if(el) el.style.color = v; } },
+      'hp-w-title':        { fn: function(v) { var el = q('#preview-pillar-world > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'hp-w-desc':         { fn: function(v) { var el = q('#preview-pillar-world > div:nth-child(3)'); if(el) el.textContent = v; } },
+
+      // --- HOME FOOTER ---
+      'hf-border-op':      { fn: function(v) { var el = q('#preview-home-footer'); if(el) el.style.borderTopColor = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hf-pad-top':        { fn: function(v) { var el = q('#preview-home-footer'); if(el) el.style.paddingTop = v + 'px'; } },
+      'hf-pad-bottom':     { fn: function(v) { var el = q('#preview-home-footer'); if(el) el.style.paddingBottom = v + 'px'; } },
+      'hf-gap':            { fn: function(v) { var el = q('#preview-home-footer'); if(el) el.style.gap = v + 'px'; } },
+      'hf-credit-size':    { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(1)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hf-credit-op':      { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(1)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hf-role-size':      { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'hf-role-op':        { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(2)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'hf-tech-font':      { fn: function(v) { qa('#preview-home-footer > div:nth-child(3) > span').forEach(function(s) { s.style.fontSize = v + 'px'; }); } },
+      'hf-tech-op':        { fn: function(v) { qa('#preview-home-footer > div:nth-child(3) > span').forEach(function(s) { s.style.color = 'rgba(255,255,255,' + (v/100) + ')'; }); } },
+      'hf-tech-gap':       { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(3)'); if(el) el.style.gap = v + 'px'; } },
+      'hf-credit-name':    { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(1) strong'); if(el) el.textContent = v; } },
+      'hf-role-text':      { fn: function(v) { var el = q('#preview-home-footer > div:nth-child(2)'); if(el) el.textContent = v; } },
+
+      // --- SPATIAL: ARCHITECTURE SVG ---
+      // SVG elements use setAttribute, not style
+      'sa-stroke-op':      { fn: function(v) { qa('#preview-spatial-arch svg > rect:not(:last-child)').forEach(function(r) { r.setAttribute('stroke', 'rgba(255,255,255,' + (v/100) + ')'); }); } },
+      'sa-stroke-w':       { fn: function(v) { qa('#preview-spatial-arch svg > rect:not(:last-child)').forEach(function(r) { r.setAttribute('stroke-width', v); }); } },
+      'sa-box-radius':     { fn: function(v) { qa('#preview-spatial-arch svg > rect').forEach(function(r) { r.setAttribute('rx', v); }); } },
+      'sa-lens-op':        { fn: function(v) { qa('#preview-spatial-arch svg circle').forEach(function(c) { c.setAttribute('stroke', 'rgba(255,255,255,' + (v/100) + ')'); }); } },
+      'sa-dot-green':      { fn: function(v) { var dots = qa('#preview-spatial-arch svg circle[fill]'); if(dots[0]) dots[0].setAttribute('fill', v); } },
+      'sa-dot-red':        { fn: function(v) { var dots = qa('#preview-spatial-arch svg circle[fill]'); if(dots[1]) dots[1].setAttribute('fill', v); } },
+      'sa-dot-r':          { fn: function(v) { qa('#preview-spatial-arch svg circle[fill]').forEach(function(c) { c.setAttribute('r', v); }); } },
+      'sa-wifi-op':        { fn: function(v) { qa('#preview-spatial-arch svg path').forEach(function(p) { p.setAttribute('stroke', 'rgba(255,255,255,' + (v/100) + ')'); }); } },
+      'sa-wifi-w':         { fn: function(v) { qa('#preview-spatial-arch svg path').forEach(function(p) { p.setAttribute('stroke-width', v); }); } },
+      'sa-label-size':     { fn: function(v) { qa('#preview-spatial-arch svg text[font-size="14"]').forEach(function(t) { t.setAttribute('font-size', v); }); } },
+      'sa-label-op':       { fn: function(v) { qa('#preview-spatial-arch svg text[font-size="14"]').forEach(function(t) { t.setAttribute('fill', 'rgba(255,255,255,' + (v/100) + ')'); }); } },
+      'sa-sublabel-size':  { fn: function(v) { qa('#preview-spatial-arch svg text[font-size="11"]').forEach(function(t) { t.setAttribute('font-size', v); }); } },
+      'sa-sublabel-op':    { fn: function(v) { qa('#preview-spatial-arch svg text[font-size="11"]').forEach(function(t) { t.setAttribute('fill', 'rgba(255,255,255,' + (v/100) + ')'); }); } },
+      'sa-wifi-label-size':{ fn: function(v) { var t = qa('#preview-spatial-arch svg text'); if(t[4]) t[4].setAttribute('font-size', v); } },
+      'sa-bar-h':          { fn: function(v) { var r = q('#preview-spatial-arch svg > rect:last-child'); if(r) r.setAttribute('height', v); } },
+      'sa-bar-radius':     { fn: function(v) { var r = q('#preview-spatial-arch svg > rect:last-child'); if(r) r.setAttribute('rx', v); } },
+      'sa-bar-bg-op':      { fn: function(v) { var r = q('#preview-spatial-arch svg > rect:last-child'); if(r) r.setAttribute('fill', 'rgba(255,255,255,' + (v/100) + ')'); } },
+      'sa-bar-border-op':  { fn: function(v) { var r = q('#preview-spatial-arch svg > rect:last-child'); if(r) r.setAttribute('stroke', 'rgba(255,255,255,' + (v/100) + ')'); } },
+      'sa-bar-text-size':  { fn: function(v) { var t = q('#preview-spatial-arch svg text:last-child'); if(t) t.setAttribute('font-size', v); } },
+      'sa-ue-text':        { fn: function(v) { var t = q('#preview-spatial-arch svg text:last-child'); if(t) t.textContent = v; } },
+
+      // --- SPATIAL: FIVE LAYERS ---
+      'sl-num-bg':         { fn: function(v) { qa('#layers-list .p-layer-num').forEach(function(n) { n.style.background = v; }); } },
+      'sl-num-size':       { fn: function(v) { qa('#layers-list .p-layer-num').forEach(function(n) { n.style.width = v + 'px'; n.style.height = v + 'px'; n.style.fontSize = (v * 0.5) + 'px'; }); } },
+      'sl-title-size':     { fn: function(v) { qa('#layers-list > div > div > div:first-child').forEach(function(t) { t.style.fontSize = v + 'px'; }); } },
+      'sl-desc-size':      { fn: function(v) { qa('#layers-list > div > div > div:last-child').forEach(function(d) { d.style.fontSize = v + 'px'; }); } },
+      'sl-row-pad':        { fn: function(v) { qa('#layers-list > div').forEach(function(r) { r.style.paddingTop = v + 'px'; r.style.paddingBottom = v + 'px'; }); } },
+      'sl-divider-op':     { fn: function(v) { qa('#layers-list > div').forEach(function(r) { r.style.borderBottomColor = 'rgba(255,255,255,' + (v/100) + ')'; }); } },
+
+      // --- SPATIAL: TAKE RECORDER CARD ---
+      'sct-icon':          { fn: function(v) { var el = q('#preview-card-take .p-icon-circle'); if(el) el.textContent = v; } },
+      'sct-icon-color':    { fn: function(v) { var el = q('#preview-card-take .p-icon-circle'); if(el) el.style.background = v + '26'; } },
+      'sct-title':         { fn: function(v) { var el = q('#preview-card-take > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'sct-desc':          { fn: function(v) { var el = q('#preview-card-take > div:nth-child(3)'); if(el) el.textContent = v; } },
+      'sct-title-size':    { fn: function(v) { var el = q('#preview-card-take > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'sct-desc-size':     { fn: function(v) { var el = q('#preview-card-take > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+
+      // --- SPATIAL: VR ROLE CARD ---
+      'scr-icon-color':    { fn: function(v) { var el = q('#preview-card-role .p-icon-circle'); if(el) el.style.background = v + '26'; } },
+      'scr-title':         { fn: function(v) { var el = q('#preview-card-role > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'scr-desc':          { fn: function(v) { var el = q('#preview-card-role > div:nth-child(3)'); if(el) el.textContent = v; } },
+
+      // --- SPATIAL: EXPORT CARD ---
+      'sce-icon-color':    { fn: function(v) { var el = q('#preview-card-export .p-icon-circle'); if(el) el.style.background = v + '26'; } },
+      'sce-title':         { fn: function(v) { var el = q('#preview-card-export > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'sce-desc':          { fn: function(v) { var el = q('#preview-card-export > div:nth-child(3)'); if(el) el.textContent = v; } },
+
+      // --- SPATIAL: STATUS TABLE ---
+      'ss-badge-radius':   { fn: function(v) { qa('#preview-spatial-status .p-status-badge').forEach(function(b) { b.style.borderRadius = v + 'px'; }); } },
+      'ss-badge-font':     { fn: function(v) { qa('#preview-spatial-status .p-status-badge').forEach(function(b) { b.style.fontSize = v + 'px'; }); } },
+      'ss-header-size':    { fn: function(v) { qa('#preview-spatial-status th').forEach(function(h) { h.style.fontSize = v + 'px'; }); } },
+      'ss-cell-size':      { fn: function(v) { qa('#preview-spatial-status td').forEach(function(c) { c.style.fontSize = v + 'px'; }); } },
+      'ss-row-pad':        { fn: function(v) { qa('#preview-spatial-status td, #preview-spatial-status th').forEach(function(c) { c.style.paddingTop = v + 'px'; c.style.paddingBottom = v + 'px'; }); } },
+      'ss-high-color':     { fn: function(v) { qa('#preview-spatial-status td:nth-child(4)').forEach(function(c) { if(c.textContent.trim() === 'High') c.style.color = v; }); } },
+      'ss-med-color':      { fn: function(v) { qa('#preview-spatial-status td:nth-child(4)').forEach(function(c) { if(c.textContent.trim() === 'Medium') c.style.color = v; }); } },
+
+      // --- COMPOUND: ASSET LAYERS ---
+      'cl-row-pad':        { fn: function(v) { qa('#asset-layers-stack .p-asset-layer').forEach(function(l) { l.style.padding = v + 'px'; }); } },
+      'cl-row-radius':     { fn: function(v) { qa('#asset-layers-stack .p-asset-layer').forEach(function(l) { l.style.borderRadius = v + 'px'; }); } },
+      'cl-font':           { fn: function(v) { qa('#asset-layers-stack .p-asset-layer').forEach(function(l) { l.style.fontSize = v + 'px'; }); } },
+      'cl-spacing':        { fn: function(v) { qa('#asset-layers-stack .p-asset-layer').forEach(function(l) { l.style.marginBottom = v + 'px'; }); } },
+      'cl-border-w':       { fn: function(v) { qa('#asset-layers-stack .p-asset-layer').forEach(function(l) { l.style.borderLeftWidth = v + 'px'; }); } },
+      'cl-color-1':        { fn: function(v) { var l = qa('#asset-layers-stack .p-asset-layer'); if(l[0]) { l[0].style.borderLeftColor = v; l[0].style.color = v; } } },
+      'cl-color-2':        { fn: function(v) { var l = qa('#asset-layers-stack .p-asset-layer'); if(l[1]) { l[1].style.borderLeftColor = v; l[1].style.color = v; } } },
+      'cl-color-3':        { fn: function(v) { var l = qa('#asset-layers-stack .p-asset-layer'); if(l[2]) { l[2].style.borderLeftColor = v; l[2].style.color = v; } } },
+      'cl-color-4':        { fn: function(v) { var l = qa('#asset-layers-stack .p-asset-layer'); if(l[3]) { l[3].style.borderLeftColor = v; l[3].style.color = v; } } },
+      'cl-color-5':        { fn: function(v) { var l = qa('#asset-layers-stack .p-asset-layer'); if(l[4]) { l[4].style.borderLeftColor = v; l[4].style.color = v; } } },
+      'cl-gap':            { fn: function(v) { var el = q('#asset-layers-stack'); if(el) el.style.gap = v + 'px'; } },
+
+      // --- COMPOUND: COMPARISON TABLE ---
+      'cc-header-size':    { fn: function(v) { qa('#preview-compound-comparison th').forEach(function(h) { h.style.fontSize = v + 'px'; }); } },
+      'cc-header-pad':     { fn: function(v) { qa('#preview-compound-comparison th').forEach(function(h) { h.style.padding = v + 'px'; }); } },
+      'cc-trad-color':     { fn: function(v) { var ths = qa('#preview-compound-comparison th'); if(ths[1]) ths[1].style.color = v; } },
+      'cc-comp-color':     { fn: function(v) { var ths = qa('#preview-compound-comparison th'); if(ths[2]) ths[2].style.color = v; } },
+      'cc-cell-size':      { fn: function(v) { qa('#preview-compound-comparison td').forEach(function(c) { c.style.fontSize = v + 'px'; }); } },
+      'cc-cell-pad':       { fn: function(v) { qa('#preview-compound-comparison td').forEach(function(c) { c.style.padding = v + 'px'; }); } },
+      'cc-label-size':     { fn: function(v) { qa('#preview-compound-comparison td:first-child').forEach(function(c) { c.style.fontSize = v + 'px'; }); } },
+      'cc-label-op':       { fn: function(v) { qa('#preview-compound-comparison td:first-child').forEach(function(c) { c.style.color = 'rgba(255,255,255,' + (v/100) + ')'; }); } },
+      'cc-trad-op':        { fn: function(v) { qa('#preview-compound-comparison td:nth-child(2)').forEach(function(c) { c.style.color = 'rgba(255,255,255,' + (v/100) + ')'; }); } },
+      'cc-comp-op':        { fn: function(v) { qa('#preview-compound-comparison td:nth-child(3)').forEach(function(c) { c.style.color = 'rgba(255,255,255,' + (v/100) + ')'; }); } },
+      'cc-divider-op':     { fn: function(v) { qa('#preview-compound-comparison tr').forEach(function(r) { r.style.borderBottomColor = 'rgba(255,255,255,' + (v/100) + ')'; }); } },
+
+      // --- COMPOUND: BENEFIT CARDS (use parent .component-wrap to find the right card) ---
+      'cb1-radius':        { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm'); if(el) el.style.borderRadius = v + 'px'; } },
+      'cb1-padding':       { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm'); if(el) el.style.padding = v + 'px'; } },
+      'cb1-accent':        { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm'); if(el) el.style.borderTopColor = v; } },
+      'cb1-border-w':      { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm'); if(el) el.style.borderTopWidth = v + 'px'; } },
+      'cb1-title-size':    { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm > div:first-child'); if(el) el.style.fontSize = v + 'px'; } },
+      'cb1-desc-size':     { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm > div:last-child'); if(el) el.style.fontSize = v + 'px'; } },
+      'cb1-desc-op':       { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm > div:last-child'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+      'cb1-title':         { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm > div:first-child'); if(el) el.textContent = v; } },
+      'cb1-desc':          { fn: function(v) { var el = q('[data-comp="compound-benefit-nd"] .p-glass-sm > div:last-child'); if(el) el.textContent = v; } },
+
+      'cb2-radius':        { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm'); if(el) el.style.borderRadius = v + 'px'; } },
+      'cb2-padding':       { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm'); if(el) el.style.padding = v + 'px'; } },
+      'cb2-accent':        { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm'); if(el) el.style.borderTopColor = v; } },
+      'cb2-border-w':      { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm'); if(el) el.style.borderTopWidth = v + 'px'; } },
+      'cb2-title-size':    { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm > div:first-child'); if(el) el.style.fontSize = v + 'px'; } },
+      'cb2-desc-size':     { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm > div:last-child'); if(el) el.style.fontSize = v + 'px'; } },
+      'cb2-title':         { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm > div:first-child'); if(el) el.textContent = v; } },
+      'cb2-desc':          { fn: function(v) { var el = q('[data-comp="compound-benefit-va"] .p-glass-sm > div:last-child'); if(el) el.textContent = v; } },
+
+      'cb3-radius':        { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm'); if(el) el.style.borderRadius = v + 'px'; } },
+      'cb3-padding':       { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm'); if(el) el.style.padding = v + 'px'; } },
+      'cb3-accent':        { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm'); if(el) el.style.borderTopColor = v; } },
+      'cb3-border-w':      { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm'); if(el) el.style.borderTopWidth = v + 'px'; } },
+      'cb3-title-size':    { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm > div:first-child'); if(el) el.style.fontSize = v + 'px'; } },
+      'cb3-desc-size':     { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm > div:last-child'); if(el) el.style.fontSize = v + 'px'; } },
+      'cb3-title':         { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm > div:first-child'); if(el) el.textContent = v; } },
+      'cb3-desc':          { fn: function(v) { var el = q('[data-comp="compound-benefit-pr"] .p-glass-sm > div:last-child'); if(el) el.textContent = v; } },
+
+      // --- WORLD: NETWORK NODE COLORS ---
+      // Location nodes in preview: Mangrove (index 0), Encampment (index 1)
+      'wn-mangrove-color': { fn: function(v) { var nodes = qa('#preview-world-network > div:nth-child(2) > div:nth-child(1) > div'); if(nodes[0]) { nodes[0].style.borderColor = v; var sp = nodes[0].querySelector('span'); if(sp) sp.style.color = v; } } },
+      'wn-encampment-color':{ fn: function(v) { var nodes = qa('#preview-world-network > div:nth-child(2) > div:nth-child(2) > div'); if(nodes[0]) { nodes[0].style.borderColor = v; var sp = nodes[0].querySelector('span'); if(sp) sp.style.color = v; } } },
+      'wn-loc-radius':     { fn: function(v) { var d = v * 2; qa('#preview-world-network > div:nth-child(2) > div > div').forEach(function(n, i) { if(i < 2 || !n.querySelector('span')) return; n.style.width = d + 'px'; n.style.height = d + 'px'; }); var locs = qa('#preview-world-network > div:nth-child(2) > div:nth-child(1) > div, #preview-world-network > div:nth-child(2) > div:nth-child(2) > div'); locs.forEach(function(n) { n.style.width = d + 'px'; n.style.height = d + 'px'; }); } },
+      'wn-loc-font':       { fn: function(v) { qa('#preview-world-network > div:nth-child(2) > div:nth-child(1) span, #preview-world-network > div:nth-child(2) > div:nth-child(2) span').forEach(function(s) { s.style.fontSize = v + 'px'; }); } },
+      // World State (processing) node
+      'wn-state-color':    { fn: function(v) { var n = q('#preview-world-network > div:nth-child(2) > div:nth-child(4) > div'); if(n) { n.style.borderColor = v; var sp = n.querySelector('span'); if(sp) sp.style.color = v; } } },
+      'wn-proc-radius':    { fn: function(v) { var d = v * 2; var n = q('#preview-world-network > div:nth-child(2) > div:nth-child(4) > div'); if(n) { n.style.width = d + 'px'; n.style.height = d + 'px'; } } },
+      'wn-proc-font':      { fn: function(v) { var sp = q('#preview-world-network > div:nth-child(2) > div:nth-child(4) > div > span'); if(sp) sp.style.fontSize = v + 'px'; } },
+      // AI node (DINOv2)
+      'wn-dino-color':     { fn: function(v) { var n = q('#preview-world-network > div:nth-child(2) > div:nth-child(6) > div'); if(n) { n.style.borderColor = v; var sp = n.querySelector('span'); if(sp) sp.style.color = v; } } },
+      'wn-ai-radius':      { fn: function(v) { var d = v * 2; var n = q('#preview-world-network > div:nth-child(2) > div:nth-child(6) > div'); if(n) { n.style.width = d + 'px'; n.style.height = d + 'px'; } } },
+      'wn-ai-font':        { fn: function(v) { var sp = q('#preview-world-network > div:nth-child(2) > div:nth-child(6) > div > span'); if(sp) sp.style.fontSize = v + 'px'; } },
+      'wn-ai-sub-font':    { fn: function(v) { var sub = q('#preview-world-network > div:nth-child(2) > div:nth-child(6) > div:last-child'); if(sub && sub.style) sub.style.fontSize = v + 'px'; } },
+      // Output node (not in simplified preview, but map anyway)
+      'wn-output-color':   { fn: function(v) { /* Output node not in simplified preview */ } },
+
+      // --- WORLD: SYSTEM CARDS ---
+      // Biomes card
+      'wcb-radius':        { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm'); if(el) el.style.borderRadius = v + 'px'; } },
+      'wcb-padding':       { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm'); if(el) el.style.padding = v + 'px'; } },
+      'wcb-icon-bg-op':    { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-icon-circle'); if(el) el.style.opacity = v/100; } },
+      'wcb-icon-size':     { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-icon-circle'); if(el) { el.style.width = v + 'px'; el.style.height = v + 'px'; } } },
+      'wcb-icon-radius':   { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-icon-circle'); if(el) el.style.borderRadius = v + 'px'; } },
+      'wcb-color':         { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-icon-circle'); if(el) el.style.background = v + '26'; } },
+      'wcb-title':         { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'wcb-desc':          { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm > div:nth-child(3)'); if(el) el.textContent = v; } },
+      'wcb-title-size':    { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'wcb-desc-size':     { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'wcb-desc-op':       { fn: function(v) { var el = q('[data-comp="world-card-biomes"] .p-glass-sm > div:nth-child(3)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+
+      // Memory card
+      'wcm-radius':        { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm'); if(el) el.style.borderRadius = v + 'px'; } },
+      'wcm-padding':       { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm'); if(el) el.style.padding = v + 'px'; } },
+      'wcm-icon-bg-op':    { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-icon-circle'); if(el) el.style.opacity = v/100; } },
+      'wcm-icon-size':     { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-icon-circle'); if(el) { el.style.width = v + 'px'; el.style.height = v + 'px'; } } },
+      'wcm-icon-radius':   { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-icon-circle'); if(el) el.style.borderRadius = v + 'px'; } },
+      'wcm-color':         { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-icon-circle'); if(el) el.style.background = v + '26'; } },
+      'wcm-title':         { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'wcm-desc':          { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm > div:nth-child(3)'); if(el) el.textContent = v; } },
+      'wcm-title-size':    { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'wcm-desc-size':     { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'wcm-desc-op':       { fn: function(v) { var el = q('[data-comp="world-card-memory"] .p-glass-sm > div:nth-child(3)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+
+      // AI card
+      'wca-radius':        { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm'); if(el) el.style.borderRadius = v + 'px'; } },
+      'wca-padding':       { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm'); if(el) el.style.padding = v + 'px'; } },
+      'wca-icon-bg-op':    { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-icon-circle'); if(el) el.style.opacity = v/100; } },
+      'wca-icon-size':     { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-icon-circle'); if(el) { el.style.width = v + 'px'; el.style.height = v + 'px'; } } },
+      'wca-icon-radius':   { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-icon-circle'); if(el) el.style.borderRadius = v + 'px'; } },
+      'wca-color':         { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-icon-circle'); if(el) el.style.background = v + '26'; } },
+      'wca-title':         { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm > div:nth-child(2)'); if(el) el.textContent = v; } },
+      'wca-desc':          { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm > div:nth-child(3)'); if(el) el.textContent = v; } },
+      'wca-title-size':    { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm > div:nth-child(2)'); if(el) el.style.fontSize = v + 'px'; } },
+      'wca-desc-size':     { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm > div:nth-child(3)'); if(el) el.style.fontSize = v + 'px'; } },
+      'wca-desc-op':       { fn: function(v) { var el = q('[data-comp="world-card-ai"] .p-glass-sm > div:nth-child(3)'); if(el) el.style.color = 'rgba(255,255,255,' + (v/100) + ')'; } },
+
+      // --- WORLD: CLOSING QUOTE ---
+      'wc-border-color':   { fn: function(v) { var el = q('#preview-world-closing'); if(el) el.style.borderLeftColor = v; } },
+      'wc-border-w':       { fn: function(v) { var el = q('#preview-world-closing'); if(el) el.style.borderLeftWidth = v + 'px'; } },
+      'wc-border-side':    { fn: function(v) { /* Would need to restructure border — informational only */ } },
+      'wc-font-style':     { fn: function(v) { var el = q('#preview-world-closing div'); if(el) el.style.fontStyle = v; } },
+      'wc-em-weight':      { fn: function(v) { /* Emphasis weight — applies to <em> if present */ } },
+      'wc-em-color':       { fn: function(v) { /* Emphasis color — applies to <em> if present */ } },
+      'wc-text':           { fn: function(v) { var el = q('#preview-world-closing div'); if(el) el.textContent = v; } },
+
+      // --- WORLD NETWORK: remaining targets that are harder to map ---
+      'wn-caldera-color':  { fn: function(v) { /* Caldera not in simplified preview */ } },
+      'wn-mycelium-color': { fn: function(v) { /* Mycelium not in simplified preview */ } },
+      'wn-tidal-color':    { fn: function(v) { /* Tidal not in simplified preview */ } },
+      'wn-loc-stroke':     { fn: function(v) { qa('#preview-world-network > div:nth-child(2) > div > div').forEach(function(n) { if(n.style.borderRadius === '50%' || n.style.borderWidth) n.style.borderWidth = v + 'px'; }); } },
+      'wn-story-color':    { fn: function(v) { /* Story Events not in simplified preview */ } },
+      'wn-proc-stroke':    { fn: function(v) { var n = q('#preview-world-network > div:nth-child(2) > div:nth-child(4) > div'); if(n) n.style.borderWidth = v + 'px'; } },
+      'wn-pcg-color':      { fn: function(v) { /* PCG not in simplified preview */ } },
+      'wn-ai-stroke':      { fn: function(v) { var n = q('#preview-world-network > div:nth-child(2) > div:nth-child(6) > div'); if(n) n.style.borderWidth = v + 'px'; } },
+      'wn-output-radius':  { fn: function(v) { /* Output not in simplified preview */ } },
+      'wn-output-stroke':  { fn: function(v) { /* Output not in simplified preview */ } },
+      'wn-output-font':    { fn: function(v) { /* Output not in simplified preview */ } },
+      'wn-line-w':         { fn: function(v) { /* Connection lines not rendered as DOM elements */ } },
+      'wn-line-op':        { fn: function(v) { /* Connection lines not rendered as DOM elements */ } },
+      'wn-dash-len':       { fn: function(v) { /* Connection lines not rendered as DOM elements */ } },
+      'wn-dash-gap':       { fn: function(v) { /* Connection lines not rendered as DOM elements */ } },
+      'wn-cross-w':        { fn: function(v) { /* Cross lines not rendered as DOM elements */ } },
+      'wn-cross-op':       { fn: function(v) { /* Cross lines not rendered as DOM elements */ } },
+      'wn-particle-r':     { fn: function(v) { /* Particles not rendered as DOM elements */ } },
+      'wn-particle-op':    { fn: function(v) { /* Particles not rendered as DOM elements */ } },
+      'wn-vert-color':     { fn: function(v) { /* Vertical lines not rendered as DOM elements */ } },
+
+      // --- UNIVERSAL: ICON CIRCLES ---
+      'icon-lg-size':      { fn: function(v) { qa('.p-icon-circle').forEach(function(el) { if(parseInt(el.style.width) >= 40) { el.style.width = v + 'px'; el.style.height = v + 'px'; } }); } },
+      'icon-sm-size':      { fn: function(v) { qa('.p-icon-circle').forEach(function(el) { if(parseInt(el.style.width) < 40) { el.style.width = v + 'px'; el.style.height = v + 'px'; } }); } },
+      'icon-font-lg':      { fn: function(v) { qa('.p-icon-circle').forEach(function(el) { el.style.fontSize = v + 'px'; }); } },
+      'icon-bg-op':        { fn: function(v) { qa('.p-icon-circle').forEach(function(el) { el.style.opacity = v/100; }); } },
+
+      // --- UNIVERSAL: COLOR PALETTE (update swatch backgrounds) ---
+      'accent-blue':       { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[0]) sw[0].style.background = v; } },
+      'accent-green':      { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[1]) sw[1].style.background = v; } },
+      'accent-cyan':       { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[2]) sw[2].style.background = v; } },
+      'accent-red':        { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[3]) sw[3].style.background = v; } },
+      'accent-orange':     { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[4]) sw[4].style.background = v; } },
+      'accent-purple':     { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[5]) sw[5].style.background = v; } },
+      'bg-primary':        { fn: function(v) { var sw = qa('#preview-colors .p-color-swatch'); if(sw[6]) sw[6].style.background = v; } },
+      'text-primary-opacity':   { fn: function(v) { var el = q('#preview-colors'); if(el) { var spans = el.querySelectorAll('.p-text-opacity'); if(spans[0]) spans[0].style.color = 'rgba(255,255,255,' + (v/100) + ')'; } } },
+      'text-secondary-opacity': { fn: function(v) { var el = q('#preview-colors'); if(el) { var spans = el.querySelectorAll('.p-text-opacity'); if(spans[1]) spans[1].style.color = 'rgba(255,255,255,' + (v/100) + ')'; } } },
+      'text-tertiary-opacity':  { fn: function(v) { var el = q('#preview-colors'); if(el) { var spans = el.querySelectorAll('.p-text-opacity'); if(spans[2]) spans[2].style.color = 'rgba(255,255,255,' + (v/100) + ')'; } } },
+
+      // --- UNIVERSAL: BADGES (status badge colors) ---
+      'status-progress-color': { fn: function(v) { qa('.p-status-progress').forEach(function(b) { b.style.background = v + '1a'; b.style.color = v; }); } },
+      'status-specced-color':  { fn: function(v) { qa('.p-status-specced').forEach(function(b) { b.style.background = v + '1a'; b.style.color = v; }); } },
+
+      // --- UNIVERSAL: LEGEND ---
+      'live-color':        { fn: function(v) { qa('.p-live-dot').forEach(function(d) { d.style.background = v; d.style.boxShadow = '0 0 6px ' + v; }); } },
+    };
+
     function triggerApply(target, value) {
+      // 1. Check APPLY_MAP first (central mapping)
+      var mapped = APPLY_MAP[target];
+      if (mapped && mapped.fn) {
+        mapped.fn(value);
+        return;
+      }
+      // 2. Fall back to inline apply() on the PROPS definition
       if (!currentComp) return;
       var def = PROPS[currentComp];
       if (!def) return;
