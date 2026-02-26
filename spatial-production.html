@@ -291,6 +291,49 @@
 
     /* Fade-in override */
     .meta-spatial-page .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       SEGMENTED PILL TOGGLE — Meta brand style
+       ============================================================ */
+    .sp-pill-toggle {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 4px;
+      margin-top: 32px;
+      gap: 2px;
+    }
+    .sp-pill-btn {
+      position: relative;
+      padding: 10px 24px;
+      border-radius: 100px;
+      border: none;
+      background: transparent;
+      color: #8a8d91;
+      font-family: 'Optimistic', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: color 0.25s ease, background 0.25s ease;
+      white-space: nowrap;
+    }
+    .sp-pill-btn:hover {
+      color: #b0b3b8;
+    }
+    .sp-pill-btn.active {
+      background: rgba(255,255,255,0.1);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .sp-section-panel {
+      display: none;
+    }
+    .sp-section-panel.active {
+      display: block;
+    }
   </style>
 </head>
 <body class="meta-spatial-page">
@@ -315,6 +358,10 @@
       </div>
       <h1 class="sp-hero-title fade-in delay-1">Meta Production Tools</h1>
       <p class="sp-hero-subtitle fade-in delay-2">Spatial production infrastructure and AI-driven asset pipelines — built on Meta hardware, Unreal Engine 5.7, and PyTorch. Two domains: real-time filmmaking tools and intelligent geometry processing.</p>
+      <div class="sp-pill-toggle fade-in delay-3">
+        <button class="sp-pill-btn active" data-section="spatial" onclick="switchSection('spatial')">Spatial Production</button>
+        <button class="sp-pill-btn" data-section="ai" onclick="switchSection('ai')">AI Tools</button>
+      </div>
     </div>
   </section>
 
@@ -322,6 +369,7 @@
   <main class="sp-content">
 
     <!-- ========== SECTION: SPATIAL PRODUCTION ========== -->
+    <div id="section-spatial" class="sp-section-panel active">
     <div class="fade-in" style="margin-bottom: 40px;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
         <div style="width:4px;height:28px;background:linear-gradient(180deg,#0082fb,#0064e0);border-radius:2px;"></div>
@@ -611,10 +659,10 @@
       </div>
     </div>
 
-    <!-- ========== SECTION: AI RETOPOLOGY SYSTEM ========== -->
-    <div class="sp-divider"></div>
-    <div class="sp-divider" style="margin:0;height:0;"></div>
+    </div><!-- /section-spatial -->
 
+    <!-- ========== SECTION: AI RETOPOLOGY SYSTEM ========== -->
+    <div id="section-ai" class="sp-section-panel">
     <div class="fade-in" style="margin-bottom: 40px;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
         <div style="width:4px;height:28px;background:linear-gradient(180deg,#ff6b00,#ee0979);border-radius:2px;"></div>
@@ -925,6 +973,8 @@
       </div>
     </div>
 
+    </div><!-- /section-ai -->
+
   </main>
 
   <footer class="footer">
@@ -937,6 +987,36 @@
     </div>
   </footer>
 
+  <script>
+    /* Section toggle — show/hide Spatial vs AI panels */
+    function switchSection(id) {
+      // Toggle panels
+      document.querySelectorAll('.sp-section-panel').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      var target = document.getElementById('section-' + id);
+      if (target) target.classList.add('active');
+
+      // Toggle pill buttons
+      document.querySelectorAll('.sp-pill-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      var btn = document.querySelector('.sp-pill-btn[data-section="' + id + '"]');
+      if (btn) btn.classList.add('active');
+
+      // Re-trigger fade-in animations for newly visible elements
+      if (target) {
+        target.querySelectorAll('.fade-in').forEach(function(el) {
+          el.classList.remove('visible');
+          void el.offsetWidth; // force reflow
+          el.classList.add('visible');
+        });
+      }
+
+      // Scroll to top of content area
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
   <script src="main.js"></script>
   <script src="liquid-glass.js"></script>
 </body>
